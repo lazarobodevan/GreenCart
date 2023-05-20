@@ -4,17 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "SET NODE_ENV=dev& nodemon src/server.ts",
+    "test": "SET NODE_ENV=test& jest src/__test__"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.1",
     "@types/node": "^20.1.7",
+    "@types/supertest": "^2.0.12",
+    "jest": "^29.5.0",
     "nodemon": "^2.0.22",
     "sequelize-cli": "^6.6.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },

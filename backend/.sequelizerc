@@ -2,5 +2,5 @@ const path = require('path')
 
 module.exports = {
     'config': path.resolve(__dirname,'build','database','config','database.js'),
-    'migrations-path':path.resolve(__dirname,'build','database','migrations'),
+    'migrations-path': process.env.NODE_ENV === 'dev' ? path.resolve(__dirname,'build','database','migrations'): path.resolve(__dirname,'build','__test__','migrations'),
 }

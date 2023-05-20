@@ -1,25 +1,25 @@
-
-module.exports={
-    "dev":{
+"use strict";
+module.exports = {
+    "dev": {
         "dialect": "postgres",
-        "host":"localhost",
+        "host": "localhost",
         "username": "postgres",
         "password": "123",
         "database": "postgres",
-        "define":{
+        "define": {
             "timestamps": true,
             "underscored": true
         }
     },
-    "test":{
+    "test": {
         "dialect": "postgres",
-        "host":"localhost",
+        "host": "localhost",
         "username": "postgres",
         "password": "123",
         "database": "test",
-        "define":{
+        "define": {
             "timestamps": true,
             "underscored": true
         }
     }
-}
+};
