@@ -1,26 +1,14 @@
-import express from 'express'
-import router from './routes/index'
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-class App {
-    public express: express.Application
+export class App{
+    public express: express.Application;
 
     constructor(){
         this.express = express();
-        this.middlewares();
-        this.routes();
-    }
-
-    private middlewares():void{
-        this.express.use(express.json())
-    }
-
-    private routes():void{
-        this.express.get('/',(req,res)=>{
-            return res.status(200).json({message:'Server is running'})
-        })
-
-        this.express.use('/', router());
+        this.express.use(cors());
+        this.express.use(bodyParser.urlencoded({extended:true}));
+        this.express.use(bodyParser.json());
     }
 }
-
-export default new App().express
