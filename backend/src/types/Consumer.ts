@@ -3,6 +3,7 @@ import { Producer } from "./Producer"
 
 export type Consumer = {
     id:              String
+    name:            String
     email:           String
     password:        String
     origin_city:     String

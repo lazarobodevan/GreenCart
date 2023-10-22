@@ -1,5 +1,6 @@
 import { App } from "./app";
 import dotenv from 'dotenv';
+import logger from "./logger";
 
 class Server{
     private app: App;
@@ -12,7 +13,7 @@ class Server{
 
     private initServer(){
         this.app.express.listen(process.env.SERVER_PORT);
-        console.log(`Listening on port ${process.env.SERVER_PORT}`);
+        logger.info(`Listening on port ${process.env.SERVER_PORT}`);
     }
 }
 
