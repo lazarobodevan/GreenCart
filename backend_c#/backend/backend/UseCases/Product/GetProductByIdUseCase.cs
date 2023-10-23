@@ -8,7 +8,7 @@ namespace backend.UseCases.Product {
             this.repository = repository;
         }
 
-        public async Task<Models.Product?> execute(Guid id) {
+        public async Task<Models.Product?> Execute(Guid id) {
             var product = await this.repository.FindById(id);
 
             return product;

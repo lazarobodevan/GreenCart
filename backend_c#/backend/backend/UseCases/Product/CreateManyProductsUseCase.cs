@@ -12,7 +12,7 @@ namespace backend.UseCases.Product {
             this.repository = repository;
         }
 
-        public async Task<IEnumerable<Models.Product>> execute(CreateProductDTO[] productsDTO) {
+        public async Task<IEnumerable<Models.Product>> Execute(CreateProductDTO[] productsDTO) {
 
             List<Models.Product> productsEntities = new List<Models.Product>();
             foreach (var product in productsDTO) {

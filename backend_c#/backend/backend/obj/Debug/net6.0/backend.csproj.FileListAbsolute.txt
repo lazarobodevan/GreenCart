@@ -1,5 +1,6 @@
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net6.0\appsettings.Development.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net6.0\appsettings.json
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net6.0\secrets.example.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net6.0\backend.exe
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net6.0\backend.deps.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net6.0\backend.runtimeconfig.json
@@ -52,4 +53,3 @@ C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net6.0\refint\backend.dll
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net6.0\backend.pdb
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net6.0\backend.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net6.0\ref\backend.dll
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net6.0\secrets.example.json

@@ -10,7 +10,7 @@ namespace backend.UseCases.Product {
             repository = _repository;
         }
 
-        public async Task<Models.Product> execute(CreateProductDTO _productDTO) {
+        public async Task<Models.Product> Execute(CreateProductDTO _productDTO) {
 
             Models.Product productEntity = new Models.Product {
                 Name = _productDTO.Name,

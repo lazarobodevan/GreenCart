@@ -10,11 +10,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Tests.UnitTests.Repositories {
-    public class ProducerRepositoryTest {
+    public class ProducerRepositoryTest: IAsyncLifetime {
         private DatabaseContext _dbContext;
 
         public ProducerRepositoryTest() {
             _dbContext = DbContextFactory.GetDatabaseContext();
+        }
+
+        public Task InitializeAsync() {
+            return this._dbContext.Database.EnsureDeletedAsync();
+        }
+
+        public Task DisposeAsync() {
+            return this._dbContext.Database.EnsureDeletedAsync();
         }
 
         [Fact]
@@ -31,7 +39,7 @@ namespace Tests.UnitTests.Repositories {
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                Where_to_Find = "Local de encontro"
+                WhereToFind = "Local de encontro"
             };
 
             //Act
@@ -57,7 +65,7 @@ namespace Tests.UnitTests.Repositories {
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                Where_to_Find = "Local de encontro"
+                WhereToFind = "Local de encontro"
             };
 
             //Act
@@ -83,7 +91,7 @@ namespace Tests.UnitTests.Repositories {
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                Where_to_Find = "Local de encontro"
+                WhereToFind = "Local de encontro"
             };
 
             //Act
@@ -120,7 +128,7 @@ namespace Tests.UnitTests.Repositories {
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                Where_to_Find = "Local de encontro"
+                WhereToFind = "Local de encontro"
             };
 
             //Act
@@ -146,7 +154,7 @@ namespace Tests.UnitTests.Repositories {
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                Where_to_Find = "Local de encontro"
+                WhereToFind = "Local de encontro"
             };
 
             var fakeEmail = "test@fake.com";
@@ -179,7 +187,7 @@ namespace Tests.UnitTests.Repositories {
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                Where_to_Find = "Local de encontro"
+                WhereToFind = "Local de encontro"
             };
             var producer2 = new Producer {
                 Name = "Producer Test2",
@@ -191,7 +199,7 @@ namespace Tests.UnitTests.Repositories {
                 OriginCity = "City3",
                 Password = "123",
                 Telephone = "(31) 99999-9990",
-                Where_to_Find = "Local de encontro2"
+                WhereToFind = "Local de encontro2"
             };
 
             var createdProducer1 = await producerRepository.Save(producer1);
@@ -236,11 +244,12 @@ namespace Tests.UnitTests.Repositories {
             };
 
             var createdProduct1 = await productRepository.Save(product1);
+
             var createdProducts2And3 = await productRepository.SaveMany(new Product[] { product2, product3 });
 
             //Act
-            var foundProductsFromProducer1 = producerRepository.GetProducts(producer1.Id);
-            var foundProductsFromProducer2 = producerRepository.GetProducts(producer2.Id);
+            var foundProductsFromProducer1 = producerRepository.GetProducts(createdProducer1.Id);
+            var foundProductsFromProducer2 = producerRepository.GetProducts(createdProducer2.Id);
 
             var isFoundProductsFromProducer2ContainsProduct1 = foundProductsFromProducer2.Any(product => product.Name == product1.Name);
             var isFoundProductsFromProducer2ContainsProduct2 = foundProductsFromProducer2.Any(product => product.Name == product2.Name);
@@ -267,6 +276,5 @@ namespace Tests.UnitTests.Repositories {
             //Assert
             Assert.Empty(possibleProduct);
         }
-
     }
 }

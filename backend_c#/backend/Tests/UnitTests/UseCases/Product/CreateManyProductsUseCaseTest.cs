@@ -68,7 +68,7 @@ namespace Tests.UnitTests.UseCases {
                 ),
             };
             //Act
-            var createdProducts = await usecase.execute( productsDTO );
+            var createdProducts = await usecase.Execute( productsDTO );
 
             //Assert
             Assert.Equal(productsDTO.Length, createdProducts.Count());

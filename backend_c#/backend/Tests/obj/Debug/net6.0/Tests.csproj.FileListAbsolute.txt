@@ -16,6 +16,7 @@ C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Castle.Core.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
@@ -124,4 +125,3 @@ C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\refint\Tests.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\Tests.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\Tests.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\ref\Tests.dll
-C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll

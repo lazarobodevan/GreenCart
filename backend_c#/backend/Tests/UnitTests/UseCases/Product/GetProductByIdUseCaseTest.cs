@@ -55,8 +55,8 @@ namespace Tests.UnitTests.UseCases {
                 producerId
             );
             //Act
-            var createdProduct = await createProductUseCase.execute(productDTO);
-            var possibleProduct = await getProductByIdUseCase.execute(createdProduct.Id);
+            var createdProduct = await createProductUseCase.Execute(productDTO);
+            var possibleProduct = await getProductByIdUseCase.Execute(createdProduct.Id);
 
             //Assert
             Assert.NotNull( possibleProduct );

@@ -32,7 +32,7 @@ namespace backend.Controllers.v1
                     return BadRequest("Dados incompletos");
                 }
 
-                var createdProduct = await createProductUseCase.execute(productDTO);
+                var createdProduct = await createProductUseCase.Execute(productDTO);
                 return View(new ListProductDTO(createdProduct));
 
             }

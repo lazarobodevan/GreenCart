@@ -34,7 +34,7 @@ namespace Tests.UnitTests.UseCases {
             );
             //Act
 
-            Product product =  await usecase.execute(productDTO);
+            Product product =  await usecase.Execute(productDTO);
             //Assert
             Assert.NotNull(product);
         }

@@ -43,7 +43,7 @@ namespace backend.Models
 
         [Required]
         [Column("WhereToFind")]
-        public String Where_to_Find {  get; set; }
+        public String WhereToFind {  get; set; }
 
         public List<Product>? Products { get; set; }
         public List<Order>? Orders { get; set; }
@@ -70,7 +70,7 @@ namespace backend.Models
             Picture = picture;
             CPF = cPF;
             Attended_Cities = attended_Cities;
-            Where_to_Find = where_to_Find;
+            WhereToFind = where_to_Find;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             DeletedAt = deletedAt;
