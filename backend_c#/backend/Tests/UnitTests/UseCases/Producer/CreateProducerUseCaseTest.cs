@@ -11,9 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Tests.UnitTests.UseCases.Producer {
-    public class CreateProducerUseCaseTest:IAsyncLifetime {
+    public class CreateProducerUseCaseTest {
 
-        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "BookfsdfDbTest").Options;
+        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
 
         DatabaseContext _databaseContext;
 
@@ -21,16 +21,6 @@ namespace Tests.UnitTests.UseCases.Producer {
             _databaseContext = new DatabaseContext(dbContextOptions);
         }
 
-        public async Task DisposeAsync() {
-            //Reset database
-            await _databaseContext.Database.EnsureDeletedAsync();
-
-        }
-
-        public async Task InitializeAsync() {
-            //throw new NotImplementedException();
-            await _databaseContext.Database.EnsureDeletedAsync();
-        }
 
         [Fact]
         public async Task CreateProducerSuccessfully() {
@@ -56,7 +46,7 @@ namespace Tests.UnitTests.UseCases.Producer {
             var createdProducer = await usecase.Execute(producer);
 
             //Assert
-            //Assert.NotNull(createdProducer);
+            Assert.NotNull(createdProducer);
         }
     }
 }

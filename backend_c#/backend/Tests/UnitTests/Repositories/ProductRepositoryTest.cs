@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Tests.UnitTests.Repositories {
     public class ProductRepositoryTest : IAsyncLifetime{
 
-        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "BookDbTest").Options;
+        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
 
         DatabaseContext _databaseContext;
 

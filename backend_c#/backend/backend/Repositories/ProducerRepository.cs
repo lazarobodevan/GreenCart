@@ -21,10 +21,11 @@ namespace backend.Repositories {
         }
 
         public IEnumerable<Product> GetProducts(Guid producerId) {
-            var products = this._context.Producers.Include(producer => producer.Products).SingleOrDefault(producer => producer.Id.Equals(producerId));
-
-            if (products?.Products != null) {
-                return products.Products;
+            //var products = this._context.Producers.Include(producer => producer.Products).SingleOrDefault(producer => producer.Id.Equals(producerId));
+            var products = this._context.Producers.Where(producer => producer.Id == producerId).SelectMany(producer => producer.Products).ToList();
+            
+            if (products != null) {
+                return products;
             }
 
             return Enumerable.Empty<Product>();

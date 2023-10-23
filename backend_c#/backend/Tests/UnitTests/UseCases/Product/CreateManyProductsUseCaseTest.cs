@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Tests.UnitTests.UseCases {
     public class CreateManyProductsUseCaseTest: IAsyncLifetime {
-        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "BookDbTest").Options;
+        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
 
         DatabaseContext _databaseContext;
 

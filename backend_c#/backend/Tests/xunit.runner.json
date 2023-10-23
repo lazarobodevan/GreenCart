@@ -1,0 +1,11 @@
+{
+  "$schema": "https://xunit.net/schema/current/xunit.runner.schema.json",
+  "options": {
+    "methodDisplay": "method",
+    "methodDisplayOptions": "fullName",
+    "parallelizeTestCollections": false, // Desative a execução paralela de grupos de testes
+    "maxParallelThreads": 1,
+    "execution": "Single",
+    "workingDirectory": ""
+  }
+}

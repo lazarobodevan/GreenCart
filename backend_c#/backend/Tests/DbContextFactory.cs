@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Tests {
     public class DbContextFactory {
         
-        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "BookDbTest").Options;
+        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
 
         public static DatabaseContext GetDatabaseContext() {
             return new DatabaseContext(dbContextOptions);

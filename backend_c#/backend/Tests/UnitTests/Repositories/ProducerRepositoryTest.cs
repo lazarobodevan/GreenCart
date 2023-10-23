@@ -9,21 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//***** DO NOT REMOVE*****
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
+//************************
+
 namespace Tests.UnitTests.Repositories {
-    public class ProducerRepositoryTest: IAsyncLifetime {
+
+    public class ProducerRepositoryTest {
         private DatabaseContext _dbContext;
 
         public ProducerRepositoryTest() {
             _dbContext = DbContextFactory.GetDatabaseContext();
         }
 
-        public Task InitializeAsync() {
-            return this._dbContext.Database.EnsureDeletedAsync();
-        }
-
-        public Task DisposeAsync() {
-            return this._dbContext.Database.EnsureDeletedAsync();
-        }
 
         [Fact]
         public async Task CreateProducerSuccessfully() {
