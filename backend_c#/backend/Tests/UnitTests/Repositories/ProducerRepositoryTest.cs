@@ -159,12 +159,17 @@ namespace Tests.UnitTests.Repositories {
             Assert.Null(possibleProducer);
         }
 
+        /*
+         * Producer 1 has 1 Product called Product1;
+         * Producer 2 has 2 Products called Product2 and Product3
+         * Should find only 1 product for Producer1 and 2 products for Producer2
+        */
         [Fact]
         public async Task GetProducerProductsSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_dbContext);
             var producerRepository = new ProducerRepository(_dbContext);
-            var producer = new Producer {
+            var producer1 = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
                 Attended_Cities = "City1;City2;City3",
@@ -176,20 +181,91 @@ namespace Tests.UnitTests.Repositories {
                 Telephone = "(31) 99999-9999",
                 Where_to_Find = "Local de encontro"
             };
+            var producer2 = new Producer {
+                Name = "Producer Test2",
+                Email = "test2@test.com",
+                Attended_Cities = "City2;City3",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                CPF = "111.111.111-12",
+                OriginCity = "City3",
+                Password = "123",
+                Telephone = "(31) 99999-9990",
+                Where_to_Find = "Local de encontro2"
+            };
+
+            var createdProducer1 = await producerRepository.Save(producer1);
+            var createdProducer2 = await producerRepository.Save(producer2);
 
             byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            var productDTO = new CreateProductDTO(
-                "Product",
-                "Description",
-                picture,
-                Category.VEGETABLE,
-                10.10,
-                Unit.UNIT,
-                10,
-                true,
-                new DateTime(),
-                new Guid()
-            );
+            var product1 = new Product {
+                Name = "Product1",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.VEGETABLE,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer1.Id,
+            };
+            var product2 = new Product {
+                Name = "Product2",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.GRAIN,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer2.Id,
+            };
+            var product3 = new Product {
+                Name = "Product3",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.GRAIN,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer2.Id,
+            };
+
+            var createdProduct1 = await productRepository.Save(product1);
+            var createdProducts2And3 = await productRepository.SaveMany(new Product[] { product2, product3 });
+
+            //Act
+            var foundProductsFromProducer1 = producerRepository.GetProducts(producer1.Id);
+            var foundProductsFromProducer2 = producerRepository.GetProducts(producer2.Id);
+
+            var isFoundProductsFromProducer2ContainsProduct1 = foundProductsFromProducer2.Any(product => product.Name == product1.Name);
+            var isFoundProductsFromProducer2ContainsProduct2 = foundProductsFromProducer2.Any(product => product.Name == product2.Name);
+            var isFoundProductsFromProducer2ContainsProduct3 = foundProductsFromProducer2.Any(product => product.Name == product3.Name);
+
+            //Assert
+            Assert.Single(foundProductsFromProducer1);
+            Assert.Equal(foundProductsFromProducer1.First().Name, product1.Name);
+
+            Assert.Equal(2, foundProductsFromProducer2.Count());
+            Assert.False(isFoundProductsFromProducer2ContainsProduct1);
+            Assert.True(isFoundProductsFromProducer2ContainsProduct2);
+            Assert.True(isFoundProductsFromProducer2ContainsProduct3);
+        }
+
+        [Fact]
+        public void GetProducerProductsFail() {
+            //Arrange
+            var producerRepository = new ProducerRepository(_dbContext);
+
+            //Act
+            var possibleProduct = producerRepository.GetProducts(Guid.NewGuid());
+
+            //Assert
+            Assert.Empty(possibleProduct);
         }
 
     }

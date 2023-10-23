@@ -92,7 +92,7 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task FindProductByIdNegative() {
+        public async Task FindProductByIdFail() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
