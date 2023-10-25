@@ -20,15 +20,23 @@ namespace backend.Repositories {
             return await this._context.Producers.FirstOrDefaultAsync(producer => producer.Id == id);
         }
 
+        public IEnumerable<Producer> GetNearProducers(string city) {
+            var producers = this._context.Producers
+                .Where(producer => producer.Attended_Cities.Contains(city.ToUpper()))
+                .Include(producer => producer.Products)
+                .ToList();
+
+            return producers;
+        }
+
         public IEnumerable<Product> GetProducts(Guid producerId) {
             //var products = this._context.Producers.Include(producer => producer.Products).SingleOrDefault(producer => producer.Id.Equals(producerId));
-            var products = this._context.Producers.Where(producer => producer.Id == producerId).SelectMany(producer => producer.Products).ToList();
+            var products = this._context.Producers
+                .Where(producer => producer.Id == producerId)
+                .SelectMany(producer => producer.Products)
+                .ToList();
             
-            if (products != null) {
-                return products;
-            }
-
-            return Enumerable.Empty<Product>();
+            return products;
         }
 
         public async Task<Producer> Save(Producer producer) {

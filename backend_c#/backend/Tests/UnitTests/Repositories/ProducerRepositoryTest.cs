@@ -15,11 +15,19 @@ using System.Threading.Tasks;
 
 namespace Tests.UnitTests.Repositories {
 
-    public class ProducerRepositoryTest {
+    public class ProducerRepositoryTest : IAsyncLifetime {
         private DatabaseContext _dbContext;
 
         public ProducerRepositoryTest() {
             _dbContext = DbContextFactory.GetDatabaseContext();
+        }
+
+        public async Task InitializeAsync() {
+            await this._dbContext.Database.EnsureDeletedAsync();
+        }
+
+        public async Task DisposeAsync() {
+            await this._dbContext.Database.EnsureDeletedAsync();
         }
 
 
@@ -274,5 +282,181 @@ namespace Tests.UnitTests.Repositories {
             //Assert
             Assert.Empty(possibleProduct);
         }
+
+        [Fact]
+        public async Task GetNearProducersFromCity1AndReturnOneProducerSuccessfully() {
+            //Arrange
+            var productRepository = new ProductRepository(_dbContext);
+            var producerRepository = new ProducerRepository(_dbContext);
+            var producer1 = new Producer {
+                Name = "Producer Test",
+                Email = "test@test.com",
+                Attended_Cities = "CITY1;CITY2;CITY3",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                CPF = "111.111.111-11",
+                OriginCity = "City1",
+                Password = "123",
+                Telephone = "(31) 99999-9999",
+                WhereToFind = "Local de encontro"
+            };
+            var producer2 = new Producer {
+                Name = "Producer Test2",
+                Email = "test2@test.com",
+                Attended_Cities = "CITY2;CITY3",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                CPF = "111.111.111-12",
+                OriginCity = "City3",
+                Password = "123",
+                Telephone = "(31) 99999-9990",
+                WhereToFind = "Local de encontro2"
+            };
+
+            var createdProducer1 = await producerRepository.Save(producer1);
+            var createdProducer2 = await producerRepository.Save(producer2);
+
+            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var product1 = new Product {
+                Name = "Product1",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.VEGETABLE,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer1.Id,
+            };
+            var product2 = new Product {
+                Name = "Product2",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.GRAIN,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer2.Id,
+            };
+            var product3 = new Product {
+                Name = "Product3",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.GRAIN,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer2.Id,
+            };
+
+            var createdProduct1 = await productRepository.Save(product1);
+
+            var createdProducts2And3 = await productRepository.SaveMany(new Product[] { product2, product3 });
+
+            //Act
+            var producersFromCity1 = producerRepository.GetNearProducers("city1").ToList();
+
+            var isProducersFromCity1ContainsProducer2 = producersFromCity1.Any(producer => producer.Name.Contains(producer2.Name));
+
+            //Assert
+            Assert.False(isProducersFromCity1ContainsProducer2);
+            Assert.Single(producersFromCity1);
+            Assert.NotNull(producersFromCity1.First().Products);
+        }
+
+        [Fact]
+        public async Task GetNearProducersFromCity2AndShouldReturnTwoProducersSuccessfully() {
+            //Arrange
+            var productRepository = new ProductRepository(_dbContext);
+            var producerRepository = new ProducerRepository(_dbContext);
+            var producer1 = new Producer {
+                Name = "Producer Test",
+                Email = "test@test.com",
+                Attended_Cities = "CITY1;CITY2;CITY3",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                CPF = "111.111.111-11",
+                OriginCity = "City1",
+                Password = "123",
+                Telephone = "(31) 99999-9999",
+                WhereToFind = "Local de encontro"
+            };
+            var producer2 = new Producer {
+                Name = "Producer Test2",
+                Email = "test2@test.com",
+                Attended_Cities = "CITY2;CITY3",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                CPF = "111.111.111-12",
+                OriginCity = "City3",
+                Password = "123",
+                Telephone = "(31) 99999-9990",
+                WhereToFind = "Local de encontro2"
+            };
+
+            var createdProducer1 = await producerRepository.Save(producer1);
+            var createdProducer2 = await producerRepository.Save(producer2);
+
+            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var product1 = new Product {
+                Name = "Product1",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.VEGETABLE,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer1.Id,
+            };
+            var product2 = new Product {
+                Name = "Product2",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.GRAIN,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer2.Id,
+            };
+            var product3 = new Product {
+                Name = "Product3",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.GRAIN,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = createdProducer2.Id,
+            };
+
+            var createdProduct1 = await productRepository.Save(product1);
+
+            var createdProducts2And3 = await productRepository.SaveMany(new Product[] { product2, product3 });
+
+            //Act
+            var producersFromCity2 = producerRepository.GetNearProducers("city2").ToList();
+
+            var isProducersFromCity2ContainsProducer1 = producersFromCity2.Any(producer => producer.Name.Contains(producer1.Name));
+            var isProducersFromCity2ContainsProducer2 = producersFromCity2.Any(producer => producer.Name.Contains(producer2.Name));
+
+            //Assert
+            Assert.True(isProducersFromCity2ContainsProducer1);
+            Assert.True(isProducersFromCity2ContainsProducer2);
+            Assert.Equal(2,producersFromCity2.Count());
+            Assert.NotNull(producersFromCity2.ToList().ElementAt(0).Products);
+            Assert.NotNull(producersFromCity2.ToList().ElementAt(1).Products);
+        }
+
     }
 }

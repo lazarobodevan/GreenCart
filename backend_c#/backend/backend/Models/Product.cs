@@ -73,8 +73,8 @@ namespace backend.Models {
             IsOrganic = isOrganic;
             HarvestDate = harvestDate;
             ProducerId = producerId;
-            CreatedAt = createdAt ?? new DateTime();
-            UpdatedAt = updatedAt ?? new DateTime();
+            CreatedAt = createdAt ?? DateTime.Now;
+            UpdatedAt = updatedAt ?? DateTime.Now;
             DeletedAt = deletedAt;
         }
     }

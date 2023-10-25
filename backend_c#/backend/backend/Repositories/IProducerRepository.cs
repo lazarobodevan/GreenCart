@@ -6,5 +6,6 @@ namespace backend.Repositories {
         Task<Producer?> FindById(Guid id);
         Task<Producer?> FindByEmail(string email);
         IEnumerable<Product> GetProducts(Guid producerId);
+        IEnumerable<Producer> GetNearProducers(string city);
     }
 }

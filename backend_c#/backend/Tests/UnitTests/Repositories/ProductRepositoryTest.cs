@@ -64,7 +64,7 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact] 
-        public async Task findProductByIdSuccessfully() {
+        public async Task FindProductByIdSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -148,5 +148,114 @@ namespace Tests.UnitTests.Repositories {
             
         }
 
+        [Fact]
+        public async Task UpdateProductSuccessfully() {
+            //Arrange
+            ProductRepository repository = new ProductRepository(_databaseContext);
+            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+
+            var product = new Product {
+                Name = "Product",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.VEGETABLE,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = Guid.NewGuid(),
+            };
+
+            //Act
+            var savedProduct = await repository.Save(product);
+            savedProduct.Name = "Updated Product";
+            savedProduct.IsOrganic = false;
+            var updatedProduct = await repository.Update(savedProduct);
+
+            //Assert
+            Assert.NotNull(updatedProduct);
+            Assert.Equal(savedProduct.Id, updatedProduct.Id);
+            Assert.Equal("Updated Product", updatedProduct.Name);
+            Assert.False(updatedProduct.IsOrganic);
+            Assert.NotEqual(updatedProduct.CreatedAt, updatedProduct.UpdatedAt);
+        }
+
+        [Fact]
+        public async Task UpdateNotExistantProductFail() {
+            //Arrange
+            ProductRepository repository = new ProductRepository(_databaseContext);
+            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+
+            var product = new Product {
+                Id = Guid.NewGuid(),
+                Name = "Product",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.VEGETABLE,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = Guid.NewGuid(),
+            };
+
+            //Act
+            var savedProduct = product;
+            savedProduct.Name = "Updated Product";
+            savedProduct.IsOrganic = false;
+
+            async Task Act() {
+                var updatedProduct = await repository.Update(savedProduct!);
+            }
+
+            //Assert
+            await Assert.ThrowsAsync<Exception>(async () => await Act());
+        }
+
+        [Fact]
+        public async Task DeleteProductSuccessfully() {
+            //Arrange
+            var productRepository = new ProductRepository(_databaseContext);
+
+            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+
+            var product = new Product {
+                Name = "Product",
+                Description = "Description",
+                Picture = picture,
+                Category = Category.VEGETABLE,
+                Price = 10.11,
+                Unit = Unit.LITER,
+                AvailableQuantity = 1,
+                IsOrganic = true,
+                HarvestDate = DateTime.Now,
+                ProducerId = Guid.NewGuid(),
+            };
+
+            //Act
+            var createdProduct = await productRepository.Save(product);
+            Assert.Null(createdProduct.DeletedAt);
+            var deletedProduct = await productRepository.Delete(createdProduct.Id);
+
+            //Assert
+            
+            Assert.NotNull(deletedProduct.DeletedAt);
+        }
+
+        [Fact]
+        public async Task TryToDeleteNotExistantProductAndThrowAnError() {
+            //Arrange
+            var productRepository = new ProductRepository(_databaseContext);
+
+            //Act
+            async Task Act() {
+                var deletedProduct = await productRepository.Delete(Guid.NewGuid());
+            }
+
+            //Assert
+            await Assert.ThrowsAsync<Exception>(async () => await Act());
+        }
     }
 }

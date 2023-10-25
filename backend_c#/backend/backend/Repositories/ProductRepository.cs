@@ -12,6 +12,7 @@ namespace backend.Repositories {
 
         public async Task<Product> Save(Product product) {
 
+            product.CreatedAt = DateTime.Now;
             var createdProduct = await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
 
@@ -30,7 +31,7 @@ namespace backend.Repositories {
             List<Product> savedProducts = new List<Product>();
 
             foreach(var product in  products) {
-
+                product.CreatedAt = DateTime.Now;
                 var createdProduct = await _context.Products.AddAsync(product);
                 savedProducts.Add(createdProduct.Entity);
 
@@ -39,6 +40,34 @@ namespace backend.Repositories {
             await _context.SaveChangesAsync();
 
             return savedProducts;
+        }
+
+        public async Task<Product> Update(Product product) {
+            var possibleProduct = await this.FindById(product.Id);
+
+            if(possibleProduct != null) {
+                product.UpdatedAt = DateTime.Now;
+                var updatedProduct = this._context.Products.Update(product);
+
+                return updatedProduct.Entity;
+            }
+
+            throw new Exception("Produto não existe");
+            
+        }
+
+        public async Task<Product> Delete(Guid productId) {
+            
+            var possibleProduct = await this._context.Products.FindAsync(productId);
+
+            if(possibleProduct != null) {
+                possibleProduct.DeletedAt = DateTime.Now;
+                var deletedProduct = await this.Update(possibleProduct);
+
+                return deletedProduct;
+            }
+
+            throw new Exception("Produto não existe");
         }
     }
 }
