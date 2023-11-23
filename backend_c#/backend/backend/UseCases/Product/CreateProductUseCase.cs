@@ -1,6 +1,8 @@
 ﻿using backend.DTOs.Product;
+using backend.Enums;
 using backend.Models;
 using backend.Repositories;
+using backend.Utils;
 
 namespace backend.UseCases.Product {
     public class CreateProductUseCase {
@@ -11,22 +13,24 @@ namespace backend.UseCases.Product {
         }
 
         public async Task<Models.Product> Execute(CreateProductDTO _productDTO) {
+            //ProducerRepository rep = new ProducerRepository();
+
+            DateTime parsedDateTime = DateUtils.ConvertStringToDateTime(_productDTO.HarvestDate!, "dd/MM/yyyy");
 
             Models.Product productEntity = new Models.Product {
                 Name = _productDTO.Name,
-                AvailableQuantity = _productDTO.AvailableQuantity,
-                Category = _productDTO.Category,
-                HarvestDate = _productDTO.HarvestDate,
+                AvailableQuantity = (int)_productDTO.AvailableQuantity!,
+                Category = (Category)_productDTO.Category!,
+                HarvestDate = parsedDateTime,
                 Description = _productDTO.Description,
-                IsOrganic = _productDTO.IsOrganic,
+                IsOrganic = (bool)_productDTO.IsOrganic!,
                 Picture = _productDTO.Picture,
-                Price = _productDTO.Price,
-                ProducerId = _productDTO.ProducerId,
-                Unit = _productDTO.Unit
+                Price = (Double)_productDTO.Price!,
+                ProducerId = (Guid)_productDTO.ProducerId!,
+                Unit = (Unit)_productDTO.Unit!
             };
-
+            
             var createdProduct = await this.repository.Save(productEntity);
-
             return createdProduct;
         }
 

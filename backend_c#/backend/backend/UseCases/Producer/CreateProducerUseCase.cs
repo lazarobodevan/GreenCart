@@ -12,10 +12,16 @@ namespace backend.UseCases.Producer {
 
         public async Task<Models.Producer> Execute(CreateProducerDTO producerDTO) {
 
+            var possibleProducer = await repository.FindByEmail(producerDTO.Email);
+
+            if(possibleProducer != null) {
+                throw new Exception("Usuário já existe");
+            }
+
             Models.Producer producer = new Models.Producer {
                 Name = producerDTO.Name,
                 Email = producerDTO.Email,
-                Attended_Cities = producerDTO.Attended_Cities,
+                AttendedCities = producerDTO.AttendedCities,
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = producerDTO.CPF,

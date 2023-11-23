@@ -51,7 +51,7 @@ namespace Tests.UnitTests.UseCases {
                 Unit.LITER,
                 2,
                 true,
-                new DateTime(),
+                "22/11/2023",
                 producerId
             );
             //Act

@@ -12,8 +12,8 @@ using backend.Contexts;
 namespace backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231004201837_initial")]
-    partial class initial
+    [Migration("20231123043635_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Consumer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<string>("CPF")
@@ -82,15 +83,40 @@ namespace backend.Migrations
                     b.ToTable("Consumers");
                 });
 
+            modelBuilder.Entity("backend.Models.ConsumerFavProducer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ConsumerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProducerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsumerId");
+
+                    b.HasIndex("ProducerId");
+
+                    b.ToTable("ConsumerFavProducer");
+                });
+
             modelBuilder.Entity("backend.Models.Order", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<DateTime?>("AcceptedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("AcceptedAt");
+
+                    b.Property<Guid>("ConsumerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConsumerObs")
                         .HasColumnType("text")
@@ -104,9 +130,15 @@ namespace backend.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DeletedAt");
 
+                    b.Property<Guid>("ProducerId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ProducerObs")
                         .HasColumnType("text")
                         .HasColumnName("ProducerObs");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
@@ -126,13 +158,20 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConsumerId");
+
+                    b.HasIndex("ProducerId");
+
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("backend.Models.Producer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<string>("Attended_Cities")
@@ -144,9 +183,6 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("CPF");
-
-                    b.Property<string>("ConsumerId")
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -189,22 +225,21 @@ namespace backend.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("UpdatedAt");
 
-                    b.Property<string>("Where_to_Find")
+                    b.Property<string>("WhereToFind")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("WhereToFind");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConsumerId");
-
                     b.ToTable("Producers");
                 });
 
             modelBuilder.Entity("backend.Models.Product", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<int>("AvailableQuantity")
@@ -224,7 +259,6 @@ namespace backend.Migrations
                         .HasColumnName("DeletedAt");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Description");
 
@@ -250,9 +284,8 @@ namespace backend.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("Price");
 
-                    b.Property<string>("ProducerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ProducerId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Unit")
                         .HasColumnType("integer")
@@ -269,23 +302,42 @@ namespace backend.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("backend.Models.ConsumerFavProducer", b =>
+                {
+                    b.HasOne("backend.Models.Consumer", "Consumer")
+                        .WithMany("FavdProducers")
+                        .HasForeignKey("ConsumerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Models.Producer", "Producer")
+                        .WithMany("FavdByConsumers")
+                        .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Consumer");
+
+                    b.Navigation("Producer");
+                });
+
             modelBuilder.Entity("backend.Models.Order", b =>
                 {
                     b.HasOne("backend.Models.Consumer", "Consumer")
                         .WithMany("Orders")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ConsumerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("backend.Models.Producer", "Producer")
                         .WithMany("Orders")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ProducerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("backend.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -294,13 +346,6 @@ namespace backend.Migrations
                     b.Navigation("Producer");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("backend.Models.Producer", b =>
-                {
-                    b.HasOne("backend.Models.Consumer", null)
-                        .WithMany("FavdProducers")
-                        .HasForeignKey("ConsumerId");
                 });
 
             modelBuilder.Entity("backend.Models.Product", b =>
@@ -323,6 +368,8 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Producer", b =>
                 {
+                    b.Navigation("FavdByConsumers");
+
                     b.Navigation("Orders");
 
                     b.Navigation("Products");

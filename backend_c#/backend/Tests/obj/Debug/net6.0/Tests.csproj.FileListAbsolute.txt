@@ -125,3 +125,8 @@ C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\refint\Tests.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\Tests.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\Tests.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net6.0\ref\Tests.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\RestSharp.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\System.Text.Json.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net6.0\appsettings.Staging.json

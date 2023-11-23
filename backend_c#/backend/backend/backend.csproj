@@ -7,8 +7,13 @@
     <UserSecretsId>cc07855f-80a6-4aa1-a79f-0fa0eaceaba5</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
+    
+	<PropertyGroup>
+	    <UseIISExpress>true</UseIISExpress>
+    </PropertyGroup>
 
-  <ItemGroup>
+
+	<ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
       <PrivateAssets>all</PrivateAssets>

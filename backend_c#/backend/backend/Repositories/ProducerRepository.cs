@@ -12,7 +12,8 @@ namespace backend.Repositories {
 
         public async Task<Producer?> FindByEmail(string email) {
             
-            return await this._context.Producers.FirstOrDefaultAsync(producer => producer.Email == email);    
+            var possibleProducer = await this._context.Producers.FirstOrDefaultAsync(producer => producer.Email == email);
+            return possibleProducer;
 
         }
 
@@ -22,7 +23,7 @@ namespace backend.Repositories {
 
         public IEnumerable<Producer> GetNearProducers(string city) {
             var producers = this._context.Producers
-                .Where(producer => producer.Attended_Cities.Contains(city.ToUpper()))
+                .Where(producer => producer.AttendedCities.Contains(city.ToUpper()))
                 .Include(producer => producer.Products)
                 .ToList();
 

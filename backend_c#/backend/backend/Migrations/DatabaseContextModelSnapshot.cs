@@ -24,8 +24,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Consumer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<string>("CPF")
@@ -81,16 +82,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.ConsumerFavProducer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("ConsumerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ConsumerId")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("ProducerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ProducerId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -103,17 +103,17 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Order", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<DateTime?>("AcceptedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("AcceptedAt");
 
-                    b.Property<string>("ConsumerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ConsumerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConsumerObs")
                         .HasColumnType("text")
@@ -127,17 +127,15 @@ namespace backend.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("DeletedAt");
 
-                    b.Property<string>("ProducerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ProducerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ProducerObs")
                         .HasColumnType("text")
                         .HasColumnName("ProducerObs");
 
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
@@ -168,8 +166,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Producer", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<string>("Attended_Cities")
@@ -223,7 +222,7 @@ namespace backend.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("UpdatedAt");
 
-                    b.Property<string>("Where_to_Find")
+                    b.Property<string>("WhereToFind")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("WhereToFind");
@@ -235,8 +234,9 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Product", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
                         .HasColumnName("Id");
 
                     b.Property<int>("AvailableQuantity")
@@ -256,7 +256,6 @@ namespace backend.Migrations
                         .HasColumnName("DeletedAt");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Description");
 
@@ -282,9 +281,8 @@ namespace backend.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("Price");
 
-                    b.Property<string>("ProducerId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("ProducerId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Unit")
                         .HasColumnType("integer")

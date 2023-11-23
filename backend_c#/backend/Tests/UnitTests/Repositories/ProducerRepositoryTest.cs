@@ -38,7 +38,7 @@ namespace Tests.UnitTests.Repositories {
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "City1;City2;City3",
+                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -64,7 +64,7 @@ namespace Tests.UnitTests.Repositories {
             var producer = new Producer {
                 
                 Email = "test@test.com",
-                Attended_Cities = "City1;City2;City3",
+                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -90,7 +90,7 @@ namespace Tests.UnitTests.Repositories {
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "City1;City2;City3",
+                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -127,7 +127,7 @@ namespace Tests.UnitTests.Repositories {
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "City1;City2;City3",
+                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -153,7 +153,7 @@ namespace Tests.UnitTests.Repositories {
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "City1;City2;City3",
+                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -186,7 +186,7 @@ namespace Tests.UnitTests.Repositories {
             var producer1 = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "City1;City2;City3",
+                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -198,7 +198,7 @@ namespace Tests.UnitTests.Repositories {
             var producer2 = new Producer {
                 Name = "Producer Test2",
                 Email = "test2@test.com",
-                Attended_Cities = "City2;City3",
+                AttendedCities = "City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-12",
@@ -291,7 +291,7 @@ namespace Tests.UnitTests.Repositories {
             var producer1 = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "CITY1;CITY2;CITY3",
+                AttendedCities = "CITY1;CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -303,7 +303,7 @@ namespace Tests.UnitTests.Repositories {
             var producer2 = new Producer {
                 Name = "Producer Test2",
                 Email = "test2@test.com",
-                Attended_Cities = "CITY2;CITY3",
+                AttendedCities = "CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-12",
@@ -377,7 +377,7 @@ namespace Tests.UnitTests.Repositories {
             var producer1 = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "CITY1;CITY2;CITY3",
+                AttendedCities = "CITY1;CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",
@@ -389,7 +389,7 @@ namespace Tests.UnitTests.Repositories {
             var producer2 = new Producer {
                 Name = "Producer Test2",
                 Email = "test2@test.com",
-                Attended_Cities = "CITY2;CITY3",
+                AttendedCities = "CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-12",

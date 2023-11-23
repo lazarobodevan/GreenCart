@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
@@ -39,7 +40,7 @@ namespace backend.Models
 
         [Required]
         [Column("AttendedCities")]
-        public String Attended_Cities {  get; set; }
+        public String AttendedCities {  get; set; }
 
         [Required]
         [Column("WhereToFind")]
@@ -69,7 +70,7 @@ namespace backend.Models
             Telephone = telephone;
             Picture = picture;
             CPF = cPF;
-            Attended_Cities = attended_Cities;
+            AttendedCities = attended_Cities;
             WhereToFind = where_to_Find;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;

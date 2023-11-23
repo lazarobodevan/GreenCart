@@ -32,7 +32,7 @@ namespace Tests.UnitTests.UseCases.Producer {
             var producer = new CreateProducerDTO{
                 Name = "Producer Test",
                 Email = "test@test.com",
-                Attended_Cities = "City1;City2;City3",
+                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = "111.111.111-11",

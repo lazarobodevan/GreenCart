@@ -29,12 +29,12 @@ namespace Tests.UnitTests.UseCases {
                 Unit.UNIT,
                 10,
                 true,
-                new DateTime(),
+                "22/11/2023",
                 new Guid()
             );
             //Act
 
-            Product product =  await usecase.Execute(productDTO);
+            backend.Models.Product product =  await usecase.Execute(productDTO);
             //Assert
             Assert.NotNull(product);
         }

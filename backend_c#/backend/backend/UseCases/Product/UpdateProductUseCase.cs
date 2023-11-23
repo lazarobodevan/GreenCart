@@ -1,4 +1,5 @@
-﻿using backend.Repositories;
+﻿using backend.Models;
+using backend.Repositories;
 
 namespace backend.UseCases.Product {
     public class UpdateProductUseCase {
@@ -8,6 +9,9 @@ namespace backend.UseCases.Product {
             this.repository = repository;
         }
 
-        public async Task<Models.Product> Execute() { }
+        public async Task<Models.Product> Execute(Models.Product product) {
+            Models.Product updatedProduct = await this.repository.Update(product);
+            return updatedProduct;
+        }
     }
 }

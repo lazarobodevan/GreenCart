@@ -2,6 +2,8 @@
 using backend.Enums;
 using backend.Models;
 using backend.Repositories;
+using backend.Utils;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace backend.UseCases.Product {
@@ -14,19 +16,24 @@ namespace backend.UseCases.Product {
 
         public async Task<IEnumerable<Models.Product>> Execute(CreateProductDTO[] productsDTO) {
 
+            DateTime parsedDateTime;
+            
             List<Models.Product> productsEntities = new List<Models.Product>();
             foreach (var product in productsDTO) {
+
+                parsedDateTime = DateUtils.ConvertStringToDateTime(product.HarvestDate!, "dd/MM/yyyy");
+
                 Models.Product p = new Models.Product {
                     Name = product.Name,
                     Description = product.Description,
                     Picture = product.Picture,
-                    Category = product.Category,
-                    Price = product.Price,
-                    Unit = product.Unit,
-                    AvailableQuantity = product.AvailableQuantity,
-                    IsOrganic = product.IsOrganic,
-                    HarvestDate = product.HarvestDate,
-                    ProducerId = product.ProducerId,
+                    Category = (Category)product.Category!,
+                    Price = (double)product.Price!,
+                    Unit = (Unit)product.Unit!,
+                    AvailableQuantity = (int)product.AvailableQuantity!,
+                    IsOrganic = (bool)product.IsOrganic!,
+                    HarvestDate = parsedDateTime,
+                    ProducerId = (Guid)product.ProducerId!,
                 };
                 productsEntities.Add(p);
             }
