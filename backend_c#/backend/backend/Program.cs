@@ -1,6 +1,9 @@
 using backend.Contexts;
 using backend.Repositories;
+using backend.Utils.Errors;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 if (builder.Environment.IsStaging()) {
     Console.WriteLine("Running in staging modeaaaa");

@@ -2,12 +2,15 @@
 using backend.DTOs.Product;
 using backend.Enums;
 using backend.Models;
+using backend.Utils;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace Tests.IntegrationTests.v1 {
@@ -80,6 +83,31 @@ namespace Tests.IntegrationTests.v1 {
 
 
             Assert.True(productResponse.IsSuccessful);
+
+        }
+
+        [Fact]
+        public async Task ShouldThrowErrorOfMissingFieldsInRequestBody() {
+            
+            //Arrange
+            var producerClient = new RestClient("http://localhost:5212/api/Producer");
+            var producerRequest = new RestRequest();
+
+            JsonDocument expectedResult = JsonDocument.Parse("{\"CPF\":[\"CPF é obrigatório\"],\"Name\":[\"Nome é obrigatório\"],\"Email\":[\"Email é obrigatório\"],\"Password\":[\"Senha é obrigatória\"],\"Telephone\":[\"Celular é obrigatório\"],\"OriginCity\":[\"Cidade de origem é obrigatório\"],\"WhereToFind\":[\"Onde te encontrar é obrigatório\"],\"AttendedCities\":[\"Cidades atendidas é obrigatório\"]}");
+
+            //Act
+            producerRequest.Method = Method.Post;
+            producerRequest.AddJsonBody(JsonConvert.SerializeObject(new { }));
+            producerRequest.AddHeader("Content-Type", "application/json");
+
+            RestResponse producerResponse = await producerClient.ExecuteAsync(producerRequest);
+
+            var responseObj = JsonConvert.DeserializeObject<ApiResponse>(producerResponse.Content);
+
+            //Assert
+            string expectedJson = expectedResult.RootElement.ToString();
+            string actualJson = JsonConvert.SerializeObject(responseObj.Errors);
+            Assert.Equal(expectedJson, actualJson);
 
         }
 

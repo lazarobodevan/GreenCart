@@ -32,7 +32,8 @@ namespace Tests.UnitTests.Repositories {
 
 
         [Fact]
-        public async Task CreateProducerSuccessfully() {
+        [Trait("OP","Create")]
+        public async Task ShouldCreateProducerSuccessfully() {
             //Arrange
             ProducerRepository repository = new ProducerRepository(this._dbContext);
             var producer = new Producer {
@@ -56,7 +57,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task CreateProducerFail() {
+        [Trait("OP", "Create")]
+        public async Task ShouldCreateProducerFail() {
             //Arrange
             ProducerRepository repository = new ProducerRepository(this._dbContext);
             
@@ -84,7 +86,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task FindProducerByIdSuccessfully() {
+        [Trait("OP", "FindById")]
+        public async Task ShouldFindProducerByIdSuccessfully() {
             //Arrange
             var repository = new ProducerRepository(_dbContext);
             var producer = new Producer {
@@ -109,7 +112,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task FindProducerByIdFail() {
+        [Trait("OP", "FindById")]
+        public async Task ShouldFindProducerByIdFail() {
             //Arrange
             var repository = new ProducerRepository(_dbContext);
 
@@ -121,7 +125,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task FindProducerByEmailSuccessfully() {
+        [Trait("OP", "FindByEmail")]
+        public async Task ShouldFindProducerByEmailSuccessfully() {
             //Arrange
             var repository = new ProducerRepository(_dbContext);
             var producer = new Producer {
@@ -147,7 +152,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task FindProducerByEmailFail() {
+        [Trait("OP", "FindByEmail")]
+        public async Task ShouldFindProducerByEmailFail() {
             //Arrange
             var repository = new ProducerRepository(_dbContext);
             var producer = new Producer {
@@ -179,7 +185,8 @@ namespace Tests.UnitTests.Repositories {
          * Should find only 1 product for Producer1 and 2 products for Producer2
         */
         [Fact]
-        public async Task GetProducerProductsSuccessfully() {
+        [Trait("OP", "GetProducerProducts")]
+        public async Task ShouldGetProducerProductsSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_dbContext);
             var producerRepository = new ProducerRepository(_dbContext);
@@ -272,7 +279,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public void GetProducerProductsFail() {
+        [Trait("OP", "GetProducerProducts")]
+        public void ShouldGetProducerProductsFail() {
             //Arrange
             var producerRepository = new ProducerRepository(_dbContext);
 
@@ -284,7 +292,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task GetNearProducersFromCity1AndReturnOneProducerSuccessfully() {
+        [Trait("OP", "GetNearProducers")]
+        public async Task ShouldGetNearProducersFromCity1AndReturnOneProducerSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_dbContext);
             var producerRepository = new ProducerRepository(_dbContext);
@@ -370,7 +379,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task GetNearProducersFromCity2AndShouldReturnTwoProducersSuccessfully() {
+        [Trait("OP", "GetNearProducers")]
+        public async Task ShouldGetNearProducersFromCity2AndShouldReturnTwoProducersSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_dbContext);
             var producerRepository = new ProducerRepository(_dbContext);

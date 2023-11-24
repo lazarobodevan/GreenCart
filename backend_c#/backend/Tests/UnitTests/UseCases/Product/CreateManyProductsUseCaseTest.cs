@@ -32,7 +32,8 @@ namespace Tests.UnitTests.UseCases {
         }
 
         [Fact]
-        public async Task CreateManyProductsUseCaseSuccessfully() {
+        [Trait("OP", "CreateMany")]
+        public async Task ShouldCreateManyProductsUseCaseSuccessfully() {
             
             //Arrange
             ProductRepository repository = new ProductRepository(_databaseContext);

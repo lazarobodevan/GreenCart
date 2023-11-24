@@ -2,7 +2,7 @@
 using backend.DTOs.Product;
 using backend.Repositories;
 using backend.UseCases.Product;
-using backend.Utils;
+using backend.Utils.Errors;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 

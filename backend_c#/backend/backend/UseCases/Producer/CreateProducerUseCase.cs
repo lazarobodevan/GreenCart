@@ -1,6 +1,7 @@
 ﻿using backend.DTOs.Producer;
 using backend.Models;
 using backend.Repositories;
+using backend.Utils.Errors;
 
 namespace backend.UseCases.Producer {
     public class CreateProducerUseCase {
@@ -15,7 +16,7 @@ namespace backend.UseCases.Producer {
             var possibleProducer = await repository.FindByEmail(producerDTO.Email);
 
             if(possibleProducer != null) {
-                throw new Exception("Usuário já existe");
+                throw new Exception("Usuário já cadastrado");
             }
 
             Models.Producer producer = new Models.Producer {

@@ -14,7 +14,8 @@ namespace Tests.UnitTests.UseCases.Product {
     public class UpdateProductUseCaseTest {
 
         [Fact]
-        public async Task UpdateExistantProductSuccessfully() {
+        [Trait("OP", "Update")]
+        public async Task ShouldUpdateExistantProductSuccessfully() {
             //Arrange
             var dbContext = DbContextFactory.GetDatabaseContext();
             ProductRepository repository = new ProductRepository(dbContext);

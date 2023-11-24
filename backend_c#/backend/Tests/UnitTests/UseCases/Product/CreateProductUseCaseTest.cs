@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace Tests.UnitTests.UseCases {
     public class CreateProductUseCaseTest {
         [Fact]
-        public async Task CreateProductUseCaseSuccessfully() {
+        [Trait("OP", "Create")]
+        public async Task ShouldCreateProductUseCaseSuccessfully() {
             //Arrange
             var dbContext = DbContextFactory.GetDatabaseContext();
             ProductRepository repository = new ProductRepository(dbContext);

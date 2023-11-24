@@ -35,7 +35,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task SaveProductSuccessfully() {
+        [Trait("OP", "Create")]
+        public async Task ShouldSaveProductSuccessfully() {
             
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -63,8 +64,9 @@ namespace Tests.UnitTests.Repositories {
             Assert.NotEqual(Guid.Empty, createdProduct.Id);
         }
 
-        [Fact] 
-        public async Task FindProductByIdSuccessfully() {
+        [Fact]
+        [Trait("OP", "FindById")]
+        public async Task ShouldFindProductByIdSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -92,7 +94,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task FindProductByIdFail() {
+        [Trait("OP", "FindById")]
+        public async Task ShouldFindProductByIdFail() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -105,7 +108,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task SaveManyProductsSuccessfully() {
+        [Trait("OP", "CreateMany")]
+        public async Task ShouldSaveManyProductsSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -149,7 +153,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task UpdateProductSuccessfully() {
+        [Trait("OP", "Update")]
+        public async Task ShouldUpdateProductSuccessfully() {
             //Arrange
             ProductRepository repository = new ProductRepository(_databaseContext);
             byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
@@ -182,7 +187,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task UpdateNotExistantProductFail() {
+        [Trait("OP", "Update")]
+        public async Task ShouldUpdateNotExistantProductFail() {
             //Arrange
             ProductRepository repository = new ProductRepository(_databaseContext);
             byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
@@ -215,7 +221,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task DeleteProductSuccessfully() {
+        [Trait("OP", "Delete")]
+        public async Task ShouldDeleteProductSuccessfully() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -245,7 +252,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        public async Task TryToDeleteNotExistantProductAndThrowAnError() {
+        [Trait("OP", "Delete")]
+        public async Task ShouldTryToDeleteNotExistantProductAndThrowAnError() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
