@@ -41,9 +41,9 @@ namespace backend.DTOs.Product {
         [Required(ErrorMessage = "Id do produtor é obrigatório")]
         public Guid? ProducerId { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        private DateTime CreatedAt { get; set; }
 
-        public DateTime UpdatedAt { get; set; }
+        private DateTime UpdatedAt { get; set; }
 
         public CreateProductDTO() { }
 

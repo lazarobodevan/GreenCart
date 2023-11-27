@@ -13,9 +13,9 @@ namespace backend.Controllers.v1
     public class ProductController : ControllerBase
     {
 
-        private readonly ProductRepository repository;
+        private readonly IProductRepository repository;
         private readonly CreateProductUseCase createProductUseCase;
-        public ProductController(ProductRepository repository)
+        public ProductController(IProductRepository repository)
         {
             this.repository = repository;
             createProductUseCase = new CreateProductUseCase(this.repository);

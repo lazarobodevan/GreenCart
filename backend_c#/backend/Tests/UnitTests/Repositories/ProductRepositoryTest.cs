@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tests.Factories;
 
 namespace Tests.UnitTests.Repositories {
     public class ProductRepositoryTest : IAsyncLifetime{
@@ -170,13 +171,15 @@ namespace Tests.UnitTests.Repositories {
                 IsOrganic = true,
                 HarvestDate = DateTime.Now,
                 ProducerId = Guid.NewGuid(),
+                CreatedAt = DateTime.Now,
             };
 
             //Act
             var savedProduct = await repository.Save(product);
             savedProduct.Name = "Updated Product";
             savedProduct.IsOrganic = false;
-            var updatedProduct = await repository.Update(savedProduct);
+            savedProduct.UpdatedAt = DateTime.Now;
+            var updatedProduct = repository.Update(savedProduct);
 
             //Assert
             Assert.NotNull(updatedProduct);
@@ -184,40 +187,6 @@ namespace Tests.UnitTests.Repositories {
             Assert.Equal("Updated Product", updatedProduct.Name);
             Assert.False(updatedProduct.IsOrganic);
             Assert.NotEqual(updatedProduct.CreatedAt, updatedProduct.UpdatedAt);
-        }
-
-        [Fact]
-        [Trait("OP", "Update")]
-        public async Task ShouldUpdateNotExistantProductFail() {
-            //Arrange
-            ProductRepository repository = new ProductRepository(_databaseContext);
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-            var product = new Product {
-                Id = Guid.NewGuid(),
-                Name = "Product",
-                Description = "Description",
-                Picture = picture,
-                Category = Category.VEGETABLE,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = Guid.NewGuid(),
-            };
-
-            //Act
-            var savedProduct = product;
-            savedProduct.Name = "Updated Product";
-            savedProduct.IsOrganic = false;
-
-            async Task Act() {
-                var updatedProduct = await repository.Update(savedProduct!);
-            }
-
-            //Assert
-            await Assert.ThrowsAsync<Exception>(async () => await Act());
         }
 
         [Fact]
@@ -244,26 +213,13 @@ namespace Tests.UnitTests.Repositories {
             //Act
             var createdProduct = await productRepository.Save(product);
             Assert.Null(createdProduct.DeletedAt);
-            var deletedProduct = await productRepository.Delete(createdProduct.Id);
+            createdProduct.DeletedAt = DateTime.Now;
+            var deletedProduct = productRepository.Delete(createdProduct);
 
             //Assert
             
             Assert.NotNull(deletedProduct.DeletedAt);
         }
 
-        [Fact]
-        [Trait("OP", "Delete")]
-        public async Task ShouldTryToDeleteNotExistantProductAndThrowAnError() {
-            //Arrange
-            var productRepository = new ProductRepository(_databaseContext);
-
-            //Act
-            async Task Act() {
-                var deletedProduct = await productRepository.Delete(Guid.NewGuid());
-            }
-
-            //Assert
-            await Assert.ThrowsAsync<Exception>(async () => await Act());
-        }
     }
 }

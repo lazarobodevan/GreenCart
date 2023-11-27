@@ -3,9 +3,9 @@ using backend.Repositories;
 
 namespace backend.UseCases.Producer {
     public class FindProducerByIdUseCase {
-        private readonly ProducerRepository _repository;
+        private readonly IProducerRepository _repository;
 
-        public FindProducerByIdUseCase(ProducerRepository repository) {
+        public FindProducerByIdUseCase(IProducerRepository repository) {
             _repository = repository;
         }
 

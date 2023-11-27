@@ -5,9 +5,9 @@ using backend.Utils.Errors;
 
 namespace backend.UseCases.Producer {
     public class CreateProducerUseCase {
-        private readonly ProducerRepository repository;
+        private readonly IProducerRepository repository;
 
-        public CreateProducerUseCase(ProducerRepository repository) {
+        public CreateProducerUseCase(IProducerRepository repository) {
             this.repository = repository;
         }
 
@@ -23,13 +23,13 @@ namespace backend.UseCases.Producer {
                 Name = producerDTO.Name,
                 Email = producerDTO.Email,
                 AttendedCities = producerDTO.AttendedCities,
-                CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 CPF = producerDTO.CPF,
                 OriginCity = producerDTO.OriginCity,
                 Password = producerDTO.Password,
                 Telephone = producerDTO.Telephone,
-                WhereToFind = producerDTO.WhereToFind
+                WhereToFind = producerDTO.WhereToFind,
+                CreatedAt = DateTime.Now,
             };
 
             var createdProducer = await this.repository.Save(producer);

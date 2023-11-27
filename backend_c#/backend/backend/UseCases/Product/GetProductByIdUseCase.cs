@@ -2,9 +2,9 @@
 
 namespace backend.UseCases.Product {
     public class GetProductByIdUseCase {
-        private readonly ProductRepository repository;
+        private readonly IProductRepository repository;
 
-        public GetProductByIdUseCase(ProductRepository repository) {
+        public GetProductByIdUseCase(IProductRepository repository) {
             this.repository = repository;
         }
 

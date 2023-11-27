@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tests.Factories;
 
 namespace Tests.UnitTests.UseCases {
     public class GetProductByIdUseCaseTest: IAsyncLifetime {
@@ -40,21 +41,11 @@ namespace Tests.UnitTests.UseCases {
             GetProductByIdUseCase getProductByIdUseCase = new GetProductByIdUseCase(repository);
             CreateProductUseCase createProductUseCase = new CreateProductUseCase(repository);
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            ProductFactory productFactory = new ProductFactory();
+
             Guid producerId = Guid.NewGuid();
 
-            var productDTO = new CreateProductDTO(
-                "Product2",
-                "Description2",
-                picture,
-                Category.SWEET,
-                23.10,
-                Unit.LITER,
-                2,
-                true,
-                "22/11/2023",
-                producerId
-            );
+            var productDTO = productFactory.GetDefaultCreateProductDto(producerId).Build();
             //Act
             var createdProduct = await createProductUseCase.Execute(productDTO);
             var possibleProduct = await getProductByIdUseCase.Execute(createdProduct.Id);

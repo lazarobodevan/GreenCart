@@ -8,9 +8,9 @@ using System.Xml.Linq;
 
 namespace backend.UseCases.Product {
     public class CreateManyProductsUseCase {
-        private readonly ProductRepository repository;
+        private readonly IProductRepository repository;
 
-        public CreateManyProductsUseCase(ProductRepository repository) {
+        public CreateManyProductsUseCase(IProductRepository repository) {
             this.repository = repository;
         }
 

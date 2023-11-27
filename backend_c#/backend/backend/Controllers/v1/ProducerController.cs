@@ -10,9 +10,9 @@ namespace backend.Controllers.v1 {
     [Route("api/[controller]")]
     public class ProducerController: ControllerBase {
 
-        private readonly ProducerRepository repository;
+        private readonly IProducerRepository repository;
         private readonly CreateProducerUseCase createProducerUseCase;
-        public ProducerController(ProducerRepository repository) {
+        public ProducerController(IProducerRepository repository) {
             this.repository = repository;
             createProducerUseCase = new CreateProducerUseCase(this.repository);
         }

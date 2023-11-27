@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tests.Factories;
 
 namespace Tests.UnitTests.UseCases {
     public class CreateProductUseCaseTest {
@@ -17,25 +18,17 @@ namespace Tests.UnitTests.UseCases {
             //Arrange
             var dbContext = DbContextFactory.GetDatabaseContext();
             ProductRepository repository = new ProductRepository(dbContext);
-            CreateProductUseCase usecase = new CreateProductUseCase(repository);
+            CreateProductUseCase createProductUseCase = new CreateProductUseCase(repository);
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            ProductFactory productFactory = new ProductFactory();
 
-            var productDTO = new CreateProductDTO(
-                "Product",
-                "Description",
-                picture,
-                Category.VEGETABLE,
-                10.10,
-                Unit.UNIT,
-                10,
-                true,
-                "22/11/2023",
-                new Guid()
-            );
+            var producerId = Guid.NewGuid();
+
+            var productDTO = productFactory.GetDefaultCreateProductDto(producerId).Build();
+            
             //Act
+            backend.Models.Product product =  await createProductUseCase.Execute(productDTO);
 
-            backend.Models.Product product =  await usecase.Execute(productDTO);
             //Assert
             Assert.NotNull(product);
         }

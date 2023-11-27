@@ -8,11 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tests.Factories;
 
 namespace Tests.UnitTests.UseCases.Producer {
     public class FindProducerByIdUseCaseTest : IAsyncLifetime {
 
         private DatabaseContext databaseContext;
+        private ProducerFactory producerFactory = new ProducerFactory();
 
         public FindProducerByIdUseCaseTest() {
             databaseContext = DbContextFactory.GetDatabaseContext();
@@ -34,18 +36,7 @@ namespace Tests.UnitTests.UseCases.Producer {
             CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(producerRepository);
             FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(producerRepository);
 
-            var producer = new CreateProducerDTO {
-                Name = "Producer Test",
-                Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
-                CreatedAt = DateTime.Now,
-                FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
-                OriginCity = "City1",
-                Password = "123",
-                Telephone = "(31) 99999-9999",
-                WhereToFind = "Local de encontro"
-            };
+            var producer = producerFactory.GetDefaultCreateProducerDto();
 
             //Act
             var createdProducer = await createProducerUseCase.Execute(producer);

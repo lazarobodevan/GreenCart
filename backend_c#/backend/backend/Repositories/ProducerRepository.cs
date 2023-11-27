@@ -41,6 +41,7 @@ namespace backend.Repositories {
         }
 
         public async Task<Producer> Save(Producer producer) {
+            producer.CreatedAt = DateTime.Now;
             var createdProducer = await this._context.Producers.AddAsync(producer);
             await this._context.SaveChangesAsync();
             return createdProducer.Entity;

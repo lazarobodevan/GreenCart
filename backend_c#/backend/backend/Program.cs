@@ -40,8 +40,8 @@ if(builder.Environment.IsProduction()) {
 
 
 
-builder.Services.AddScoped<ProductRepository>();
-builder.Services.AddScoped<ProducerRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 
 var app = builder.Build();
 

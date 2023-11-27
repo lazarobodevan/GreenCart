@@ -2,9 +2,9 @@
 
 namespace backend.UseCases.Producer {
     public class GetProducerProductsUseCase {
-        private readonly ProducerRepository repository;
+        private readonly IProducerRepository repository;
 
-        public GetProducerProductsUseCase(ProducerRepository repository) {
+        public GetProducerProductsUseCase(IProducerRepository repository) {
             this.repository = repository;
         }
 

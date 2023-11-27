@@ -7,13 +7,12 @@ using backend.Utils;
 namespace backend.UseCases.Product {
     public class CreateProductUseCase {
 
-        private readonly ProductRepository repository;
-        public CreateProductUseCase(ProductRepository _repository) {
+        private readonly IProductRepository repository;
+        public CreateProductUseCase(IProductRepository _repository) {
             repository = _repository;
         }
 
         public async Task<Models.Product> Execute(CreateProductDTO _productDTO) {
-            //ProducerRepository rep = new ProducerRepository();
 
             DateTime parsedDateTime = DateUtils.ConvertStringToDateTime(_productDTO.HarvestDate!, "dd/MM/yyyy");
 

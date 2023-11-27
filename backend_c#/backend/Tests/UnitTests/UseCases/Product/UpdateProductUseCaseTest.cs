@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tests.Factories;
 
 namespace Tests.UnitTests.UseCases.Product {
     
@@ -22,25 +23,15 @@ namespace Tests.UnitTests.UseCases.Product {
             UpdateProductUseCase updateProductUsecase = new UpdateProductUseCase(repository);
             CreateProductUseCase createProductUseCase = new CreateProductUseCase(repository);
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            ProductFactory productFactory = new ProductFactory();
 
-            var productDTO = new CreateProductDTO(
-                "Product",
-                "Description",
-                picture,
-                Category.VEGETABLE,
-                10.10,
-                Unit.UNIT,
-                10,
-                true,
-                "22/11/2023",
-                new Guid()
-            );
+            Guid producerId = Guid.NewGuid();
+
+            var productDTO = productFactory.GetDefaultCreateProductDto(producerId).Build();
+
 
             //Act
-
             var createdProduct = await createProductUseCase.Execute(productDTO);
-
 
             createdProduct.Name= "Updated Product";
             createdProduct.Category = Category.GRAIN;
@@ -49,7 +40,6 @@ namespace Tests.UnitTests.UseCases.Product {
 
             //Assert
             Assert.NotNull(updatedProduct);
-
             Assert.Equal(createdProduct.Name, updatedProduct.Name);
             Assert.Equal(createdProduct.Category, updatedProduct.Category);
 
