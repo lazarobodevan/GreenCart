@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Contexts {
-    public class DatabaseContext: DbContext {
+    public class DatabaseContext: DbContext, IDatabaseContextOptions {
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options) {
 
@@ -11,7 +11,7 @@ namespace backend.Contexts {
         public DatabaseContext() { }
 
         public DbSet<Producer> Producers { get; set; }
-        public DbSet<Consumer> Consumers { get;}     
+        public DbSet<Consumer> Consumers { get; set; }     
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
     }
