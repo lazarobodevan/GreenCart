@@ -3,6 +3,7 @@ using backend.DTOs.Producer;
 using backend.Models;
 using backend.Repositories;
 using backend.UseCases.Producer;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,30 +12,25 @@ using System.Threading.Tasks;
 using Tests.Factories;
 
 namespace Tests.UnitTests.UseCases.Producer {
-    public class FindProducerByIdUseCaseTest : IAsyncLifetime {
+    public class FindProducerByIdUseCaseTest {
 
-        private DatabaseContext databaseContext;
-        private ProducerFactory producerFactory = new ProducerFactory();
+        private readonly Mock<IProducerRepository> _producerRepository;
+        private ProducerDTOFactory producerFactory = new ProducerDTOFactory();
 
         public FindProducerByIdUseCaseTest() {
-            databaseContext = DbContextFactory.GetDatabaseContext();
-        }
-
-        public Task DisposeAsync() {
-            return databaseContext.Database.EnsureDeletedAsync();
-        }
-
-        public Task InitializeAsync() {
-            return databaseContext.Database.EnsureDeletedAsync();
+            _producerRepository = new Mock<IProducerRepository>();
         }
 
         [Fact]
         [Trait("OP", "FindById")]
-        public async Task ShouldFindProducerByIdSuccessfully() {
+        public async Task FindById_GivenProducerId_ReturnsProducer() {
             //Arrange
-            ProducerRepository producerRepository = new ProducerRepository(databaseContext);
-            CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(producerRepository);
-            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(producerRepository);
+            var producerId = Guid.NewGuid();
+            _producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer {Id = producerId});
+            _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(new backend.Models.Producer { Id = producerId });
+
+            CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object);
+            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object);
 
             var producer = producerFactory.GetDefaultCreateProducerDto();
 
@@ -49,11 +45,11 @@ namespace Tests.UnitTests.UseCases.Producer {
 
         [Fact]
         [Trait("OP", "FindById")]
-        public async Task ShouldFailToFindProducerAndReturnNull() {
-            
+        public async Task FindById_GivenNotExistantId_ReturnsNull() {
+
             //Arrange
-            ProducerRepository producerRepository = new ProducerRepository(databaseContext);
-            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(producerRepository);
+            _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Producer?>(null));
+            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object);
 
             //Act
             var foundProducer = await findProducerByIdUseCase.Execute(Guid.NewGuid());

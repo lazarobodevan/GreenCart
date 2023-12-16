@@ -39,7 +39,7 @@ namespace Tests.UnitTests.UseCases {
             //Arrange
             ProductRepository repository = new ProductRepository(_databaseContext);
             CreateManyProductsUseCase usecase = new CreateManyProductsUseCase(repository);
-            ProductFactory productFactory = new ProductFactory();
+            ProductDTOFactory productFactory = new ProductDTOFactory();
 
             byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
             Guid producerId = Guid.NewGuid();

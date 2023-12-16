@@ -41,7 +41,7 @@ namespace Tests.UnitTests.UseCases {
             GetProductByIdUseCase getProductByIdUseCase = new GetProductByIdUseCase(repository);
             CreateProductUseCase createProductUseCase = new CreateProductUseCase(repository);
 
-            ProductFactory productFactory = new ProductFactory();
+            ProductDTOFactory productFactory = new ProductDTOFactory();
 
             Guid producerId = Guid.NewGuid();
 

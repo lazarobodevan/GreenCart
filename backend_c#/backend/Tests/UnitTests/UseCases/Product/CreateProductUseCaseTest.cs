@@ -20,7 +20,7 @@ namespace Tests.UnitTests.UseCases {
             ProductRepository repository = new ProductRepository(dbContext);
             CreateProductUseCase createProductUseCase = new CreateProductUseCase(repository);
 
-            ProductFactory productFactory = new ProductFactory();
+            ProductDTOFactory productFactory = new ProductDTOFactory();
 
             var producerId = Guid.NewGuid();
 

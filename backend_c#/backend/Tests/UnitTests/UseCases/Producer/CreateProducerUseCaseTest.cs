@@ -5,6 +5,8 @@ using backend.Repositories;
 using backend.UseCases.Producer;
 using backend.Utils.Errors;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,36 +16,25 @@ using Tests.Factories;
 
 namespace Tests.UnitTests.UseCases.Producer {
 
-    public class CreateProducerUseCaseTest: IAsyncLifetime {
+    public class CreateProducerUseCaseTest {
 
-        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
-        private ProducerFactory producerFactory = new ProducerFactory();
-
-        DatabaseContext _databaseContext;
+        private ProducerDTOFactory producerFactory = new ProducerDTOFactory();
+        private Mock<IProducerRepository> producerRepository;
 
         public CreateProducerUseCaseTest() {
-            _databaseContext = new DatabaseContext(dbContextOptions);
-        }
-
-        public Task DisposeAsync() {
-            //Reset database
-            return _databaseContext.Database.EnsureDeletedAsync();
-
-        }
-
-        public Task InitializeAsync() {
-            //throw new NotImplementedException();
-            return _databaseContext.Database.EnsureDeletedAsync();
+            producerRepository = new Mock<IProducerRepository>();
         }
 
 
         [Fact]
         [Trait("OP", "Create")]
-        public async Task ShouldCreateProducerSuccessfully() {
-            
+        public async Task Save_GivenProducer_ReturnsCreatedProducer() {
+
             //Arrange
-            ProducerRepository repository = new ProducerRepository(_databaseContext);
-            CreateProducerUseCase usecase = new CreateProducerUseCase(repository);
+            producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer());
+            producerRepository.Setup(x => x.FindByEmail(It.IsAny<string>())).Returns(Task.FromResult<backend.Models.Producer?>(null));
+
+            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object);
 
             var producer = producerFactory.GetDefaultCreateProducerDto();
 
@@ -56,17 +47,18 @@ namespace Tests.UnitTests.UseCases.Producer {
 
         [Fact]
         [Trait("OP", "Create")]
-        public async Task ShouldThrowErrorWhenCreatingProducerWithAlreadyExistantEmail() {
+        public async Task Save_GivenAlreadyExistantProducer_ThrowsError() {
             //Arrange
-            ProducerRepository repository = new ProducerRepository(_databaseContext);
-            CreateProducerUseCase usecase = new CreateProducerUseCase(repository);
+            producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer());
+            producerRepository.Setup(x => x.FindByEmail(It.IsAny<string>())).ReturnsAsync(new backend.Models.Producer());
+
+            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object);
 
             var producer = producerFactory.GetDefaultCreateProducerDto();
 
             //Act
             async Task Act(CreateProducerDTO producer) {
-                var createdProducer1 = await usecase.Execute(producer);
-                var createdProducer2 = await usecase.Execute(producer);
+                var createdProducer = await usecase.Execute(producer);
             }
 
             //Assert

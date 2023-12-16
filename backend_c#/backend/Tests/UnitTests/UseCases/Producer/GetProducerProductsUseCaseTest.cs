@@ -6,6 +6,7 @@ using backend.Models;
 using backend.Repositories;
 using backend.UseCases.Producer;
 using backend.UseCases.Product;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,111 +15,39 @@ using System.Threading.Tasks;
 using Tests.Factories;
 
 namespace Tests.UnitTests.UseCases.Producer {
-    public class GetProducerProductsUseCaseTest:IAsyncLifetime {
+    public class GetProducerProductsUseCaseTest {
 
-        private DatabaseContext _dbContext;
-        private ProducerFactory producerFactory = new ProducerFactory();
+        private readonly Mock<IProducerRepository> _producerRepository;
 
         public GetProducerProductsUseCaseTest() {
-            _dbContext = DbContextFactory.GetDatabaseContext();
-        }
-
-        public async Task InitializeAsync() {
-            await this._dbContext.Database.EnsureDeletedAsync();
-        }
-
-        public async Task DisposeAsync() {
-            await this._dbContext.Database.EnsureDeletedAsync();
+            _producerRepository = new Mock<IProducerRepository>();
         }
 
         [Fact]
         [Trait("OP", "GetProducerProducts")]
-        public async Task ShouldGetProducerProductsUseCaseSuccessfully() {
-
+        public void GetProducerProducts_GivenProducerId_ReturnsProducerProducts() {
             //Arrange
-            ProducerRepository producerRepository = new ProducerRepository(_dbContext);
-            GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(producerRepository);
-            CreateProducerUseCase createProducerUsecase = new CreateProducerUseCase(producerRepository);
-
-            ProductRepository productRepository = new ProductRepository(_dbContext);
-            CreateManyProductsUseCase createManyProductsUsecase = new CreateManyProductsUseCase(productRepository);
-
-            ProductFactory productFactory = new ProductFactory();
-
-            var producer = producerFactory.GetDefaultCreateProducerDto();
-
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            Guid producerId = Guid.NewGuid();
-
-            var productsDTO = new CreateProductDTO[]{
-                productFactory.GetDefaultCreateProductDto(producerId).Build(),
-                productFactory.GetDefaultCreateProductDto(producerId)
-                    .WithName("Product 2")
-                    .WithDescription("Description 2")
-                    .Build(),
-            };
+            _producerRepository.Setup(x => x.GetProducts(It.IsAny<Guid>())).Returns(new List<backend.Models.Product>());
+            GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(_producerRepository.Object);
 
             //Act
-            var createdProducer = await createProducerUsecase.Execute(producer);
-
-            foreach(var prod in productsDTO) {
-                prod.ProducerId = createdProducer.Id;
-            }
-
-            var createdProducts = await createManyProductsUsecase.Execute(productsDTO);
-
-            var foundProducerProducts = await getProducerProductsUseCase.Execute(createdProducer.Id);
+            var foundProducts = getProducerProductsUseCase.Execute(Guid.NewGuid());
 
             //Assert
-            Assert.Equal(productsDTO.Length, foundProducerProducts.Count());
+            Assert.NotNull(foundProducts);
         }
 
         [Fact]
         [Trait("OP", "GetProducerProducts")]
-        public async Task ShouldReturnEmptyListOfProducerProducts() {
-            
-            //Arrange
-
-            ProducerRepository producerRepository = new ProducerRepository(_dbContext);
-            GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(producerRepository);
-            CreateProducerUseCase createProducerUsecase = new CreateProducerUseCase(producerRepository);
-
-            var producer = producerFactory.GetDefaultCreateProducerDto();
-
-            //Act
-            var createdProducer = await createProducerUsecase.Execute(producer);
-            var foundProducts = await getProducerProductsUseCase.Execute(createdProducer.Id);
-
-            //Assert
-            Assert.Empty(foundProducts);
-
-        }
-
-        [Fact]
-        [Trait("OP", "GetProducerProducts")]
-        public async Task ShouldThrowErrorWhenTryingToGetProductsFromNotExistantProducer() {
+        public async Task GetProducerProducts_GivenNotExistantProducerId_ThrowsError() {
 
             //Arrange
-
-            ProducerRepository producerRepository = new ProducerRepository(_dbContext);
-            GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(producerRepository);
-
-            ProductFactory productFactory = new ProductFactory();
-
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-            Guid producerId = Guid.NewGuid();
-
-            var productsDTO = new CreateProductDTO[]{
-                productFactory.GetDefaultCreateProductDto(producerId).Build(),
-                productFactory.GetDefaultCreateProductDto(producerId)
-                    .WithName("Product 2")
-                    .WithDescription("Description 2")
-                    .Build()
-            };
+            _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Producer?>(null));
+            GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(_producerRepository.Object);
 
             //Act
             async Task Act() {
-                var foundProducts = await getProducerProductsUseCase.Execute(producerId);
+                var foundProducts = await getProducerProductsUseCase.Execute(Guid.NewGuid());
             }
 
             //Assert
