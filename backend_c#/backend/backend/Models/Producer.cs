@@ -76,5 +76,22 @@ namespace backend.Models
             UpdatedAt = updatedAt;
             DeletedAt = deletedAt;
         }
+
+        public Producer(Producer producer) {
+            Id = producer.Id;
+            Name = producer.Name;
+            Email = producer.Email;
+            Password = producer.Password;
+            OriginCity = producer.OriginCity;
+            Telephone = producer.Telephone;
+            Picture = producer.Picture;
+            CPF = producer.CPF;
+            AttendedCities = producer.AttendedCities;
+            WhereToFind = producer.WhereToFind;
+            FavdByConsumers = producer.FavdByConsumers;
+            CreatedAt = producer.CreatedAt;
+            UpdatedAt = producer.UpdatedAt;
+            DeletedAt = producer.DeletedAt;
+        }
     }
 }

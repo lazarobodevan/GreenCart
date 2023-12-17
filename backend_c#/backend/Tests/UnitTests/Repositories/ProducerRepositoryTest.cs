@@ -286,8 +286,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        [Trait("OP", "GetNearProducers")]
-        public async Task GetNearProducers_GivenCity1_ReturnsOneProducerFromCity1() {
+        [Trait("OP", "FindNearProducers")]
+        public async Task FindNearProducers_GivenCity1_ReturnsOneProducerFromCity1() {
             //Arrange
             var producer1 = new Producer {
                 Name = "Producer Test",
@@ -360,7 +360,7 @@ namespace Tests.UnitTests.Repositories {
             var createdProducts2And3 = await _productRepository.SaveMany(new Product[] { product2, product3 });
 
             //Act
-            var producersFromCity1 = _producerRepository.GetNearProducers("city1").ToList();
+            var producersFromCity1 = _producerRepository.FindNearProducers("city1").ToList();
 
             var isProducersFromCity1ContainsProducer2 = producersFromCity1.Any(producer => producer.Name.Contains(producer2.Name));
 
@@ -371,8 +371,8 @@ namespace Tests.UnitTests.Repositories {
         }
 
         [Fact]
-        [Trait("OP", "GetNearProducers")]
-        public async Task GetNearProducers_GivenCity2_ReturnsTwoProducersFromCity2() {
+        [Trait("OP", "FindNearProducers")]
+        public async Task FindNearProducers_GivenCity2_ReturnsTwoProducersFromCity2() {
             //Arrange
             var producer1 = new Producer {
                 Name = "Producer Test",
@@ -445,7 +445,7 @@ namespace Tests.UnitTests.Repositories {
             var createdProducts2And3 = await _productRepository.SaveMany(new Product[] { product2, product3 });
 
             //Act
-            var producersFromCity2 = _producerRepository.GetNearProducers("city2").ToList();
+            var producersFromCity2 = _producerRepository.FindNearProducers("city2").ToList();
 
             var isProducersFromCity2ContainsProducer1 = producersFromCity2.Any(producer => producer.Name.Contains(producer1.Name));
             var isProducersFromCity2ContainsProducer2 = producersFromCity2.Any(producer => producer.Name.Contains(producer2.Name));
@@ -458,5 +458,101 @@ namespace Tests.UnitTests.Repositories {
             Assert.NotNull(producersFromCity2.ToList().ElementAt(1).Products);
         }
 
+        [Fact]
+        [Trait("OP", "Update")]
+        public async Task Update_GivenProducer_ReturnsUpdatedProducer() {
+            //Arrange
+            var producer = new Producer {
+                Id = Guid.NewGuid(),
+                Name = "Producer Test",
+                Email = "test@test.com",
+                AttendedCities = "City1;City2;City3",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                CPF = "111.111.111-11",
+                OriginCity = "City1",
+                Password = "123",
+                Telephone = "(31) 99999-9999",
+                WhereToFind = "Local de encontro"
+            };
+            
+
+            //Act
+            var createdProducer = await _producerRepository.Save(new backend.Models.Producer (producer));
+            
+            _dbContext.ChangeTracker.Clear();
+
+            producer.Id = createdProducer.Id;
+            producer.Name = "Test";
+            producer.Telephone = "(31) 99999-9991";
+            producer.WhereToFind = "Local";
+            producer.Email = "test2@test.com";
+            producer.AttendedCities = "City1";
+            producer.CPF = "011.111.111-11";
+            producer.OriginCity = "City2";
+            producer.Password = "321";
+
+            var updatedProducer = await _producerRepository.Update(producer);
+
+            //Assert
+            Assert.NotNull(createdProducer);
+            Assert.IsType<Producer>(createdProducer);
+            
+            Assert.Equal(updatedProducer.Id, createdProducer.Id);
+            Assert.NotEqual(DateTime.MinValue, updatedProducer.UpdatedAt);
+            Assert.NotEqual(updatedProducer.Name, createdProducer.Name);
+            Assert.NotEqual(updatedProducer.Telephone, createdProducer.Telephone);
+            Assert.NotEqual(updatedProducer.WhereToFind, createdProducer.WhereToFind);
+            Assert.NotEqual(updatedProducer.Email, createdProducer.Email);
+            Assert.NotEqual(updatedProducer.CPF, createdProducer.CPF);
+            Assert.NotEqual(updatedProducer.OriginCity, createdProducer.OriginCity);
+            Assert.NotEqual(updatedProducer.Password, createdProducer.Password);
+        }
+
+        [Fact]
+        [Trait("OP", "Delete")]
+        public async Task Delete_GivenProducer_ReturnsDeletedProducer() {
+            //Arrange
+            var producer = new Producer {
+                Name = "Producer Test",
+                Email = "test@test.com",
+                AttendedCities = "City1;City2;City3",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                CPF = "111.111.111-11",
+                OriginCity = "City1",
+                Password = "123",
+                Telephone = "(31) 99999-9999",
+                WhereToFind = "Local de encontro"
+            };
+
+            //Act
+            var createdProducer = await _producerRepository.Save(producer);
+            Assert.NotNull(createdProducer);
+
+            var deletedProducer = await _producerRepository.Delete(createdProducer);
+
+            //Assert
+            Assert.NotNull(deletedProducer);
+            Assert.NotEqual(DateTime.MinValue, createdProducer.DeletedAt) ;
+        }
+
+        [Fact]
+        [Trait("OP","Delete")]
+        public async Task Delete_GivenNotExistantProducer_ThrowsException() {
+            //Arrange
+            var producerId = Guid.NewGuid();
+            var producer = new backend.Models.Producer {
+                Id = producerId
+            };
+
+            //Act
+            async Task Act(backend.Models.Producer producer) {
+                await _producerRepository.Delete(producer);
+            }
+
+            //Assert
+            var exception = await Assert.ThrowsAsync<Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException>(async () => await Act(producer));
+        }
     }
 }

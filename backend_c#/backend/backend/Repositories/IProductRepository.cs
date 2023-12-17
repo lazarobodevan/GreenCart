@@ -7,6 +7,6 @@ namespace backend.Repositories {
         Task<Product?> FindById(Guid productId);
         Task<IEnumerable<Product>> SaveMany(Product[] products);
         Product Update(Product product);
-        Product Delete(Product product);
+        Task<Product> Delete(Product product);
     }
 }

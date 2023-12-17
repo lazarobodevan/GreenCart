@@ -214,11 +214,11 @@ namespace Tests.UnitTests.Repositories {
             var createdProduct = await productRepository.Save(product);
             Assert.Null(createdProduct.DeletedAt);
             createdProduct.DeletedAt = DateTime.Now;
-            var deletedProduct = productRepository.Delete(createdProduct);
+            var deletedProduct = await productRepository.Delete(createdProduct);
 
             //Assert
-            
-            Assert.NotNull(deletedProduct.DeletedAt);
+            Assert.NotNull(deletedProduct);
+            Assert.NotEqual(DateTime.MinValue,deletedProduct.DeletedAt);
         }
 
     }

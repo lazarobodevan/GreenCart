@@ -1,5 +1,7 @@
-﻿using backend.Models;
+﻿using backend.DTOs.Product;
+using backend.Models;
 using backend.Repositories;
+using backend.Utils;
 
 namespace backend.UseCases.Product {
     public class UpdateProductUseCase {
@@ -9,17 +11,37 @@ namespace backend.UseCases.Product {
             this.repository = repository;
         }
 
-        public async Task<Models.Product> Execute(Models.Product product) {
-            var possibleProduct = await this.repository.FindById(product.Id);
-            
-            if (possibleProduct != null) {
-                product.UpdatedAt = DateTime.Now;
-                Models.Product updatedProduct = this.repository.Update(product);
+        public async Task<Models.Product> Execute(UpdateProductDTO productDTO) {
 
-                return updatedProduct;
+            var possibleProduct = await this.repository.FindById(productDTO.Id);
+            DateTime harvestDate = new DateTime();
+
+            if (possibleProduct == null) {
+                throw new Exception("Produto não existe");
             }
 
-            throw new Exception("Falha ao atualizar: o produto não existe");
+            if(productDTO.HarvestDate != null) {
+                harvestDate = DateUtils.ConvertStringToDateTime(productDTO.HarvestDate, "dd/MM/yyyy");    
+            }
+
+
+            var productEntity = new Models.Product {
+                Id = possibleProduct.Id,
+                Name = productDTO.Name ?? possibleProduct.Name,
+                AvailableQuantity = productDTO.AvailableQuantity ?? possibleProduct.AvailableQuantity,
+                Category = productDTO.Category ?? possibleProduct.Category,
+                Description = productDTO.Description ?? possibleProduct.Description,
+                Unit = productDTO.Unit ?? possibleProduct.Unit,
+                HarvestDate = harvestDate != DateTime.MinValue ? harvestDate : possibleProduct.HarvestDate,
+                IsOrganic = productDTO.IsOrganic ?? possibleProduct.IsOrganic,
+                Picture = productDTO.Picture ?? possibleProduct.Picture,
+                Price = productDTO.Price ?? possibleProduct.Price,
+                UpdatedAt = DateTime.Now,
+            };
+
+            var updatedProduct = repository.Update(productEntity);
+
+            return updatedProduct;
             
         }
     }

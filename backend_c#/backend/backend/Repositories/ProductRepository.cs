@@ -54,13 +54,14 @@ namespace backend.Repositories {
         }
 
         //Soft delete
-        public Product Delete(Product product) {
+        public async Task<Product> Delete(Product product) {
             
             product.DeletedAt = DateTime.Now;
 
-            var deletedProduct = this.Update(product);
+            var deletedProduct = this._context.Products.Update(product);
+            await this._context.SaveChangesAsync();
 
-            return deletedProduct;
+            return deletedProduct.Entity;
            
         }
     }

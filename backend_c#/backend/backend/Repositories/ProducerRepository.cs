@@ -21,7 +21,7 @@ namespace backend.Repositories {
             return await this._context.Producers.FirstOrDefaultAsync(producer => producer.Id == id);
         }
 
-        public IEnumerable<Producer> GetNearProducers(string city) {
+        public IEnumerable<Producer> FindNearProducers(string city) {
             var producers = this._context.Producers
                 .Where(producer => producer.AttendedCities.Contains(city.ToUpper()))
                 .Include(producer => producer.Products)
@@ -46,5 +46,27 @@ namespace backend.Repositories {
             await this._context.SaveChangesAsync();
             return createdProducer.Entity;
         }
+
+        public async Task<Producer> Update(Producer producer) {
+            producer.UpdatedAt = DateTime.Now;
+
+            var updatedProducer = this._context.Producers.Update(producer);
+
+            await this._context.SaveChangesAsync();
+
+            return updatedProducer.Entity;
+
+        }
+
+        public async Task<Producer> Delete(Producer producer) {
+            
+            producer.DeletedAt = DateTime.Now;
+            
+            var deletedProducer = this._context.Producers.Update(producer);
+            await this._context.SaveChangesAsync();
+
+            return deletedProducer.Entity;
+        }
+
     }
 }
