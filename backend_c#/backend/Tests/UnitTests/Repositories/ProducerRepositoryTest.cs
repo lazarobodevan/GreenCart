@@ -1,8 +1,8 @@
 ﻿using backend.Contexts;
-using backend.DTOs.Product;
-using backend.Enums;
 using backend.Models;
-using backend.Repositories;
+using backend.Producer.Repository;
+using backend.Product.Enums;
+using backend.Product.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
@@ -16,7 +16,8 @@ using System.Threading.Tasks;
 [assembly: CollectionBehavior(DisableTestParallelization = false)]
 //************************
 
-namespace Tests.UnitTests.Repositories {
+namespace Tests.UnitTests.Repositories
+{
 
     public class ProducerRepositoryTest {
         private readonly DbContextOptions<DatabaseContext> _options;

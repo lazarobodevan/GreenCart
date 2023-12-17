@@ -1,8 +1,7 @@
 ﻿using backend.Contexts;
-using backend.DTOs.Product;
-using backend.Enums;
 using backend.Models;
-using backend.Repositories;
+using backend.Product.Enums;
+using backend.Product.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
@@ -13,7 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Factories;
 
-namespace Tests.UnitTests.Repositories {
+namespace Tests.UnitTests.Repositories
+{
     public class ProductRepositoryTest : IAsyncLifetime{
 
         private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;

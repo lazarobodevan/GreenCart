@@ -1,5 +1,5 @@
-﻿using backend.Repositories;
-using backend.UseCases.Producer;
+﻿using backend.Producer.Repository;
+using backend.Producer.UseCases;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests.UnitTests.UseCases.Producer {
+namespace Tests.UnitTests.UseCases.Producer
+{
     public class FindNearProducersUseCaseTest {
         private Mock<IProducerRepository> _producerRepositoryMock;
 

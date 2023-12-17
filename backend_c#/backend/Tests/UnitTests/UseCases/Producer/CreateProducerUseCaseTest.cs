@@ -1,8 +1,8 @@
 ﻿using backend.Contexts;
-using backend.DTOs.Producer;
 using backend.Models;
-using backend.Repositories;
-using backend.UseCases.Producer;
+using backend.Producer.DTOs;
+using backend.Producer.Repository;
+using backend.Producer.UseCases;
 using backend.Utils.Errors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -14,7 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Factories;
 
-namespace Tests.UnitTests.UseCases.Producer {
+namespace Tests.UnitTests.UseCases.Producer
+{
 
     public class CreateProducerUseCaseTest {
 

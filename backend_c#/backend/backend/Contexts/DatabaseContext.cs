@@ -10,9 +10,9 @@ namespace backend.Contexts {
 
         public DatabaseContext() { }
 
-        public DbSet<Producer> Producers { get; set; }
+        public DbSet<Models.Producer> Producers { get; set; }
         public DbSet<Consumer> Consumers { get; set; }     
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Models.Product> Products { get; set; }
     }
 }

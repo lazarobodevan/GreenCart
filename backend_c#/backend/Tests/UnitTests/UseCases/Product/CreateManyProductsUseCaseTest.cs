@@ -1,8 +1,7 @@
 ﻿using backend.Contexts;
-using backend.DTOs.Product;
-using backend.Enums;
-using backend.Repositories;
-using backend.UseCases.Product;
+using backend.Product.DTOs;
+using backend.Product.Repository;
+using backend.Product.UseCases;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Factories;
 
-namespace Tests.UnitTests.UseCases {
+namespace Tests.UnitTests.UseCases
+{
     public class CreateManyProductsUseCaseTest: IAsyncLifetime {
         private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
 

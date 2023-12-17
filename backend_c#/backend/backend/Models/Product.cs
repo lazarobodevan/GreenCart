@@ -1,8 +1,9 @@
-﻿using backend.Enums;
+﻿using backend.Product.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace backend.Models {
+namespace backend.Models
+{
 
     [Table("Products")]
     public class Product {

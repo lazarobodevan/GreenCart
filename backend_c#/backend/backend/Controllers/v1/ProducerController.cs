@@ -1,11 +1,11 @@
-﻿using backend.DTOs.Producer;
-using backend.Repositories;
-using backend.UseCases.Producer;
-using backend.UseCases.Product;
+﻿using backend.Producer.DTOs;
+using backend.Producer.Repository;
+using backend.Producer.UseCases;
 using backend.Utils;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Controllers.v1 {
+namespace backend.Controllers.v1
+{
     [ApiController]
     [Route("api/[controller]")]
     public class ProducerController: ControllerBase {

@@ -1,18 +1,11 @@
-﻿using backend.DTOs.Product;
-using backend.Enums;
-using backend.Repositories;
-using backend.UseCases.Product;
-using backend.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tests.Factories;
-using Moq;
+﻿using Moq;
+using backend.Product.Repository;
+using backend.Product.UseCases;
+using backend.Product.DTOs;
 
-namespace Tests.UnitTests.UseCases.Product {
-    
+namespace Tests.UnitTests.UseCases.Product
+{
+
     public class UpdateProductUseCaseTest {
 
         private readonly Mock<IProductRepository> _productRepositoryMock;

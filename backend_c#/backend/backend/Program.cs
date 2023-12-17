@@ -1,5 +1,6 @@
 using backend.Contexts;
-using backend.Repositories;
+using backend.Producer.Repository;
+using backend.Product.Repository;
 using backend.Utils.Errors;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;

@@ -1,12 +1,13 @@
-﻿using backend.Enums;
-using backend.Models;
+﻿using backend.Models;
+using backend.Product.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests.Factories {
+namespace Tests.Factories
+{
     internal class ProductFactory {
 
         private Product ProductEntity = new Product {

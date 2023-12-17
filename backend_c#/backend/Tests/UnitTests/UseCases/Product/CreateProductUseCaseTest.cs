@@ -1,8 +1,6 @@
-﻿using backend.DTOs.Product;
-using backend.Enums;
-using backend.Models;
-using backend.Repositories;
-using backend.UseCases.Product;
+﻿using backend.Models;
+using backend.Product.Repository;
+using backend.Product.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Factories;
 
-namespace Tests.UnitTests.UseCases {
+namespace Tests.UnitTests.UseCases
+{
     public class CreateProductUseCaseTest {
         [Fact]
         [Trait("OP", "Create")]

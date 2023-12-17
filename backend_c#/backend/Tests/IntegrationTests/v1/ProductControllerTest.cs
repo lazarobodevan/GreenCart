@@ -1,7 +1,7 @@
-﻿using backend.DTOs.Producer;
-using backend.DTOs.Product;
-using backend.Enums;
-using backend.Models;
+﻿using backend.Models;
+using backend.Producer.DTOs;
+using backend.Product.DTOs;
+using backend.Product.Enums;
 using backend.Utils;
 using Newtonsoft.Json;
 using RestSharp;
@@ -13,7 +13,8 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
-namespace Tests.IntegrationTests.v1 {
+namespace Tests.IntegrationTests.v1
+{
     public class ProductControllerTest: IAsyncLifetime {
 
         public async Task DisposeAsync() {

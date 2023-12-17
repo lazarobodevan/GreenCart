@@ -1,24 +1,25 @@
-﻿using backend.DTOs.Product;
-using backend.Enums;
+﻿using backend.Product.DTOs;
+using backend.Product.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests.Factories {
+namespace Tests.Factories
+{
     public class ProductDTOFactory {
         
         private CreateProductDTO createProductDto = new CreateProductDTO {
             Name = "Product test",
             Description = "Description",
             AvailableQuantity = 10,
-            Category = backend.Enums.Category.BEVERAGE,
+            Category = Category.BEVERAGE,
             HarvestDate = "25/11/2023",
             IsOrganic = true,
             Picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
             Price = 10.50,
-            Unit = backend.Enums.Unit.LITER,
+            Unit = Unit.LITER,
     };
 
         public ProductDTOFactory GetDefaultCreateProductDto(Guid producerId) {

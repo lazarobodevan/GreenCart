@@ -1,12 +1,13 @@
-﻿using backend.DTOs.Producer;
-using backend.Models;
+﻿using backend.Models;
+using backend.Producer.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests.Factories {
+namespace Tests.Factories
+{
     public class ProducerDTOFactory {
         
         private CreateProducerDTO createProducerDto = new CreateProducerDTO {

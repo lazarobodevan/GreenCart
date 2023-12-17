@@ -1,11 +1,7 @@
 ﻿using backend.Contexts;
-using backend.DTOs.Producer;
-using backend.DTOs.Product;
-using backend.Enums;
 using backend.Models;
-using backend.Repositories;
-using backend.UseCases.Producer;
-using backend.UseCases.Product;
+using backend.Producer.Repository;
+using backend.Producer.UseCases;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -14,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tests.Factories;
 
-namespace Tests.UnitTests.UseCases.Producer {
+namespace Tests.UnitTests.UseCases.Producer
+{
     public class GetProducerProductsUseCaseTest {
 
         private readonly Mock<IProducerRepository> _producerRepository;
