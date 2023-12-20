@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tests.Factories;
+using Tests.Factories.Product;
 
 namespace Tests.UnitTests.Repositories
 {
@@ -37,54 +38,27 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "Create")]
-        public async Task ShouldSaveProductSuccessfully() {
+        public async Task Save_GivenProduct_ReturnsCreatedProduct() {
             
+            //Arrange
             var productRepository = new ProductRepository(_databaseContext);
-
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-            var product = new Product {
-                Name = "Product",
-                Description = "Description",
-                Picture = picture,
-                Category = Category.VEGETABLE,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = Guid.NewGuid(),
-            };
+            var product = new ProductFactory().Build();
 
             //Act
             var createdProduct = await productRepository.Save(product);
 
             //Assert
-
             Assert.NotNull( createdProduct );
             Assert.NotEqual(Guid.Empty, createdProduct.Id);
         }
 
         [Fact]
         [Trait("OP", "FindById")]
-        public async Task ShouldFindProductByIdSuccessfully() {
+        public async Task FindById_GivenProduct_ReturnsFoundProduct() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-            var product = new Product {
-                Name = "Product",
-                Description = "Description",
-                Picture = picture,
-                Category = Category.VEGETABLE,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = Guid.NewGuid(),
-            };
+            var product = new ProductFactory().Build();
 
             //Act
             var createdProduct = await productRepository.Save(product);
@@ -96,7 +70,7 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "FindById")]
-        public async Task ShouldFindProductByIdFail() {
+        public async Task FindById_GivenProductId_ReturnsNull() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -109,8 +83,8 @@ namespace Tests.UnitTests.Repositories
         }
 
         [Fact]
-        [Trait("OP", "CreateMany")]
-        public async Task ShouldSaveManyProductsSuccessfully() {
+        [Trait("OP", "Create")]
+        public async Task Create_GivenManyProducts_ReturnsCreatedProducts() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -118,31 +92,8 @@ namespace Tests.UnitTests.Repositories
             Guid producerId = Guid.NewGuid();
 
             var products = new Product[]{
-                new Product {
-                    Name = "Product",
-                    Description = "Description",
-                    Picture = picture,
-                    Category = Category.VEGETABLE,
-                    Price = 10.11,
-                    Unit = Unit.LITER,
-                    AvailableQuantity = 1,
-                    IsOrganic = true,
-                    HarvestDate = DateTime.Now,
-                    ProducerId = producerId,
-                },
-                new Product {
-                    Name = "Product2",
-                    Description = "Description2",
-                    Picture = picture,
-                    Category = Category.SWEET,
-                    Price = 40.43,
-                    Unit = Unit.LITER,
-                    AvailableQuantity = 14,
-                    IsOrganic = false,
-                    HarvestDate = DateTime.Now,
-                    ProducerId = producerId,
-                }
-
+                new ProductFactory().Build(),
+                new ProductFactory().Build()
             };
 
             //Act
@@ -155,30 +106,17 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "Update")]
-        public async Task ShouldUpdateProductSuccessfully() {
+        public async Task Update_GivenProduct_ReturnsUpdatedProduct() {
             //Arrange
             ProductRepository repository = new ProductRepository(_databaseContext);
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-            var product = new Product {
-                Name = "Product",
-                Description = "Description",
-                Picture = picture,
-                Category = Category.VEGETABLE,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = Guid.NewGuid(),
-                CreatedAt = DateTime.Now,
-            };
+            var product = new ProductFactory().Build();
 
             //Act
             var savedProduct = await repository.Save(product);
             savedProduct.Name = "Updated Product";
             savedProduct.IsOrganic = false;
             savedProduct.UpdatedAt = DateTime.Now;
+
             var updatedProduct = repository.Update(savedProduct);
 
             //Assert
@@ -191,29 +129,14 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "Delete")]
-        public async Task ShouldDeleteProductSuccessfully() {
+        public async Task Delete_GivenProduct_ReturnsDeletedProduct() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
-
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-            var product = new Product {
-                Name = "Product",
-                Description = "Description",
-                Picture = picture,
-                Category = Category.VEGETABLE,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = Guid.NewGuid(),
-            };
+            var product = new ProductFactory().Build();
 
             //Act
             var createdProduct = await productRepository.Save(product);
             Assert.Null(createdProduct.DeletedAt);
-            createdProduct.DeletedAt = DateTime.Now;
             var deletedProduct = await productRepository.Delete(createdProduct);
 
             //Assert
