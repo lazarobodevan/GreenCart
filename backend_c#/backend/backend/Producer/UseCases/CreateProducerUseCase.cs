@@ -16,31 +16,39 @@ namespace backend.Producer.UseCases
 
         public async Task<Models.Producer> Execute(CreateProducerDTO producerDTO)
         {
+            Models.Producer? possibleProducer = null;
 
-            var possibleProducer = await repository.FindByEmail(producerDTO.Email);
-
-            if (possibleProducer != null)
-            {
+            try {
+                possibleProducer = await repository.FindByEmail(producerDTO.Email);   
+            } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
+            if (possibleProducer != null) {
                 throw new Exception("Usuário já cadastrado");
             }
 
-            Models.Producer producer = new Models.Producer
-            {
-                Name = producerDTO.Name,
-                Email = producerDTO.Email,
-                AttendedCities = producerDTO.AttendedCities,
-                FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = producerDTO.CPF,
-                OriginCity = producerDTO.OriginCity,
-                Password = producerDTO.Password,
-                Telephone = producerDTO.Telephone,
-                WhereToFind = producerDTO.WhereToFind,
-                CreatedAt = DateTime.Now,
-            };
 
-            var createdProducer = await repository.Save(producer);
+            try {
+                Models.Producer producer = new Models.Producer {
+                    Name = producerDTO.Name,
+                    Email = producerDTO.Email,
+                    AttendedCities = producerDTO.AttendedCities,
+                    FavdByConsumers = new List<ConsumerFavProducer>(),
+                    CPF = producerDTO.CPF,
+                    OriginCity = producerDTO.OriginCity,
+                    Password = producerDTO.Password,
+                    Telephone = producerDTO.Telephone,
+                    WhereToFind = producerDTO.WhereToFind,
+                    CreatedAt = DateTime.Now,
+                };
 
-            return createdProducer;
+                var createdProducer = await repository.Save(producer);
+
+                return createdProducer;
+
+            }catch(Exception e) {
+                return null;
+            }
         }
     }
 }

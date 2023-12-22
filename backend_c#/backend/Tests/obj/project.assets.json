@@ -24,7 +24,7 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
-      "Microsoft.CodeCoverage/17.7.2": {
+      "Microsoft.CodeCoverage/17.8.0": {
         "type": "package",
         "compile": {
           "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {}
@@ -297,11 +297,11 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.NET.Test.Sdk/17.7.2": {
+      "Microsoft.NET.Test.Sdk/17.8.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeCoverage": "17.7.2",
-          "Microsoft.TestPlatform.TestHost": "17.7.2"
+          "Microsoft.CodeCoverage": "17.8.0",
+          "Microsoft.TestPlatform.TestHost": "17.8.0"
         },
         "compile": {
           "lib/netcoreapp3.1/_._": {}
@@ -348,7 +348,7 @@
           }
         }
       },
-      "Microsoft.TestPlatform.ObjectModel/17.7.2": {
+      "Microsoft.TestPlatform.ObjectModel/17.8.0": {
         "type": "package",
         "dependencies": {
           "NuGet.Frameworks": "6.5.0",
@@ -445,10 +445,10 @@
           }
         }
       },
-      "Microsoft.TestPlatform.TestHost/17.7.2": {
+      "Microsoft.TestPlatform.TestHost/17.8.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.TestPlatform.ObjectModel": "17.7.2",
+          "Microsoft.TestPlatform.ObjectModel": "17.8.0",
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
@@ -617,7 +617,7 @@
           }
         }
       },
-      "Moq/4.20.69": {
+      "Moq/4.20.70": {
         "type": "package",
         "dependencies": {
           "Castle.Core": "5.1.1"
@@ -2121,12 +2121,12 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
-      "xunit/2.5.1": {
+      "xunit/2.6.3": {
         "type": "package",
         "dependencies": {
-          "xunit.analyzers": "1.3.0",
-          "xunit.assert": "2.5.1",
-          "xunit.core": "[2.5.1]"
+          "xunit.analyzers": "1.7.0",
+          "xunit.assert": "2.6.3",
+          "xunit.core": "[2.6.3]"
         }
       },
       "xunit.abstractions/2.0.3": {
@@ -2142,30 +2142,27 @@
           }
         }
       },
-      "xunit.analyzers/1.3.0": {
+      "xunit.analyzers/1.7.0": {
         "type": "package"
       },
-      "xunit.assert/2.5.1": {
+      "xunit.assert/2.6.3": {
         "type": "package",
-        "dependencies": {
-          "NETStandard.Library": "1.6.1"
-        },
         "compile": {
-          "lib/netstandard1.1/xunit.assert.dll": {
+          "lib/net6.0/xunit.assert.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard1.1/xunit.assert.dll": {
+          "lib/net6.0/xunit.assert.dll": {
             "related": ".xml"
           }
         }
       },
-      "xunit.core/2.5.1": {
+      "xunit.core/2.6.3": {
         "type": "package",
         "dependencies": {
-          "xunit.extensibility.core": "[2.5.1]",
-          "xunit.extensibility.execution": "[2.5.1]"
+          "xunit.extensibility.core": "[2.6.3]",
+          "xunit.extensibility.execution": "[2.6.3]"
         },
         "build": {
           "build/xunit.core.props": {},
@@ -2176,7 +2173,7 @@
           "buildMultiTargeting/xunit.core.targets": {}
         }
       },
-      "xunit.extensibility.core/2.5.1": {
+      "xunit.extensibility.core/2.6.3": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.1",
@@ -2193,11 +2190,11 @@
           }
         }
       },
-      "xunit.extensibility.execution/2.5.1": {
+      "xunit.extensibility.execution/2.6.3": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.1",
-          "xunit.extensibility.core": "[2.5.1]"
+          "xunit.extensibility.core": "[2.6.3]"
         },
         "compile": {
           "lib/netstandard1.1/xunit.execution.dotnet.dll": {
@@ -2210,7 +2207,7 @@
           }
         }
       },
-      "xunit.runner.visualstudio/2.5.1": {
+      "xunit.runner.visualstudio/2.5.5": {
         "type": "package",
         "compile": {
           "lib/net6.0/_._": {}
@@ -2321,15 +2318,15 @@
         "coverlet.collector.nuspec"
       ]
     },
-    "Microsoft.CodeCoverage/17.7.2": {
-      "sha512": "ntbkwIqwszkfCRjxVZOyEQiHauiYsY9NtYjw9ASsoxDSiG8YtV6AGcOAwrAk3TZv2UOq4MrpX+3MYEeMHSb03w==",
+    "Microsoft.CodeCoverage/17.8.0": {
+      "sha512": "KC8SXWbGIdoFVdlxKk9WHccm0llm9HypcHMLUUFabRiTS3SO2fQXNZfdiF3qkEdTJhbRrxhdRxjL4jbtwPq4Ew==",
       "type": "package",
-      "path": "microsoft.codecoverage/17.7.2",
+      "path": "microsoft.codecoverage/17.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "LICENSE_NET.txt",
+        "LICENSE_MIT.txt",
         "ThirdPartyNotices.txt",
         "build/netstandard2.0/CodeCoverage/CodeCoverage.config",
         "build/netstandard2.0/CodeCoverage/CodeCoverage.exe",
@@ -2383,7 +2380,7 @@
         "build/netstandard2.0/zh-Hant/Microsoft.VisualStudio.TraceDataCollector.resources.dll",
         "lib/net462/Microsoft.VisualStudio.CodeCoverage.Shim.dll",
         "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll",
-        "microsoft.codecoverage.17.7.2.nupkg.sha512",
+        "microsoft.codecoverage.17.8.0.nupkg.sha512",
         "microsoft.codecoverage.nuspec"
       ]
     },
@@ -2983,15 +2980,15 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.NET.Test.Sdk/17.7.2": {
-      "sha512": "WOSF/GUYcnrLGkdvCbXDRig2rShtBwfQc5l7IxQE6PZI3CeXAqF1SpyzwlGA5vw+MdEAXs3niy+ZkGBBWna6tw==",
+    "Microsoft.NET.Test.Sdk/17.8.0": {
+      "sha512": "BmTYGbD/YuDHmApIENdoyN1jCk0Rj1fJB0+B/fVekyTdVidr91IlzhqzytiUgaEAzL1ZJcYCme0MeBMYvJVzvw==",
       "type": "package",
-      "path": "microsoft.net.test.sdk/17.7.2",
+      "path": "microsoft.net.test.sdk/17.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "LICENSE_NET.txt",
+        "LICENSE_MIT.txt",
         "build/net462/Microsoft.NET.Test.Sdk.props",
         "build/net462/Microsoft.NET.Test.Sdk.targets",
         "build/netcoreapp3.1/Microsoft.NET.Test.Sdk.Program.cs",
@@ -3002,7 +2999,7 @@
         "buildMultiTargeting/Microsoft.NET.Test.Sdk.props",
         "lib/net462/_._",
         "lib/netcoreapp3.1/_._",
-        "microsoft.net.test.sdk.17.7.2.nupkg.sha512",
+        "microsoft.net.test.sdk.17.8.0.nupkg.sha512",
         "microsoft.net.test.sdk.nuspec"
       ]
     },
@@ -3053,15 +3050,15 @@
         "microsoft.openapi.nuspec"
       ]
     },
-    "Microsoft.TestPlatform.ObjectModel/17.7.2": {
-      "sha512": "aHzQWgDMVBnk39HhQVmn06w+YxzF1h2V5/M4WgrNQAn7q97GR4Si3vLRTDlmJo9nK/Nknce+H4tXx4gqOKyLeg==",
+    "Microsoft.TestPlatform.ObjectModel/17.8.0": {
+      "sha512": "AYy6vlpGMfz5kOFq99L93RGbqftW/8eQTqjT9iGXW6s9MRP3UdtY8idJ8rJcjeSja8A18IhIro5YnH3uv1nz4g==",
       "type": "package",
-      "path": "microsoft.testplatform.objectmodel/17.7.2",
+      "path": "microsoft.testplatform.objectmodel/17.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "LICENSE_NET.txt",
+        "LICENSE_MIT.txt",
         "lib/net462/Microsoft.TestPlatform.CoreUtilities.dll",
         "lib/net462/Microsoft.TestPlatform.PlatformAbstractions.dll",
         "lib/net462/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll",
@@ -3149,19 +3146,19 @@
         "lib/netstandard2.0/zh-Hans/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.TestPlatform.CoreUtilities.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll",
-        "microsoft.testplatform.objectmodel.17.7.2.nupkg.sha512",
+        "microsoft.testplatform.objectmodel.17.8.0.nupkg.sha512",
         "microsoft.testplatform.objectmodel.nuspec"
       ]
     },
-    "Microsoft.TestPlatform.TestHost/17.7.2": {
-      "sha512": "pv9yVD7IKPLJV28zYjLsWFiM3j506I2ye+6NquG8vsbm/gR7lgyig8IgY6Vo57VMvGaAKwtUECzcj+C5tH271Q==",
+    "Microsoft.TestPlatform.TestHost/17.8.0": {
+      "sha512": "9ivcl/7SGRmOT0YYrHQGohWiT5YCpkmy/UEzldfVisLm6QxbLaK3FAJqZXI34rnRLmqqDCeMQxKINwmKwAPiDw==",
       "type": "package",
-      "path": "microsoft.testplatform.testhost/17.7.2",
+      "path": "microsoft.testplatform.testhost/17.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "LICENSE_NET.txt",
+        "LICENSE_MIT.txt",
         "ThirdPartyNotices.txt",
         "build/netcoreapp3.1/Microsoft.TestPlatform.TestHost.props",
         "build/netcoreapp3.1/x64/testhost.dll",
@@ -3219,7 +3216,7 @@
         "lib/netcoreapp3.1/zh-Hant/Microsoft.TestPlatform.CommunicationUtilities.resources.dll",
         "lib/netcoreapp3.1/zh-Hant/Microsoft.TestPlatform.CrossPlatEngine.resources.dll",
         "lib/netcoreapp3.1/zh-Hant/Microsoft.VisualStudio.TestPlatform.Common.resources.dll",
-        "microsoft.testplatform.testhost.17.7.2.nupkg.sha512",
+        "microsoft.testplatform.testhost.17.8.0.nupkg.sha512",
         "microsoft.testplatform.testhost.nuspec"
       ]
     },
@@ -3342,10 +3339,10 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "Moq/4.20.69": {
-      "sha512": "8P/oAUOL8ZVyXnzBBcgdhTsOD1kQbAWfOcMI7KDQO3HqQtzB/0WYLdnMa4Jefv8nu/MQYiiG0IuoJdvG0v0Nig==",
+    "Moq/4.20.70": {
+      "sha512": "4rNnAwdpXJBuxqrOCzCyICXHSImOTRktCgCWXWykuF1qwoIsVvEnR7PjbMk/eLOxWvhmj5Kwt+kDV3RGUYcNwg==",
       "type": "package",
-      "path": "moq/4.20.69",
+      "path": "moq/4.20.70",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3358,7 +3355,7 @@
         "lib/netstandard2.0/Moq.xml",
         "lib/netstandard2.1/Moq.dll",
         "lib/netstandard2.1/Moq.xml",
-        "moq.4.20.69.nupkg.sha512",
+        "moq.4.20.70.nupkg.sha512",
         "moq.nuspec",
         "readme.md"
       ]
@@ -6937,16 +6934,16 @@
         "system.xml.xdocument.nuspec"
       ]
     },
-    "xunit/2.5.1": {
-      "sha512": "WJJ7Ruxv1INF4ySosVZ0fN1dGhzNBEdLLZoIVn4TPU8CbYgaxUebAL/VPaBneXGT3EDE2llsJ2cKzGkGeZSY4Q==",
+    "xunit/2.6.3": {
+      "sha512": "4CoGp3iKZORZ9aaHdPrFcdlDBRI/ZFRyDZWJuP7r2idULEtWf+k0yGT80cF/v6nE/MQDXLMIuSGDIrHuPLC/+Q==",
       "type": "package",
-      "path": "xunit/2.5.1",
+      "path": "xunit/2.6.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "_content/README.md",
         "_content/logo-128-transparent.png",
-        "xunit.2.5.1.nupkg.sha512",
+        "xunit.2.6.3.nupkg.sha512",
         "xunit.nuspec"
       ]
     },
@@ -6967,10 +6964,10 @@
         "xunit.abstractions.nuspec"
       ]
     },
-    "xunit.analyzers/1.3.0": {
-      "sha512": "gSk+8RC6UZ6Fzx1OHoB2bPyENeg3WHIeJhB/hb4oZNN0pW0dwOuplJay6OnqFIvW8T37re/RB4PWpEvayWIO1Q==",
+    "xunit.analyzers/1.7.0": {
+      "sha512": "lAcpaB0KnjWETbPDMsDPoQi6zS0uXUYopmyTQDWvILJWcL9jwMxXXGmDLptlMA6vGi5Z0LtudsYN+dEUTmuHaA==",
       "type": "package",
-      "path": "xunit.analyzers/1.3.0",
+      "path": "xunit.analyzers/1.7.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -6981,29 +6978,31 @@
         "analyzers/dotnet/cs/xunit.analyzers.fixes.dll",
         "tools/install.ps1",
         "tools/uninstall.ps1",
-        "xunit.analyzers.1.3.0.nupkg.sha512",
+        "xunit.analyzers.1.7.0.nupkg.sha512",
         "xunit.analyzers.nuspec"
       ]
     },
-    "xunit.assert/2.5.1": {
-      "sha512": "eMvuz6PFdD3DDeaXkFVwMzNZ40zcRoM9Zz3siAyWgfiAucSNOWZnVgqC8hSHbdMd98Gy6o0yIYG6mq4Tg37rrQ==",
+    "xunit.assert/2.6.3": {
+      "sha512": "7JWrjxDIAwF1vBZyENu4BZaddNJijIQcIQcc+73sJPWaqzDmseysTYv2jR0IWBsWIGa6LSfMO/3+dH0fsHL5Wg==",
       "type": "package",
-      "path": "xunit.assert/2.5.1",
+      "path": "xunit.assert/2.6.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "_content/README.md",
         "_content/logo-128-transparent.png",
+        "lib/net6.0/xunit.assert.dll",
+        "lib/net6.0/xunit.assert.xml",
         "lib/netstandard1.1/xunit.assert.dll",
         "lib/netstandard1.1/xunit.assert.xml",
-        "xunit.assert.2.5.1.nupkg.sha512",
+        "xunit.assert.2.6.3.nupkg.sha512",
         "xunit.assert.nuspec"
       ]
     },
-    "xunit.core/2.5.1": {
-      "sha512": "Tzuz//XwPJYAmC9FBIwgBgo5gb2kSoppDwkisyYhq0wtwxhv+gOJwtqUgkgk8Hr19B616Zol03LkD18r2e4AxA==",
+    "xunit.core/2.6.3": {
+      "sha512": "rlrm//9cNAlCkh3p5mdggzfchZlcXowUVK3UPqKiaN7G0Wu7gOUNLLZej9twnwTCVe1h3FEi9PRwzXMMXpFwSQ==",
       "type": "package",
-      "path": "xunit.core/2.5.1",
+      "path": "xunit.core/2.6.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7013,14 +7012,14 @@
         "build/xunit.core.targets",
         "buildMultiTargeting/xunit.core.props",
         "buildMultiTargeting/xunit.core.targets",
-        "xunit.core.2.5.1.nupkg.sha512",
+        "xunit.core.2.6.3.nupkg.sha512",
         "xunit.core.nuspec"
       ]
     },
-    "xunit.extensibility.core/2.5.1": {
-      "sha512": "XGPiWP7D/KIY/fzdmU9gx7eDt0QD0IAWOy54LI+ckLZCqFMupIFochC3dHRxykuAz+L0nYvz6PxDdR2UcgNmDw==",
+    "xunit.extensibility.core/2.6.3": {
+      "sha512": "qWCpmK4nxFBsf68r35AgnrW6B+xjTCpjJYfJkaBaini4Myl/2P/Ro6WocVtJfpHilkatitVFgM3XVR0jthdJlQ==",
       "type": "package",
-      "path": "xunit.extensibility.core/2.5.1",
+      "path": "xunit.extensibility.core/2.6.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7033,14 +7032,14 @@
         "lib/net452/xunit.runner.utility.net452.dll",
         "lib/netstandard1.1/xunit.core.dll",
         "lib/netstandard1.1/xunit.core.xml",
-        "xunit.extensibility.core.2.5.1.nupkg.sha512",
+        "xunit.extensibility.core.2.6.3.nupkg.sha512",
         "xunit.extensibility.core.nuspec"
       ]
     },
-    "xunit.extensibility.execution/2.5.1": {
-      "sha512": "I5IUervdZoKLD66TUcqsJDXcB3ui9RxzKe0MQGzEi4Hsxkaoz0YylmvwqW2nd3nilyqqIAs0OUaZf/faKPxY6w==",
+    "xunit.extensibility.execution/2.6.3": {
+      "sha512": "I+9OA9a6WVia40bxJi3KaxVcjTE1ouHqD0QcrjHA/hLl7Ozb5eQmV7ecLu3gRZlPLdcVN+If8IZcEmqytmLtkA==",
       "type": "package",
-      "path": "xunit.extensibility.execution/2.5.1",
+      "path": "xunit.extensibility.execution/2.6.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7050,28 +7049,32 @@
         "lib/net452/xunit.execution.desktop.xml",
         "lib/netstandard1.1/xunit.execution.dotnet.dll",
         "lib/netstandard1.1/xunit.execution.dotnet.xml",
-        "xunit.extensibility.execution.2.5.1.nupkg.sha512",
+        "xunit.extensibility.execution.2.6.3.nupkg.sha512",
         "xunit.extensibility.execution.nuspec"
       ]
     },
-    "xunit.runner.visualstudio/2.5.1": {
-      "sha512": "W5dQj2tysIY6MHaidZyqyiR7MGFEk+FrvHRapFyhe11HuR4A6aFGSVi8txi+kkXdY9FDjXffU/1PkNzRX52Caw==",
+    "xunit.runner.visualstudio/2.5.5": {
+      "sha512": "AJsBBn8S00ZxdXPSIp8s+NcBQMO9tcll1UVCfGNoEi1DUH2z3f4Y1epV9nYbhgG6wFoTKJP6YuLT2MeTPV9gnA==",
       "type": "package",
-      "path": "xunit.runner.visualstudio/2.5.1",
+      "path": "xunit.runner.visualstudio/2.5.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "_content/README.md",
         "_content/logo-128-transparent.png",
         "build/net462/xunit.abstractions.dll",
+        "build/net462/xunit.runner.reporters.net452.dll",
+        "build/net462/xunit.runner.utility.net452.dll",
         "build/net462/xunit.runner.visualstudio.props",
         "build/net462/xunit.runner.visualstudio.testadapter.dll",
         "build/net6.0/xunit.abstractions.dll",
+        "build/net6.0/xunit.runner.reporters.netcoreapp10.dll",
+        "build/net6.0/xunit.runner.utility.netcoreapp10.dll",
         "build/net6.0/xunit.runner.visualstudio.dotnetcore.testadapter.dll",
         "build/net6.0/xunit.runner.visualstudio.props",
         "lib/net462/_._",
         "lib/net6.0/_._",
-        "xunit.runner.visualstudio.2.5.1.nupkg.sha512",
+        "xunit.runner.visualstudio.2.5.5.nupkg.sha512",
         "xunit.runner.visualstudio.nuspec"
       ]
     },
@@ -7084,13 +7087,13 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "Microsoft.EntityFrameworkCore.InMemory >= 7.0.11",
-      "Microsoft.NET.Test.Sdk >= 17.7.2",
-      "Moq >= 4.20.69",
+      "Microsoft.NET.Test.Sdk >= 17.8.0",
+      "Moq >= 4.20.70",
       "RestSharp >= 110.2.0",
       "backend >= 1.0.0",
       "coverlet.collector >= 6.0.0",
-      "xunit >= 2.5.1",
-      "xunit.runner.visualstudio >= 2.5.1"
+      "xunit >= 2.6.3",
+      "xunit.runner.visualstudio >= 2.5.5"
     ]
   },
   "packageFolders": {
@@ -7099,9 +7102,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\projs\\AgroFam\\backend_c#\\backend\\Tests\\Tests.csproj",
-      "projectName": "Tests",
-      "projectPath": "C:\\projs\\AgroFam\\backend_c#\\backend\\Tests\\Tests.csproj",
+      "projectUniqueName": "C:\\projs\\AgroFam\\backend_c#\\backend\\Tests\\UnitTests.csproj",
+      "projectName": "UnitTests",
+      "projectPath": "C:\\projs\\AgroFam\\backend_c#\\backend\\Tests\\UnitTests.csproj",
       "packagesPath": "C:\\Users\\Lázaro\\.nuget\\packages\\",
       "outputPath": "C:\\projs\\AgroFam\\backend_c#\\backend\\Tests\\obj\\",
       "projectStyle": "PackageReference",
@@ -7142,11 +7145,11 @@
           },
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
-            "version": "[17.7.2, )"
+            "version": "[17.8.0, )"
           },
           "Moq": {
             "target": "Package",
-            "version": "[4.20.69, )"
+            "version": "[4.20.70, )"
           },
           "RestSharp": {
             "target": "Package",
@@ -7160,13 +7163,13 @@
           },
           "xunit": {
             "target": "Package",
-            "version": "[2.5.1, )"
+            "version": "[2.6.3, )"
           },
           "xunit.runner.visualstudio": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.5.1, )"
+            "version": "[2.5.5, )"
           }
         },
         "imports": [

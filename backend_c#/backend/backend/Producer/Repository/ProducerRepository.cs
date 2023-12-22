@@ -15,10 +15,13 @@ namespace backend.Producer.Repository
 
         public async Task<Models.Producer?> FindByEmail(string email)
         {
+            try {
+                var possibleProducer = await _context.Producers.FirstOrDefaultAsync(producer => producer.Email == email);
+                return possibleProducer;
 
-            var possibleProducer = await _context.Producers.FirstOrDefaultAsync(producer => producer.Email == email);
-            return possibleProducer;
-
+            }catch(Exception e) {
+                return null;
+            }
         }
 
         public async Task<Models.Producer?> FindById(Guid id)
@@ -50,7 +53,10 @@ namespace backend.Producer.Repository
         public async Task<Models.Producer> Save(Models.Producer producer)
         {
             producer.CreatedAt = DateTime.Now;
+            Console.WriteLine("*********************************************************************************");
+            Console.WriteLine(producer.Name);
             var createdProducer = await _context.Producers.AddAsync(producer);
+            Console.WriteLine(createdProducer.Entity.Id);
             await _context.SaveChangesAsync();
             return createdProducer.Entity;
         }

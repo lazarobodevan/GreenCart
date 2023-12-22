@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backend", "backend\backend.csproj", "{90448643-4753-4EDB-ACFE-3C158CEA06D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{D7448CA0-4407-43CE-8B16-6657A481051D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "Tests\UnitTests.csproj", "{D7448CA0-4407-43CE-8B16-6657A481051D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{FC22ADBB-81FB-4195-A4B5-8DBB23155DC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D7448CA0-4407-43CE-8B16-6657A481051D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7448CA0-4407-43CE-8B16-6657A481051D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7448CA0-4407-43CE-8B16-6657A481051D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC22ADBB-81FB-4195-A4B5-8DBB23155DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC22ADBB-81FB-4195-A4B5-8DBB23155DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC22ADBB-81FB-4195-A4B5-8DBB23155DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC22ADBB-81FB-4195-A4B5-8DBB23155DC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

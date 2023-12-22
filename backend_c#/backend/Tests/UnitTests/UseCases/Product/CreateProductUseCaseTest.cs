@@ -1,6 +1,8 @@
 ﻿using backend.Models;
+using backend.Product.DTOs;
 using backend.Product.Repository;
 using backend.Product.UseCases;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +13,47 @@ using Tests.Factories.Product;
 namespace Tests.UnitTests.UseCases
 {
     public class CreateProductUseCaseTest {
+
+        private readonly Mock<IProductRepository> _productRepositoryMock;
+
+        public CreateProductUseCaseTest() {
+            _productRepositoryMock = new Mock<IProductRepository>();
+        }
+
         [Fact]
         [Trait("OP", "Create")]
-        public async Task ShouldCreateProductUseCaseSuccessfully() {
+        public async Task Save_GivenCreateProductDTO_ReturnsCreatedProduct() {
             //Arrange
-            var dbContext = DbContextFactory.GetDatabaseContext();
-            ProductRepository repository = new ProductRepository(dbContext);
-            CreateProductUseCase createProductUseCase = new CreateProductUseCase(repository);
+            _productRepositoryMock.Setup(x => x.Save(It.IsAny<backend.Models.Product>())).ReturnsAsync(new ProductFactory().Build());
 
-            ProductDTOFactory productFactory = new ProductDTOFactory();
-
-            var producerId = Guid.NewGuid();
-
-            var productDTO = productFactory.GetDefaultCreateProductDto(producerId).Build();
+            CreateProductUseCase createProductUseCase = new CreateProductUseCase(_productRepositoryMock.Object);
+            var productDTO = new ProductDTOFactory().Build();
             
             //Act
-            backend.Models.Product product =  await createProductUseCase.Execute(productDTO);
+            var product =  await createProductUseCase.Execute(productDTO);
 
             //Assert
             Assert.NotNull(product);
+        }
+
+        [Fact]
+        [Trait("OP", "Create")]
+        public async Task Save_GivenCreateProductDTOWithInvalidHarvestDate_ThrowsException() {
+            
+            //Arrange
+            CreateProductUseCase createProductUseCase = new CreateProductUseCase(_productRepositoryMock.Object);
+            CreateProductDTO productDTO = new ProductDTOFactory()
+                    .WithHarvestDate("31/31/1231")
+                    .Build();
+
+            //Act
+            async Task Act() {
+                var createdProduct = await createProductUseCase.Execute(productDTO);
+            }
+
+            //Assert
+            var exception = await Assert.ThrowsAsync<Exception>(async () => await Act());
+            Assert.Equal("Formato inválido de data", exception.Message);
         }
     }
 }

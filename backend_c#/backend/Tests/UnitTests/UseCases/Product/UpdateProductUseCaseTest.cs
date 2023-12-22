@@ -19,18 +19,19 @@ namespace Tests.UnitTests.UseCases.Product
         public async Task Update_GivenProduct_ReturnsUpdatedProduct() {
             //Arrange
             var productId = Guid.NewGuid();
-            var product = new backend.Models.Product {
-                Id = productId,
-                Name= "Product"
-            };
+            var product = new Factories.Product.ProductFactory()
+                .WithId(productId)
+                .Build();
+
             var updatedProductDTO = new UpdateProductDTO {
                 Id = productId,
                 Name = "Updated product"
             };
-            var updatedProductEntity = new backend.Models.Product {
-                Id = productId,
-                Name = "Updated product"
-            };
+            var updatedProductEntity = new Factories.Product.ProductFactory()
+                .WithId(productId)
+                .WithName("Updated Product")
+                .Build();
+
             _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(product);
             _productRepositoryMock.Setup(x => x.Update(It.IsAny<backend.Models.Product>())).Returns(updatedProductEntity);
 

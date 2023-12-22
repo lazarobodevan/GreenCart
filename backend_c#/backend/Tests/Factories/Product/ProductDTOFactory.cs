@@ -22,17 +22,18 @@ namespace Tests.Factories.Product
             Picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
             Price = 10.50,
             Unit = Unit.LITER,
+            ProducerId = Guid.NewGuid(),
         };
 
-        public ProductDTOFactory GetDefaultCreateProductDto(Guid producerId)
-        {
-            createProductDto.ProducerId = producerId;
-            return this;
-        }
 
         public CreateProductDTO Build()
         {
             return createProductDto;
+        }
+
+        public ProductDTOFactory WithProducerId(Guid producerId) {
+            createProductDto.ProducerId = producerId;
+            return this;
         }
 
         public ProductDTOFactory WithName(string name)

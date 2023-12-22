@@ -8,7 +8,7 @@ namespace backend.Utils {
             if (DateTime.TryParseExact(strDate, strFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate)) {
                 return DateTime.SpecifyKind(parsedDate.ToUniversalTime(), DateTimeKind.Utc);
             }
-            throw new Exception("Invalid date");
+            throw new Exception("Formato inválido de data");
         }
 
     }

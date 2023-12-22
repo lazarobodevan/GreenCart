@@ -25,7 +25,9 @@ namespace backend.Controllers.v1
             }
 
             try {
+                Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 var createdProducer = await createProducerUseCase.Execute(producerDto);
+                Console.WriteLine("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                 return StatusCode(StatusCodes.Status201Created, new ListProducerDTO(createdProducer));
             }catch(Exception ex) {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = ex.Message});
