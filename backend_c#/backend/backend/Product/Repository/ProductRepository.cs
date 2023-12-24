@@ -26,9 +26,6 @@ public class ProductRepository : IProductRepository{
         catch (ReferenceConstraintException ex){
             throw new ProducerDoesNotExistException();
         }
-        catch (UniqueConstraintException ex){
-            throw new UniqueConstraintException("Produto já existe");
-        }
         catch (Exception e){
             throw new Exception("Erro inesperado ao salvar no banco de dados");
         }

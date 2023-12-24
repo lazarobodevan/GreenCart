@@ -10,8 +10,8 @@ public class DatabaseContext : DbContext, IDatabaseContextOptions{
     public DatabaseContext(){
     }
 
-    public DbSet<Models.Producer> Producers{ get; set; }
-    public DbSet<Consumer> Consumers{ get; set; }
-    public DbSet<Order> Orders{ get; set; }
-    public DbSet<Models.Product> Products{ get; set; }
+    public virtual DbSet<Models.Producer> Producers{ get; set; }
+    public virtual DbSet<Consumer> Consumers{ get; set; }
+    public virtual DbSet<Order> Orders{ get; set; }
+    public virtual DbSet<Models.Product> Products{ get; set; }
 }

@@ -10,18 +10,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using backend.Product.Exceptions;
+using EntityFramework.Exceptions.Common;
 using Tests.Factories;
+using Tests.Factories.Product;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Tests.UnitTests.Repositories
 {
     public class ProductRepositoryTest : IAsyncLifetime{
 
-        private static DbContextOptions<DatabaseContext> dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
+        private DbContextOptions<DatabaseContext> _dbContextOptions;
 
         DatabaseContext _databaseContext;
 
-        public ProductRepositoryTest() { 
-            _databaseContext = new DatabaseContext(dbContextOptions);
+        public ProductRepositoryTest() {
+            _dbContextOptions = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "DbTest").Options;
+            _databaseContext = new DatabaseContext(_dbContextOptions);
         }
 
         public Task DisposeAsync() {
@@ -49,6 +54,49 @@ namespace Tests.UnitTests.Repositories
             //Assert
             Assert.NotNull( createdProduct );
             Assert.NotEqual(Guid.Empty, createdProduct.Id);
+        }
+
+        [Fact]
+        [Trait("OP", "Create")]
+        public async Task Save_GivenNotExistentProducerId_ThrowsProducerDoesNotExistException(){
+            //Arrange
+            var _dbContext = new Mock<DatabaseContext>(_dbContextOptions);
+            var productRepository = new ProductRepository(_dbContext.Object);
+            var productEntity = new ProductFactory().Build();
+
+            _dbContext.Setup(x => x.Products.AddAsync(productEntity, It.IsAny<CancellationToken>()))
+                .Throws(new ReferenceConstraintException());
+
+            //Act
+            async Task Act(){
+                var producer = await productRepository.Save(productEntity);
+            }
+
+            //Assert
+            var exception = await Assert.ThrowsAsync<ProducerDoesNotExistException>(async () => await Act());
+            Assert.Equal("Produtor não existe", exception.Message);
+            Assert.IsType<ProducerDoesNotExistException>(exception);
+        }
+
+        [Fact]
+        public async Task Save_GivenUnexpectedException_ThrowsException() {
+            //Arrange
+            var _dbContext = new Mock<DatabaseContext>(_dbContextOptions);
+            var productRepository = new ProductRepository(_dbContext.Object);
+            var productEntity = new ProductFactory().Build();
+
+            _dbContext.Setup(x => x.Products.AddAsync(productEntity, It.IsAny<CancellationToken>()))
+                .Throws(new Exception());
+
+            //Act
+            async Task Act() {
+                var producer = await productRepository.Save(productEntity);
+            }
+
+            //Assert
+            var exception = await Assert.ThrowsAsync<Exception>(async () => await Act());
+            Assert.Equal("Erro inesperado ao salvar no banco de dados", exception.Message);
+            Assert.IsType<Exception>(exception);
         }
 
         [Fact]
