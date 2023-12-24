@@ -47,7 +47,7 @@ namespace Tests.UnitTests.UseCases.Producer
 
         [Fact]
         [Trait("OP", "Delete")]
-        public async Task Delete_GivenNotExistantProducer_ThrowsException() {
+        public async Task Delete_GivenNotExistentProducer_ThrowsException() {
             //Arrange
             var producerId = Guid.NewGuid();
             DeleteProducerUseCase deleteProducerUseCase = new DeleteProducerUseCase(_producerRepositoryMock.Object);

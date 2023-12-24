@@ -52,7 +52,7 @@ namespace Tests.UnitTests.UseCases.Producer
 
         [Fact]
         [Trait("OP","Update")]
-        public async Task Update_GivenNotExistantProducer_ThrowsException() {
+        public async Task Update_GivenNotExistentProducer_ThrowsException() {
             //Arrange
             _producerRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Producer>(null));
             UpdateProducerUseCase updateProducerUseCase = new UpdateProducerUseCase(_producerRepositoryMock.Object);

@@ -149,7 +149,7 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "FindByEmail")]
-        public async Task FindByEmail_GivenNotExistantEmail_ReturnsNull() {
+        public async Task FindByEmail_GivenNotExistentEmail_ReturnsNull() {
             //Arrange
             var producer = new Producer {
                 Name = "Producer Test",
@@ -275,7 +275,7 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "GetProducerProducts")]
-        public void GetProducerProducts_GivenNotExistantProducerId_ReturnsEmptyList() {
+        public void GetProducerProducts_GivenNotExistentProducerId_ReturnsEmptyList() {
             //Arrange
             var producerId = Guid.NewGuid();
 
@@ -540,7 +540,7 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP","Delete")]
-        public async Task Delete_GivenNotExistantProducer_ThrowsException() {
+        public async Task Delete_GivenNotExistentProducer_ThrowsException() {
             //Arrange
             var producerId = Guid.NewGuid();
             var producer = new backend.Models.Producer {

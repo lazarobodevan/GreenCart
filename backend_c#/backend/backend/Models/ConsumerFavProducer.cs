@@ -1,21 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace backend.Models {
-    public class ConsumerFavProducer {
-        [Key]
-        public Guid Id { get; set; }
+namespace backend.Models;
 
-        [ForeignKey("Consumer")]
-        public Guid ConsumerId { get; set; }
-        public Consumer Consumer { get; set; }
+public class ConsumerFavProducer{
+    [Key] public Guid Id{ get; set; }
 
-        [ForeignKey("Producer")]
-        public Guid ProducerId { get; set; }
-        public Producer Producer { get; set; }
+    [ForeignKey("Consumer")] public Guid ConsumerId{ get; set; }
 
-        public ConsumerFavProducer() { }
+    public Consumer Consumer{ get; set; }
 
+    [ForeignKey("Producer")] public Guid ProducerId{ get; set; }
 
-    }
+    public Producer Producer{ get; set; }
 }

@@ -37,7 +37,7 @@ namespace Tests.UnitTests.UseCases.Producer
 
             CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object);
 
-            var producer = producerFactory.GetDefaultCreateProducerDto();
+            var producer = producerFactory.Build();
 
             //Act
             var createdProducer = await usecase.Execute(producer);
@@ -48,14 +48,14 @@ namespace Tests.UnitTests.UseCases.Producer
 
         [Fact]
         [Trait("OP", "Create")]
-        public async Task Save_GivenAlreadyExistantProducer_ThrowsError() {
+        public async Task Save_GivenAlreadyExistentProducer_ThrowsError() {
             //Arrange
             producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer());
             producerRepository.Setup(x => x.FindByEmail(It.IsAny<string>())).ReturnsAsync(new backend.Models.Producer());
 
             CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object);
 
-            var producer = producerFactory.GetDefaultCreateProducerDto();
+            var producer = producerFactory.Build();
 
             //Act
             async Task Act(CreateProducerDTO producer) {

@@ -1,10 +1,13 @@
+using System;
 using backend.Contexts;
 using backend.Producer.Repository;
 using backend.Product.Repository;
-using backend.Utils.Errors;
-using Microsoft.AspNetCore.Mvc.Razor;
+using EntityFramework.Exceptions.PostgreSQL;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,29 +19,32 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-if (builder.Environment.IsStaging()) {
-    Console.WriteLine("Running in staging modeaaaa");
+if (builder.Environment.IsStaging()){
+    Console.WriteLine("Running in staging mode");
     Console.WriteLine(builder.Configuration.GetValue<String>("ConnectionStrings:DefaultConnection"));
     builder.Services.AddDbContext<DatabaseContext>(options => {
         options.UseNpgsql(builder.Configuration.GetValue<String>("ConnectionStrings:DefaultConnection"));
+        options.UseExceptionProcessor();
     });
 }
 
-if (builder.Environment.IsDevelopment()) {
+if (builder.Environment.IsDevelopment()){
     Console.WriteLine("Running in development mode");
     Console.WriteLine(builder.Configuration.GetValue<String>("ConnectionStrings:Test"));
     builder.Services.AddDbContext<DatabaseContext>(options => {
         options.UseNpgsql(builder.Configuration.GetValue<String>("ConnectionStrings:Dev"));
+        options.UseExceptionProcessor();
     });
 }
-if(builder.Environment.IsProduction()) {
+
+if (builder.Environment.IsProduction()){
     Console.WriteLine("Running in production mode");
     Console.WriteLine(builder.Configuration.GetValue<String>("ConnectionStrings:Dev"));
     builder.Services.AddDbContext<DatabaseContext>(options => {
         options.UseNpgsql(builder.Configuration.GetValue<String>("ConnectionStrings:Prd"));
+        options.UseExceptionProcessor();
     });
 }
-
 
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -48,8 +54,7 @@ var app = builder.Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+if (app.Environment.IsDevelopment()){
     app.UseSwagger();
     app.UseSwaggerUI();
 }

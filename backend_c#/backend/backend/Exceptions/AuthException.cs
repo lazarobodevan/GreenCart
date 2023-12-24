@@ -1,8 +1,11 @@
-﻿namespace backend.Exceptions {
-    public class AuthException : Exception{
-       
-        public AuthException():base("Erro de autenticação") { }
+﻿using System;
 
-        public AuthException(string message) : base(message) { }
+namespace backend.Exceptions;
+
+public class AuthException : Exception{
+    public AuthException() : base("Erro de autenticação"){
+    }
+
+    public AuthException(string message) : base(message){
     }
 }

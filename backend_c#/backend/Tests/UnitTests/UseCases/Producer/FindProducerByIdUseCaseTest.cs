@@ -32,7 +32,7 @@ namespace Tests.UnitTests.UseCases.Producer
             CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object);
             FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object);
 
-            var producer = producerFactory.GetDefaultCreateProducerDto();
+            var producer = producerFactory.Build();
 
             //Act
             var createdProducer = await createProducerUseCase.Execute(producer);
@@ -45,7 +45,7 @@ namespace Tests.UnitTests.UseCases.Producer
 
         [Fact]
         [Trait("OP", "FindById")]
-        public async Task FindById_GivenNotExistantId_ReturnsNull() {
+        public async Task FindById_GivenNotExistentId_ReturnsNull() {
 
             //Arrange
             _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Producer?>(null));

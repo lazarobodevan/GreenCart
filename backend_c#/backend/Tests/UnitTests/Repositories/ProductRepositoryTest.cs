@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tests.Factories;
-using Tests.Factories.Product;
 
 namespace Tests.UnitTests.Repositories
 {
@@ -42,7 +41,7 @@ namespace Tests.UnitTests.Repositories
             
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
-            var product = new ProductFactory().Build();
+            var product = new Factories.Product.ProductFactory().Build();
 
             //Act
             var createdProduct = await productRepository.Save(product);
@@ -58,7 +57,7 @@ namespace Tests.UnitTests.Repositories
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
-            var product = new ProductFactory().Build();
+            var product = new Factories.Product.ProductFactory().Build();
 
             //Act
             var createdProduct = await productRepository.Save(product);
@@ -84,7 +83,7 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "Create")]
-        public async Task Create_GivenManyProducts_ReturnsCreatedProducts() {
+        public async Task Save_GivenManyProducts_ReturnsCreatedProducts() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
 
@@ -92,8 +91,8 @@ namespace Tests.UnitTests.Repositories
             Guid producerId = Guid.NewGuid();
 
             var products = new Product[]{
-                new ProductFactory().Build(),
-                new ProductFactory().Build()
+                new Factories.Product.ProductFactory().Build(),
+                new Factories.Product.ProductFactory().Build()
             };
 
             //Act
@@ -109,7 +108,7 @@ namespace Tests.UnitTests.Repositories
         public async Task Update_GivenProduct_ReturnsUpdatedProduct() {
             //Arrange
             ProductRepository repository = new ProductRepository(_databaseContext);
-            var product = new ProductFactory().Build();
+            var product = new Factories.Product.ProductFactory().Build();
 
             //Act
             var savedProduct = await repository.Save(product);
@@ -132,7 +131,7 @@ namespace Tests.UnitTests.Repositories
         public async Task Delete_GivenProduct_ReturnsDeletedProduct() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
-            var product = new ProductFactory().Build();
+            var product = new Factories.Product.ProductFactory().Build();
 
             //Act
             var createdProduct = await productRepository.Save(product);

@@ -36,7 +36,7 @@ namespace Tests.UnitTests.UseCases.Producer
 
         [Fact]
         [Trait("OP", "GetProducerProducts")]
-        public async Task GetProducerProducts_GivenNotExistantProducerId_ThrowsError() {
+        public async Task GetProducerProducts_GivenNotExistentProducerId_ThrowsError() {
 
             //Arrange
             _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Producer?>(null));

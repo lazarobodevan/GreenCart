@@ -1,22 +1,18 @@
-﻿using backend.Producer.Repository;
+﻿using System.Collections.Generic;
+using backend.Producer.Repository;
 
-namespace backend.Producer.UseCases
-{
-    public class FindNearProducersUseCase
-    {
-        private readonly IProducerRepository _repository;
+namespace backend.Producer.UseCases;
 
-        public FindNearProducersUseCase(IProducerRepository repository)
-        {
-            _repository = repository;
-        }
+public class FindNearProducersUseCase{
+    private readonly IProducerRepository _repository;
 
-        public IEnumerable<Models.Producer> Execute(string city)
-        {
+    public FindNearProducersUseCase(IProducerRepository repository){
+        _repository = repository;
+    }
 
-            var foundProducers = _repository.FindNearProducers(city);
+    public IEnumerable<Models.Producer> Execute(string city){
+        var foundProducers = _repository.FindNearProducers(city);
 
-            return foundProducers;
-        }
+        return foundProducers;
     }
 }

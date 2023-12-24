@@ -1,20 +1,21 @@
-﻿using backend.Contexts;
-using backend.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using backend.Contexts;
+using backend.Product.Exceptions;
+using EntityFramework.Exceptions.Common;
 
-namespace backend.Product.Repository
-{
-    public class ProductRepository : IProductRepository
-    {
-        private readonly DatabaseContext _context;
+namespace backend.Product.Repository;
 
-        public ProductRepository(DatabaseContext context)
-        {
-            _context = context;
-        }
+public class ProductRepository : IProductRepository{
+    private readonly DatabaseContext _context;
 
-        public async Task<Models.Product> Save(Models.Product product)
-        {
+    public ProductRepository(DatabaseContext context){
+        _context = context;
+    }
 
+    public async Task<Models.Product> Save(Models.Product product){
+        try{
             product.CreatedAt = DateTime.Now;
 
             var createdProduct = await _context.Products.AddAsync(product);
@@ -22,55 +23,52 @@ namespace backend.Product.Repository
 
             return createdProduct.Entity;
         }
+        catch (ReferenceConstraintException ex){
+            throw new ProducerDoesNotExistException();
+        }
+        catch (UniqueConstraintException ex){
+            throw new UniqueConstraintException("Produto já existe");
+        }
+        catch (Exception e){
+            throw new Exception("Erro inesperado ao salvar no banco de dados");
+        }
+    }
 
-        public async Task<Models.Product?> FindById(Guid productId)
-        {
+    public async Task<Models.Product?> FindById(Guid productId){
+        var possibleProduct = await _context.Products.FindAsync(productId);
 
-            var possibleProduct = await _context.Products.FindAsync(productId);
+        return possibleProduct;
+    }
 
-            return possibleProduct;
+    public async Task<IEnumerable<Models.Product>> SaveMany(Models.Product[] products){
+        List<Models.Product> savedProducts = new List<Models.Product>();
+
+        foreach (var product in products){
+            product.CreatedAt = DateTime.Now;
+            var createdProduct = await _context.Products.AddAsync(product);
+            savedProducts.Add(createdProduct.Entity);
         }
 
-        public async Task<IEnumerable<Models.Product>> SaveMany(Models.Product[] products)
-        {
+        await _context.SaveChangesAsync();
 
-            List<Models.Product> savedProducts = new List<Models.Product>();
+        return savedProducts;
+    }
 
-            foreach (var product in products)
-            {
-                product.CreatedAt = DateTime.Now;
-                var createdProduct = await _context.Products.AddAsync(product);
-                savedProducts.Add(createdProduct.Entity);
+    public Models.Product Update(Models.Product product){
+        product.UpdatedAt = DateTime.Now;
 
-            }
+        var updatedProduct = _context.Products.Update(product);
 
-            await _context.SaveChangesAsync();
+        return updatedProduct.Entity;
+    }
 
-            return savedProducts;
-        }
+    //Soft delete
+    public async Task<Models.Product> Delete(Models.Product product){
+        product.DeletedAt = DateTime.Now;
 
-        public Models.Product Update(Models.Product product)
-        {
+        var deletedProduct = _context.Products.Update(product);
+        await _context.SaveChangesAsync();
 
-            product.UpdatedAt = DateTime.Now;
-
-            var updatedProduct = _context.Products.Update(product);
-
-            return updatedProduct.Entity;
-
-        }
-
-        //Soft delete
-        public async Task<Models.Product> Delete(Models.Product product)
-        {
-
-            product.DeletedAt = DateTime.Now;
-
-            var deletedProduct = _context.Products.Update(product);
-            await _context.SaveChangesAsync();
-
-            return deletedProduct.Entity;
-
-        }
+        return deletedProduct.Entity;
     }
 }

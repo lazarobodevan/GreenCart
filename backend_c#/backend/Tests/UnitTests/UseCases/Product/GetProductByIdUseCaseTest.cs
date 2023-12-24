@@ -39,7 +39,7 @@ namespace Tests.UnitTests.UseCases
 
         [Fact]
         [Trait("OP", "FindById")]
-        public async Task FindById_GivenNotExistantProductId_ReturnsNull() {
+        public async Task FindById_GivenNotExistentProductId_ReturnsNull() {
             //Arrange
             _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Product?>(null));
 

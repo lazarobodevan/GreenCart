@@ -3,15 +3,22 @@ using backend.Producer.DTOs;
 using backend.Product.DTOs;
 using backend.Product.Enums;
 using backend.Utils;
+using FluentAssertions;
+using FluentAssertions.Extensions;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using backend.Exceptions;
+using Tests.Factories.Producer;
+using Tests.Factories.Product;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace Tests.IntegrationTests.v1
 {
@@ -32,7 +39,7 @@ namespace Tests.IntegrationTests.v1
         }
 
         [Fact]
-        public async Task CreateNewProductSuccessfully() {
+        public async Task Create_GivenProducerAndProduct_ReturnsListProductsDTO() {
             //Arrange
             var productClient = new RestClient("http://localhost:5212/api/Product");
             var producerClient = new RestClient("http://localhost:5212/api/Producer");
@@ -40,115 +47,62 @@ namespace Tests.IntegrationTests.v1
             var productRequest = new RestRequest();
             var producerRequest = new RestRequest();
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-            var productDTO = new CreateProductDTO(
-                "Product",
-                "Description",
-                picture,
-                Category.VEGETABLE,
-                10.10,
-                Unit.UNIT,
-                10,
-                true,
-                "22/11/2023",
-                new Guid()
-            );
-
-            var producerDto = new CreateProducerDTO {
-                Name = "Producer Test",
-                Email = "test3@test.com",
-                AttendedCities = "City1;City2;City3",
-                CreatedAt = DateTime.Now,
-                FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
-                OriginCity = "City1",
-                Password = "123",
-                Telephone = "(31) 99999-9999",
-                WhereToFind = "Local de encontro"
-            };
+            var productDTO = new ProductDTOFactory().Build();
+            var producerDTO = new ProducerDTOFactory().Build();
 
             //Act
             producerRequest.Method = Method.Post;
-            producerRequest.AddJsonBody(JsonConvert.SerializeObject(producerDto));
+            producerRequest.AddJsonBody(JsonConvert.SerializeObject(producerDTO));
             producerRequest.AddHeader("Content-Type", "application/json");
 
             RestResponse producerResponse = await producerClient.ExecuteAsync(producerRequest);
 
-            var responseObj = JsonConvert.DeserializeObject<ListProducerDTO>(producerResponse.Content);
+            var producerResponseObj = JsonConvert.DeserializeObject<ListProducerDTO>(producerResponse.Content);
 
-            productDTO.ProducerId = responseObj?.Id;
+            productDTO.ProducerId = producerResponseObj?.Id;
 
             productRequest.Method = Method.Post;
             productRequest.AddJsonBody(JsonConvert.SerializeObject(productDTO));
             productRequest.AddHeader("Content-Type", "application/json");
 
-            Thread.Sleep(1000);
             RestResponse productResponse = await productClient.ExecuteAsync(productRequest);
-            var producerResponseObj = JsonConvert.DeserializeObject<ListProductDTO>(productResponse.Content);
+            var productResponseObj = JsonConvert.DeserializeObject<ListProductDTO>(productResponse.Content);
 
-
+            //Assert
             Assert.True(productResponse.IsSuccessful);
+            Assert.True(producerResponse.IsSuccessful);
 
+            producerResponseObj.Should().BeEquivalentTo(producerDTO, options => options.ExcludingMissingMembers());
+            productResponseObj.Should().BeEquivalentTo(productDTO, options => options.ExcludingMissingMembers().Excluding(dto => dto.HarvestDate));
+
+            Assert.IsType<DateTime>(productResponseObj!.HarvestDate);
+            Assert.Equal(productResponseObj.HarvestDate, DateUtils.ConvertStringToDateTime(productDTO.HarvestDate!, "dd/MM/yyyy"));
         }
 
         [Fact]
-        public async Task CreateNewProductSuccessfully2() {
+        public async Task Create_GivenProductAndNotExistentProducer_ReturnsException() {
             //Arrange
             var productClient = new RestClient("http://localhost:5212/api/Product");
-            var producerClient = new RestClient("http://localhost:5212/api/Producer");
 
             var productRequest = new RestRequest();
-            var producerRequest = new RestRequest();
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
-
-            var productDTO = new CreateProductDTO(
-                "Product",
-                "Description",
-                picture,
-                Category.VEGETABLE,
-                10.10,
-                Unit.UNIT,
-                10,
-                true,
-                "22/11/2023",
-                new Guid()
-            );
-
-            var producerDto = new CreateProducerDTO {
-                Name = "Producer Test",
-                Email = "test23@test.com",
-                AttendedCities = "City1;City2;City3",
-                CreatedAt = DateTime.Now,
-                FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
-                OriginCity = "City1",
-                Password = "123",
-                Telephone = "(31) 99999-9999",
-                WhereToFind = "Local de encontro"
-            };
-
-            //Act
-            producerRequest.Method = Method.Post;
-            producerRequest.AddJsonBody(JsonConvert.SerializeObject(producerDto));
-            producerRequest.AddHeader("Content-Type", "application/json");
-
-            RestResponse producerResponse = await producerClient.ExecuteAsync(producerRequest);
-
-            var responseObj = JsonConvert.DeserializeObject<ListProducerDTO>(producerResponse.Content);
-
-            productDTO.ProducerId = responseObj?.Id;
+            var productDTO = new ProductDTOFactory()
+                .WithProducerId(Guid.NewGuid())
+                .Build();
 
             productRequest.Method = Method.Post;
             productRequest.AddJsonBody(JsonConvert.SerializeObject(productDTO));
             productRequest.AddHeader("Content-Type", "application/json");
 
+            //Act
             RestResponse productResponse = await productClient.ExecuteAsync(productRequest);
-            var producerResponseObj = JsonConvert.DeserializeObject<ListProductDTO>(productResponse.Content);
-
-
-            Assert.True(productResponse.IsSuccessful);
+            ExceptionResponseModel productResponseObj =
+                JsonConvert.DeserializeObject<ExceptionResponseModel>(productResponse.Content);
+            
+            Assert.False(productResponse.IsSuccessful);
+            Assert.Equal("Produtor não existe", productResponseObj.Error.Message);
+            Assert.Equal(HttpStatusCode.BadRequest, productResponse.StatusCode);
+            
 
         }
 
@@ -177,9 +131,6 @@ namespace Tests.IntegrationTests.v1
 
         }
 
-        public async void Dispose() {
-            await _environmentConfiguration.DisposeAsync();
-        }
     }
 }
 

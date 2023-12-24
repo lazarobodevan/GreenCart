@@ -1,24 +1,19 @@
-﻿using backend.Models;
+﻿using System;
+using System.Threading.Tasks;
 using backend.Producer.Repository;
 
-namespace backend.Producer.UseCases
-{
-    public class FindProducerByIdUseCase
-    {
-        private readonly IProducerRepository _repository;
+namespace backend.Producer.UseCases;
 
-        public FindProducerByIdUseCase(IProducerRepository repository)
-        {
-            _repository = repository;
-        }
+public class FindProducerByIdUseCase{
+    private readonly IProducerRepository _repository;
 
-        public async Task<Models.Producer?> Execute(Guid producerId)
-        {
+    public FindProducerByIdUseCase(IProducerRepository repository){
+        _repository = repository;
+    }
 
-            var possibleProducer = await _repository.FindById(producerId);
+    public async Task<Models.Producer?> Execute(Guid producerId){
+        var possibleProducer = await _repository.FindById(producerId);
 
-            return possibleProducer;
-
-        }
+        return possibleProducer;
     }
 }

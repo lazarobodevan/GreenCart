@@ -49,7 +49,7 @@ namespace Tests.UnitTests.UseCases.Product
 
         [Fact]
         [Trait("OP", "Update")]
-        public async Task Update_GivenNotExistantProduct_ThrowsException() {
+        public async Task Update_GivenNotExistentProduct_ThrowsException() {
             //Arrange
             _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Product?>(null));
 
