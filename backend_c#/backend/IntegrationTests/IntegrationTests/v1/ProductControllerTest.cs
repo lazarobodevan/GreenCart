@@ -19,6 +19,7 @@ using backend.Exceptions;
 using Tests.Factories.Producer;
 using Tests.Factories.Product;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using backend.Product.Exceptions;
 
 namespace Tests.IntegrationTests.v1
 {

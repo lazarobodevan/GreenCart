@@ -37,16 +37,6 @@ public class ProducerRepository : IProducerRepository{
         return producers;
     }
 
-    public IEnumerable<Models.Product> GetProducts(Guid producerId){
-        //var products = this._context.Producers.Include(producer => producer.Products).SingleOrDefault(producer => producer.Id.Equals(producerId));
-        var products = _context.Producers
-            .Where(producer => producer.Id == producerId)
-            .SelectMany(producer => producer.Products)
-            .ToList();
-
-        return products;
-    }
-
     public async Task<Models.Producer> Save(Models.Producer producer){
         producer.CreatedAt = DateTime.Now;
         Console.WriteLine("*********************************************************************************");

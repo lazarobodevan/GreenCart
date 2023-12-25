@@ -1,4 +1,10 @@
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\CoverletSourceRootsMapping_UnitTests
+C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.csproj.AssemblyReference.cache
+C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.AssemblyInfoInputs.cache
+C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.AssemblyInfo.cs
+C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.csproj.CoreCompileInputs.cache
+C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.sourcelink.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\testhost.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.deps.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.runtimeconfig.json
@@ -10,6 +16,7 @@ C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.exe
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Tests.Shared.deps.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Tests.Shared.runtimeconfig.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\testhost.exe
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\xunit.runner.visualstudio.testadapter.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\xunit.runner.reporters.netcoreapp10.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\xunit.runner.utility.netcoreapp10.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\UnitTests.deps.json
@@ -17,6 +24,8 @@ C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\UnitTests.runtimeconf
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\UnitTests.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\UnitTests.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Castle.Core.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\EntityFramework.Exceptions.Common.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\EntityFramework.Exceptions.PostgreSQL.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -35,7 +44,6 @@ C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Npgsql.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\NuGet.Frameworks.dll
-C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\RestSharp.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -112,18 +120,9 @@ C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Tests.Shared.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Tests.Shared.pdb
-C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.csproj.AssemblyReference.cache
-C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.GeneratedMSBuildEditorConfig.editorconfig
-C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.AssemblyInfoInputs.cache
-C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.AssemblyInfo.cs
-C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.csproj.CoreCompileInputs.cache
-C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.sourcelink.json
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.csproj.CopyComplete
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\refint\UnitTests.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\ref\UnitTests.dll
-C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\EntityFramework.Exceptions.Common.dll
-C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\EntityFramework.Exceptions.PostgreSQL.dll
-C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\xunit.runner.visualstudio.testadapter.dll
