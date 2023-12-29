@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tests.Shared.Factories.Picture;
 
 //***** DO NOT REMOVE*****
 [assembly: CollectionBehavior(DisableTestParallelization = false)]
@@ -206,11 +207,15 @@ namespace Tests.UnitTests.Repositories
             var createdProducer1 = await _producerRepository.Save(producer1);
             var createdProducer2 = await _producerRepository.Save(producer2);
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var product1Id = Guid.NewGuid();
+            var product2Id = Guid.NewGuid();
+            var product3Id = Guid.NewGuid();
+
             var product1 = new Product {
+                Id = product1Id,
                 Name = "Product1",
                 Description = "Description",
-                Picture = picture,
+                Pictures = new List<Picture>() { new PictureFactory().WithProductId(product1Id).Build()},
                 Category = Category.VEGETABLE,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -220,9 +225,10 @@ namespace Tests.UnitTests.Repositories
                 ProducerId = createdProducer1.Id,
             };
             var product2 = new Product {
+                Id = product2Id,
                 Name = "Product2",
                 Description = "Description",
-                Picture = picture,
+                Pictures = new List<Picture>() { new PictureFactory().WithProductId(product2Id).Build() },
                 Category = Category.GRAIN,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -232,9 +238,10 @@ namespace Tests.UnitTests.Repositories
                 ProducerId = createdProducer2.Id,
             };
             var product3 = new Product {
+                Id = product3Id,
                 Name = "Product3",
                 Description = "Description",
-                Picture = picture,
+                Pictures = new List<Picture>() { new PictureFactory().WithProductId(product3Id).Build() },
                 Category = Category.GRAIN,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -246,7 +253,7 @@ namespace Tests.UnitTests.Repositories
 
             var createdProduct1 = await _productRepository.Save(product1);
 
-            var createdProducts2And3 = await _productRepository.SaveMany(new Product[] { product2, product3 });
+            var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 
             //Act
             var producersFromCity1 = _producerRepository.FindNearProducers("city1").ToList();
@@ -291,11 +298,15 @@ namespace Tests.UnitTests.Repositories
             var createdProducer1 = await _producerRepository.Save(producer1);
             var createdProducer2 = await _producerRepository.Save(producer2);
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var product1Id = Guid.NewGuid();
+            var product2Id = Guid.NewGuid();
+            var product3Id = Guid.NewGuid();
+
             var product1 = new Product {
+                Id = product1Id,
                 Name = "Product1",
                 Description = "Description",
-                Picture = picture,
+                Pictures = new List<Picture>() { new PictureFactory().WithProductId(product1Id).Build() },
                 Category = Category.VEGETABLE,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -305,9 +316,10 @@ namespace Tests.UnitTests.Repositories
                 ProducerId = createdProducer1.Id,
             };
             var product2 = new Product {
+                Id= product2Id,
                 Name = "Product2",
                 Description = "Description",
-                Picture = picture,
+                Pictures = new List<Picture>() { new PictureFactory().WithProductId(product2Id).Build() },
                 Category = Category.GRAIN,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -317,9 +329,10 @@ namespace Tests.UnitTests.Repositories
                 ProducerId = createdProducer2.Id,
             };
             var product3 = new Product {
+                Id= product3Id,
                 Name = "Product3",
                 Description = "Description",
-                Picture = picture,
+                Pictures = new List<Picture>() { new PictureFactory().WithProductId(product1Id).Build() },
                 Category = Category.GRAIN,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -331,7 +344,7 @@ namespace Tests.UnitTests.Repositories
 
             var createdProduct1 = await _productRepository.Save(product1);
 
-            var createdProducts2And3 = await _productRepository.SaveMany(new Product[] { product2, product3 });
+            var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 
             //Act
             var producersFromCity2 = _producerRepository.FindNearProducers("city2").ToList();

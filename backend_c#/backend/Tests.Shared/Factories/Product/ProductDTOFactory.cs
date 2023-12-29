@@ -1,5 +1,6 @@
 ﻿using backend.Product.DTOs;
 using backend.Product.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Tests.Factories.Product
             Category = Category.BEVERAGE,
             HarvestDate = "25/11/2023",
             IsOrganic = true,
-            Picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
+            Pictures = new List<IFormFile>(),
             Price = 10.50,
             Unit = Unit.LITER,
             ProducerId = Guid.NewGuid(),
@@ -66,9 +67,9 @@ namespace Tests.Factories.Product
             return this;
         }
 
-        public ProductDTOFactory WithPicture(byte[] picture)
+        public ProductDTOFactory WithPictures(List<IFormFile> pictures)
         {
-            createProductDto.Picture = picture;
+            createProductDto.Pictures = pictures;
             return this;
         }
         public ProductDTOFactory WithPrice(double price)

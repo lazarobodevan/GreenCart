@@ -40,6 +40,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AWSSDK.Extensions.NETCore.Setup": {
+              "target": "Package",
+              "version": "[3.7.300, )"
+            },
+            "AWSSDK.S3": {
+              "target": "Package",
+              "version": "[3.7.305.2, )"
+            },
             "EntityFrameworkCore.Exceptions.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.0, )"

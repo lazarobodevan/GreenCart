@@ -20,12 +20,14 @@ using Tests.Factories.Producer;
 using Tests.Factories.Product;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 using backend.Product.Exceptions;
+using Tests.Shared.Utils;
 
 namespace Tests.IntegrationTests.v1
 {
     public class ProductControllerTest:IAsyncLifetime, IClassFixture<EnvironmentConfiguration> {
 
         private EnvironmentConfiguration _environmentConfiguration;
+        private const string _baseApiUrl = "http://localhost:5212/api";
 
         public async Task DisposeAsync() {
             await _environmentConfiguration.DisposeAsync();
@@ -40,57 +42,17 @@ namespace Tests.IntegrationTests.v1
         }
 
         [Fact]
-        public async Task Create_GivenProducerAndProduct_ReturnsListProductsDTO() {
-            //Arrange
-            var productClient = new RestClient("http://localhost:5212/api/Product");
-            var producerClient = new RestClient("http://localhost:5212/api/Producer");
-
-            var productRequest = new RestRequest();
-            var producerRequest = new RestRequest();
-
-            var productDTO = new ProductDTOFactory().Build();
-            var producerDTO = new ProducerDTOFactory().Build();
-
-            //Act
-            producerRequest.Method = Method.Post;
-            producerRequest.AddJsonBody(JsonConvert.SerializeObject(producerDTO));
-            producerRequest.AddHeader("Content-Type", "application/json");
-
-            RestResponse producerResponse = await producerClient.ExecuteAsync(producerRequest);
-
-            var producerResponseObj = JsonConvert.DeserializeObject<ListProducerDTO>(producerResponse.Content);
-
-            productDTO.ProducerId = producerResponseObj?.Id;
-
-            productRequest.Method = Method.Post;
-            productRequest.AddJsonBody(JsonConvert.SerializeObject(productDTO));
-            productRequest.AddHeader("Content-Type", "application/json");
-
-            RestResponse productResponse = await productClient.ExecuteAsync(productRequest);
-            var productResponseObj = JsonConvert.DeserializeObject<ListProductDTO>(productResponse.Content);
-
-            //Assert
-            Assert.True(productResponse.IsSuccessful);
-            Assert.True(producerResponse.IsSuccessful);
-
-            producerResponseObj.Should().BeEquivalentTo(producerDTO, options => options.ExcludingMissingMembers());
-            productResponseObj.Should().BeEquivalentTo(productDTO, options => options.ExcludingMissingMembers().Excluding(dto => dto.HarvestDate));
-
-            Assert.IsType<DateTime>(productResponseObj!.HarvestDate);
-            Assert.Equal(productResponseObj.HarvestDate, DateUtils.ConvertStringToDateTime(productDTO.HarvestDate!, "dd/MM/yyyy"));
-        }
-
-        [Fact]
-        public async Task Create_GivenProductAndNotExistentProducer_ReturnsException() {
+        public async Task Save_GivenProductAndNotExistentProducer_ThrowsException() {
             //Arrange
             var productClient = new RestClient("http://localhost:5212/api/Product");
 
             var productRequest = new RestRequest();
 
-            var productDTO = new ProductDTOFactory()
-                .WithProducerId(Guid.NewGuid())
-                .Build();
-
+            var productDTO = new List<CreateProductDTO>() {
+                new ProductDTOFactory()
+                    .WithProducerId(Guid.NewGuid())
+                    .Build()
+            };
             productRequest.Method = Method.Post;
             productRequest.AddJsonBody(JsonConvert.SerializeObject(productDTO));
             productRequest.AddHeader("Content-Type", "application/json");
@@ -108,7 +70,7 @@ namespace Tests.IntegrationTests.v1
         }
 
         [Fact]
-        public async Task ShouldThrowErrorOfMissingFieldsInRequestBody() {
+        public async Task Save_GivenMissingBody_ThrowsError() {
             
             //Arrange
             var producerClient = new RestClient("http://localhost:5212/api/Producer");
@@ -130,6 +92,82 @@ namespace Tests.IntegrationTests.v1
             string actualJson = JsonConvert.SerializeObject(responseObj.Errors);
             Assert.Equal(expectedJson, actualJson);
 
+        }
+
+        [Fact]
+        public async Task GetProducerProducts_GivenProducerAndProduct_ReturnsListProductsDTO() {
+            //Arrange
+            var productClient = new RestClient($"{_baseApiUrl}/Product");
+            var producerClient = new RestClient($"{_baseApiUrl}/Producer");
+
+            var productRequest = new RestRequest();
+            var producerRequest = new RestRequest();
+
+            var producerDTO = new ProducerDTOFactory().Build();
+
+            //Act
+            producerRequest.Method = Method.Post;
+            producerRequest.AddJsonBody(JsonConvert.SerializeObject(producerDTO));
+            producerRequest.AddHeader("Content-Type", "application/json");
+
+            RestResponse producerResponse = await producerClient.ExecuteAsync(producerRequest);
+
+            var producerResponseObj = JsonConvert.DeserializeObject<ListProducerDTO>(producerResponse.Content);
+
+            List<CreateProductDTO> productsDTO = new List<CreateProductDTO>();
+
+            for (int i = 0; i < 11; i++) {
+                //Adding 11 products to generate 2 pages of pagination
+                productsDTO.Add(new ProductDTOFactory()
+                    .WithName($"aa{i.ToString()}")
+                    .WithProducerId(producerResponseObj.Id)
+                    .Build()
+                );
+            }
+
+            productRequest.Method = Method.Post;
+            productRequest.AddJsonBody(JsonConvert.SerializeObject(productsDTO));
+            productRequest.AddHeader("Content-Type", "multipart/form-data");
+            productRequest.AddFile("0", GetPictureBuilderUtils.BananaPath,"image/png");
+            productRequest.AddFile("1", GetPictureBuilderUtils.StrawberryPath, "image/png");
+
+            RestResponse productResponse = await productClient.ExecuteAsync(productRequest);
+            var productResponseObj = JsonConvert.DeserializeObject<List<ListProductDTO>>(productResponse.Content);
+
+            //Assert
+            Assert.True(productResponse.IsSuccessful);
+            Assert.True(producerResponse.IsSuccessful);
+
+            producerResponseObj.Should().BeEquivalentTo(producerDTO, options => options.ExcludingMissingMembers());
+
+            for (int i = 0; i < 2; i++) {
+                productResponseObj!
+                    .ElementAt(i)
+                    .Should()
+                    .BeEquivalentTo(
+                        productsDTO.ElementAt(i), options => options
+                            .ExcludingMissingMembers()
+                            .Excluding(dto => dto.HarvestDate)
+                    );
+                Assert.Equal(productResponseObj!.ElementAt(i).HarvestDate, DateUtils.ConvertStringToDateTime(productsDTO.ElementAt(i).HarvestDate!, "dd/MM/yyyy"));
+            }
+        }
+
+
+        public async Task GetProducerProducts_GivenProducerId_ReturnsListProductsResponse() {
+            
+            //Arrange
+            var producerClient = new RestClient("http://localhost:5212/api/Producer");
+            var productClient = new RestClient("http://localhost:5212/api/Product");
+
+            var producerRequest = new RestRequest();
+            var productRequest = new RestRequest();
+
+            var resultsPerPage = 10;
+
+            productRequest.Method = Method.Post;
+        //    productRequest.AddJsonBody(JsonConvert.SerializeObject(productDTO));
+            productRequest.AddHeader("Content-Type", "application/json");
         }
 
     }

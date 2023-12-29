@@ -28,10 +28,14 @@ namespace Tests.IntegrationTests {
         }
 
         public async Task DisposeAsync() {
-            using(var context = new DatabaseContext(options)) {
-                await this.dbContext.Database.EnsureDeletedAsync();
+            try {
+                using (var context = new DatabaseContext(options)) {
+                    await this.dbContext.Database.EnsureDeletedAsync();
+                }
+                dbContext.Dispose();
+            }catch(Exception e) {
+
             }
-            dbContext.Dispose();
 
         }
     }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Contexts;
+using backend.Picture.DTOs;
+using backend.Product.DTOs;
 using backend.Product.Exceptions;
 using EntityFramework.Exceptions.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Product.Repository;
 
@@ -15,7 +18,7 @@ public class ProductRepository : IProductRepository{
         _context = context;
     }
 
-    public async Task<Models.Product> Save(Models.Product product){
+    public async Task<Models.Product> Save(Models.Product product, List<CreatePictureDTO> pictures){
         try{
             product.CreatedAt = DateTime.Now;
 
@@ -43,17 +46,41 @@ public class ProductRepository : IProductRepository{
         }
     }
 
-    public ICollection<Models.Product> GetProducerProducts(Guid producerId) {
-        //var products = this._context.Producers.Include(producer => producer.Products).SingleOrDefault(producer => producer.Id.Equals(producerId));
-        var products = _context.Producers
-            .Where(producer => producer.Id == producerId)
-            .SelectMany(producer => producer.Products)
+    public ListDatabaseProductsPagination GetProducerProducts(Guid producerId, int page, int pageResults) {
+
+        var producerExists = _context.Producers.Any<Models.Producer>(producer => producer.Id == producerId && producer.DeletedAt == null);
+
+        if (!producerExists) { 
+            throw new ProducerDoesNotExistException();
+        }
+
+        var productsQuery = _context.Producers
+            .Where(producer => producer.Id == producerId && producer.DeletedAt == null)
+            .SelectMany(products => products.Products)
+            .Include(pictures => pictures.Pictures.Where(picture => picture.Position == 0))
+            .OrderBy(product => product.Name);
+
+        var totalProductsCount = productsQuery.Count();
+        var pageCount = totalProductsCount / pageResults;
+
+        page = Math.Min(page, (int)pageCount-1);
+
+        int offset = Math.Max(0, page) * pageResults;
+
+        var products = productsQuery
+            .Skip(offset)
+            .Take((int)pageResults)
             .ToList();
 
-        return products;
+        return new ListDatabaseProductsPagination() {
+            CurrentPage = page,
+            Products = products,
+            Pages = pageCount,
+            Offset = offset
+        };
     }
 
-    public async Task<IEnumerable<Models.Product>> SaveMany(Models.Product[] products){
+    public async Task<List<Models.Product>> SaveMany(List<Models.Product> products){
         try{
             List<Models.Product> savedProducts = new List<Models.Product>();
 
@@ -64,8 +91,10 @@ public class ProductRepository : IProductRepository{
             }
 
             await _context.SaveChangesAsync();
-
             return savedProducts;
+        }
+        catch(ReferenceConstraintException ex) {
+            throw new ProducerDoesNotExistException();
         }
         catch (Exception e){
             throw new Exception("Erro inesperado ao salvar no banco de dados");

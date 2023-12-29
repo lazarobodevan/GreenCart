@@ -1,22 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using backend.Picture.DTOs;
+using backend.Producer.DTOs;
 using backend.Product.Enums;
 
 namespace backend.Product.DTOs;
 
 public class ListProductDTO{
-    public ListProductDTO(Models.Product product){
+    public ListProductDTO(Models.Product product, List<ListPictureDTO> productPicturesUrls){
         Id = product.Id;
         Name = product.Name;
         Description = product.Description;
-        Picture = product.Picture;
+        PicturesUrls = productPicturesUrls;
         Category = product.Category;
         Price = product.Price;
         Unit = product.Unit;
         AvailableQuantity = product.AvailableQuantity;
         IsOrganic = product.IsOrganic;
         HarvestDate = product.HarvestDate;
-        Producer = product.Producer;
+        Producer = product.Producer != null ? new ListProducerDTO() {
+            Id = product.Producer.Id,
+            Name = product.Producer.Name,
+            Picture = product.Producer.Picture,
+            Email = product.Producer.Email,
+            OriginCity = product.Producer.OriginCity,
+            AttendedCities = product.Producer.AttendedCities,
+            WhereToFind = product.Producer.WhereToFind,
+        }: null;
         CreatedAt = product.CreatedAt;
         UpdatedAt = product.UpdatedAt;
         DeletedAt = product.DeletedAt;
@@ -31,7 +42,7 @@ public class ListProductDTO{
 
     [JsonPropertyName("description")] public string? Description{ get; set; }
 
-    [JsonPropertyName("picture")] public byte[]? Picture{ get; set; }
+    [JsonPropertyName("picture")] public List<ListPictureDTO> PicturesUrls{ get; set; }
 
     [JsonPropertyName("category")] public Category Category{ get; set; }
 
@@ -46,7 +57,7 @@ public class ListProductDTO{
 
     [JsonPropertyName("harvestDate")] public DateTime HarvestDate{ get; set; }
 
-    [JsonPropertyName("producer")] public Models.Producer Producer{ get; set; }
+    [JsonPropertyName("producer")] public ListProducerDTO? Producer{ get; set; }
 
     [JsonPropertyName("createdAt")] public DateTime CreatedAt{ get; set; }
 

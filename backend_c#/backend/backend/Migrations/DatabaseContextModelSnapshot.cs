@@ -17,7 +17,7 @@ namespace backend.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -164,6 +164,27 @@ namespace backend.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("backend.Models.Picture", b =>
+                {
+                    b.Property<Guid>("Key")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("Key");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("Position");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Key");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Pictures");
+                });
+
             modelBuilder.Entity("backend.Models.Producer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -171,7 +192,7 @@ namespace backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("Id");
 
-                    b.Property<string>("Attended_Cities")
+                    b.Property<string>("AttendedCities")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("AttendedCities");
@@ -272,11 +293,6 @@ namespace backend.Migrations
                         .HasColumnType("text")
                         .HasColumnName("Name");
 
-                    b.Property<byte[]>("Picture")
-                        .IsRequired()
-                        .HasColumnType("bytea")
-                        .HasColumnName("Picture");
-
                     b.Property<double>("Price")
                         .HasColumnType("double precision")
                         .HasColumnName("Price");
@@ -345,6 +361,17 @@ namespace backend.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("backend.Models.Picture", b =>
+                {
+                    b.HasOne("backend.Models.Product", "Product")
+                        .WithMany("Pictures")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("backend.Models.Product", b =>
                 {
                     b.HasOne("backend.Models.Producer", "Producer")
@@ -370,6 +397,11 @@ namespace backend.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("backend.Models.Product", b =>
+                {
+                    b.Navigation("Pictures");
                 });
 #pragma warning restore 612, 618
         }

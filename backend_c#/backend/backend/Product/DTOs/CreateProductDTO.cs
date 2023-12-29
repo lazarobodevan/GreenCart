@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using backend.Picture.DTOs;
 using backend.Product.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.Product.DTOs;
 
@@ -9,11 +12,11 @@ public class CreateProductDTO{
     public CreateProductDTO(){
     }
 
-    public CreateProductDTO(string name, string? description, byte[]? picture, Category? category, double? price,
+    public CreateProductDTO(string name, string? description, List<IFormFile>? picture, Category? category, double? price,
         Unit? unit, int? availableQuantity, bool? isOrganic, string? harvestDate, Guid? producerId){
         Name = name;
         Description = description;
-        Picture = picture;
+        Pictures = picture;
         Category = category;
         Price = price;
         Unit = unit;
@@ -31,7 +34,10 @@ public class CreateProductDTO{
     public string? Description{ get; set; }
 
     [Required(ErrorMessage = "Foto é obrigatória")]
-    public byte[]? Picture{ get; set; }
+    public List<IFormFile>? Pictures{ get; set; }
+
+    [Required(ErrorMessage ="Metadados são obrigatórios")]
+    public List<PictureRequestDTO>? PicturesMetadata { get; set; }
 
     [Required(ErrorMessage = "Categoria é obrigatório")]
     [JsonConverter(typeof(JsonStringEnumConverter))]

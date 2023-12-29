@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using backend.Product.Repository;
 using Tests.Factories;
 using backend.Product.UseCases;
+using backend.Product.DTOs;
+using Tests.Factories.Product;
+using backend.Product.Exceptions;
 
 namespace UnitTests.UnitTests.UseCases.Product
 {
@@ -28,36 +31,51 @@ namespace UnitTests.UnitTests.UseCases.Product
 
         [Fact]
         [Trait("OP", "GetProducerProducts")]
-        public void GetProducerProducts_GivenProducerId_ReturnsProducerProducts()
+        public async Task GetProducerProducts_GivenProducerId_ReturnsPaginatedProducts()
         {
             //Arrange
-            _productRepository.Setup(x => x.GetProducerProducts(It.IsAny<Guid>())).Returns(new List<backend.Models.Product>());
+
+            var storedProducts = new ListDatabaseProductsPagination() {
+                Pages = 1,
+                CurrentPage = 0,
+                Products = new List<backend.Models.Product>() {
+                    new ProductFactory().WithName("1").Build(),
+                    new ProductFactory().WithName("2").Build(),
+                }
+            };
+            _productRepository.Setup(x => x.GetProducerProducts(It.IsAny<Guid>(), 0, 2)).Returns(storedProducts);
             GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(_productRepository.Object);
 
             //Act
-            var foundProducts = getProducerProductsUseCase.Execute(Guid.NewGuid());
+            var foundProductsPage0 = await getProducerProductsUseCase.Execute(Guid.NewGuid(), 0, 2);
 
             //Assert
-            Assert.NotNull(foundProducts);
+            Assert.NotNull(foundProductsPage0);
+            Assert.Equal(2, foundProductsPage0.Products.Count());
         }
 
         [Fact]
         [Trait("OP", "GetProducerProducts")]
-        public async Task GetProducerProducts_GivenNotExistentProducerId_ThrowsError()
+        public async Task GetProducerProducts_GivenNotExistentProducerId_ThrowsProducerDoesNotExistException()
         {
 
             //Arrange
-            _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<Producer?>(null));
+            _productRepository.Setup(x => x.GetProducerProducts(
+                It.IsAny<Guid>(), 
+                It.IsAny<int>(), 
+                It.IsAny<int>())
+            ).Throws(new ProducerDoesNotExistException());
+
             GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(_productRepository.Object);
 
             //Act
             async Task Act()
             {
-                var foundProducts = await getProducerProductsUseCase.Execute(Guid.NewGuid());
+                var foundProducts = await getProducerProductsUseCase.Execute(Guid.NewGuid(), 0, 5);
             }
 
             //Assert
-            var exception = await Assert.ThrowsAsync<Exception>(async () => await Act());
+            var exception = await Assert.ThrowsAsync<ProducerDoesNotExistException>(async () => await Act());
             Assert.Equal("Produtor não existe", exception.Message);
         }
 

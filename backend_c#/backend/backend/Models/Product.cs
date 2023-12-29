@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using backend.Product.Enums;
@@ -10,24 +11,6 @@ public class Product{
     public Product(){
     }
 
-    public Product(Guid id, string name, string? description, byte[]? picture, Category category, double price,
-        Unit unit, int availableQuantity, bool isOrganic, DateTime harvestDate, Guid producerId, DateTime? createdAt,
-        DateTime? updatedAt, DateTime? deletedAt){
-        Id = id;
-        Name = name;
-        Description = description;
-        Picture = picture;
-        Category = category;
-        Price = price;
-        Unit = unit;
-        AvailableQuantity = availableQuantity;
-        IsOrganic = isOrganic;
-        HarvestDate = harvestDate;
-        ProducerId = producerId;
-        CreatedAt = createdAt ?? DateTime.Now;
-        UpdatedAt = updatedAt ?? DateTime.Now;
-        DeletedAt = deletedAt;
-    }
 
     [Key] [Column("Id")] public Guid Id{ get; set; }
 
@@ -37,9 +20,7 @@ public class Product{
 
     [Column("Description")] public string? Description{ get; set; }
 
-    [Required(ErrorMessage = "Foto é obrigatório")]
-    [Column("Picture")]
-    public byte[]? Picture{ get; set; }
+    public List<Picture> Pictures { get; set; }
 
     [Required(ErrorMessage = "Categoria é obrigatório")]
     [Column("Category")]

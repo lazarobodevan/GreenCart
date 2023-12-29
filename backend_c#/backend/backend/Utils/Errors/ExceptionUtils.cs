@@ -8,6 +8,7 @@ public class ExceptionUtils{
         return  new ExceptionResponseModel(){
                 Error = new ExceptionDetails(){
                     Message = ex.Message,
+                    InnerException = ex.InnerException?.Message,
                     Type = ex.GetType().ToString()
                 }
         };

@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Product.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Tests.Factories.Product
             Id = Guid.NewGuid(),
             Name = "Product",
             Description = "Description",
-            Picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
+            Pictures = new List<Picture>(),
             Category = Category.VEGETABLE,
             Price = 10.11,
             Unit = Unit.LITER,
@@ -44,9 +45,9 @@ namespace Tests.Factories.Product
             return this;
         }
 
-        public ProductFactory WithPicture(byte[] picture)
+        public ProductFactory WithPicture(List<Picture> pictures)
         {
-            ProductEntity.Picture = picture;
+            ProductEntity.Pictures = pictures;
             return this;
         }
 

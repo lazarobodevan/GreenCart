@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using backend.Models;
+using backend.Picture.DTOs;
 using backend.Product.DTOs;
 using backend.Product.Enums;
 using backend.Product.Repository;
 using backend.Utils;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.Product.UseCases;
 
@@ -14,18 +17,22 @@ public class CreateManyProductsUseCase{
     public CreateManyProductsUseCase(IProductRepository repository){
         this.repository = repository;
     }
+    
+    public async Task<List<Models.Product>> Execute(List<CreateProductDTO> productsDTO){
 
-    public async Task<IEnumerable<Models.Product>> Execute(CreateProductDTO[] productsDTO){
         DateTime parsedDateTime;
 
         List<Models.Product> productsEntities = new List<Models.Product>();
-        foreach (var product in productsDTO){
-            parsedDateTime = DateUtils.ConvertStringToDateTime(product.HarvestDate!, "dd/MM/yyyy");
+        List<List<CreatePictureDTO>> createPictureDTOs = new List<List<CreatePictureDTO>>();
 
+        foreach (var product in productsDTO){
+            
+            parsedDateTime = DateUtils.ConvertStringToDateTime(product.HarvestDate!, "dd/MM/yyyy");
+            var productId = Guid.NewGuid();
             var p = new Models.Product{
+                Id = productId,
                 Name = product.Name,
                 Description = product.Description,
-                Picture = product.Picture,
                 Category = (Category)product.Category!,
                 Price = (double)product.Price!,
                 Unit = (Unit)product.Unit!,
@@ -35,8 +42,30 @@ public class CreateManyProductsUseCase{
                 ProducerId = (Guid)product.ProducerId!
             };
             productsEntities.Add(p);
+            createPictureDTOs.Add(_SaveImages(product.Pictures!, productId));
         }
 
-        return await repository.SaveMany(productsEntities.ToArray());
+        var savedProducts = await repository.SaveMany(productsEntities);
+        return savedProducts;
+    }
+
+
+    private List<CreatePictureDTO> _SaveImages(List<IFormFile> pictures, Guid productId) {
+        //TODO: Padronizar o nome dos arquivos para fazer salvamento em massa de varios
+        //produtos com varias imagens
+        //TODO: Adicionar validação do nome do arquivo
+        
+        //Na criação de um novo produto, so pode fazer upload de uma imagem
+        List<CreatePictureDTO> picturesEntity = new List<CreatePictureDTO>();
+
+        foreach (var picture in pictures) {
+            picturesEntity.Add(new CreatePictureDTO() {
+                Key = Guid.NewGuid(),
+                Stream = picture.OpenReadStream(),
+                Position = 1
+            });
+        }
+
+        return picturesEntity;
     }
 }

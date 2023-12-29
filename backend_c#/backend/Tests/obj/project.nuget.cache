@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "L1FWukUFkh82tUdKSLbgvHDIr71SS5KEUVWpkHKvl1w99P1JYRl1Ox8VdvlsbN7PRDEUzO28h+LwyfzQNvkf4w==",
+  "dgSpecHash": "KkaB2+Stfj8J3DE1gMA5WcWJWLeEYmR5vJfi1wO0MbeenEoTEjdtIMfwVeqHx1ZBsJUeMCwvaSHDVtAjhPju9g==",
   "success": true,
   "projectFilePath": "C:\\projs\\AgroFam\\backend_c#\\backend\\Tests\\UnitTests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.core\\3.7.300.27\\awssdk.core.3.7.300.27.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.300\\awssdk.extensions.netcore.setup.3.7.300.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.s3\\3.7.305.2\\awssdk.s3.3.7.305.2.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.common\\8.0.0\\entityframeworkcore.exceptions.common.8.0.0.nupkg.sha512",

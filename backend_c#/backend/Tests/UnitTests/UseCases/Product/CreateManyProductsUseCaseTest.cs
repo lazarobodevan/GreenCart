@@ -39,12 +39,12 @@ namespace Tests.UnitTests.UseCases
                     .Build()
             };
 
-            _productRepositoryMock.Setup(x => x.SaveMany(It.IsAny<backend.Models.Product[]>())).ReturnsAsync(products);
+            _productRepositoryMock.Setup(x => x.SaveMany(It.IsAny<List<backend.Models.Product>>())).ReturnsAsync(products);
             
             CreateManyProductsUseCase usecase = new CreateManyProductsUseCase(_productRepositoryMock.Object);
             ProductDTOFactory productFactory = new ProductDTOFactory();
 
-            var productsDTO = new CreateProductDTO[]{
+            var productsDTO = new List<CreateProductDTO>{
                 productFactory.Build(),
                 productFactory.WithName("Product 2")
                     .WithDescription("Description 2")
@@ -54,7 +54,7 @@ namespace Tests.UnitTests.UseCases
             var createdProducts = await usecase.Execute( productsDTO );
 
             //Assert
-            Assert.Equal(productsDTO.Length, createdProducts.Count());
+            Assert.Equal(productsDTO.Count(), createdProducts.Count());
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Tests.UnitTests.UseCases
             CreateManyProductsUseCase usecase = new CreateManyProductsUseCase(_productRepositoryMock.Object);
             ProductDTOFactory productFactory = new ProductDTOFactory();
 
-            var productsDTO = new CreateProductDTO[]{
+            var productsDTO = new List<CreateProductDTO>{
                 productFactory.WithHarvestDate("31/31/1231")
                     .Build(),
                 productFactory.WithName("Product 2")

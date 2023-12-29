@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "X0LfQPdeSaesA6VWm49WTwyUfds1RsHoDO+fqjenIgRcgKGzahVvkIrLb/Y1dKaM//r/nLhd1cVXNqp612mbWQ==",
+  "dgSpecHash": "K2WiEXZjHQ047vghLj5zksDRl+6BjvJpf7OQNZGN68jWcazawqthyWESaif5bTfc24HBmCywCBHt7mKVPr1Npg==",
   "success": true,
   "projectFilePath": "C:\\projs\\AgroFam\\backend_c#\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.core\\3.7.300.27\\awssdk.core.3.7.300.27.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.300\\awssdk.extensions.netcore.setup.3.7.300.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.s3\\3.7.305.2\\awssdk.s3.3.7.305.2.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.common\\8.0.0\\entityframeworkcore.exceptions.common.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.postgresql\\8.0.0\\entityframeworkcore.exceptions.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

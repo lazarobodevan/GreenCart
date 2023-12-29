@@ -1,6 +1,11 @@
 using System;
+using Amazon;
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.Runtime;
+using Amazon.S3;
 using backend.Contexts;
 using backend.Producer.Repository;
+using backend.Producer.Services;
 using backend.Product.Repository;
 using EntityFramework.Exceptions.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional:true).Build();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -46,6 +52,26 @@ if (builder.Environment.IsProduction()){
     });
 }
 
+builder.Services.AddScoped<IAmazonS3>(provider => {
+    var awsCredentials = new BasicAWSCredentials(
+        builder.Configuration.GetValue<string>("AmazonS3:AccessKeyId"),
+        builder.Configuration.GetValue<string>("AmazonS3:SecretKey")
+    );
+
+    var awsRegion = RegionEndpoint.SAEast1;
+
+    return new AmazonS3Client(awsCredentials, awsRegion);
+});
+
+// Registra o PictureService
+builder.Services.AddScoped<IPictureService, PictureService>(provider => {
+    var amazonS3 = provider.GetRequiredService<IAmazonS3>();
+
+    return new PictureService(
+        amazonS3,
+        builder.Configuration.GetValue<string>("AmazonS3:BucketName")!
+    );
+});
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();

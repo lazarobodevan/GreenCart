@@ -16,6 +16,7 @@ using Tests.Factories;
 using Tests.Factories.Product;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using backend.Product.Exceptions;
+using backend.Product.DTOs;
 
 namespace Tests.UnitTests.Repositories
 {
@@ -171,11 +172,35 @@ namespace Tests.UnitTests.Repositories
             var createdProducer1 = await _producerRepository.Save(producer1);
             var createdProducer2 = await _producerRepository.Save(producer2);
 
-            byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+            var productId1 = Guid.NewGuid();
+            var productId2 = Guid.NewGuid();
+            var productId3 = Guid.NewGuid();
+
+            var picture1 = new List<Picture>() {
+                new Picture() {
+                    Key = Guid.NewGuid(),
+                    Position = 0,
+                    ProductId = productId1,
+                }
+            };
+            var picture2 = new List<Picture>() {
+                new Picture(){
+                    Key = Guid.NewGuid(),
+                    Position = 0,
+                    ProductId = productId2,
+                }
+            };
+            var picture3 = new List<Picture>() {
+                new Picture() {
+                    Key = Guid.NewGuid(),
+                    Position = 0,
+                    ProductId = productId3,
+                }
+            };
             var product1 = new Product {
                 Name = "Product1",
                 Description = "Description",
-                Picture = picture,
+                Pictures = picture1,
                 Category = Category.VEGETABLE,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -187,7 +212,7 @@ namespace Tests.UnitTests.Repositories
             var product2 = new Product {
                 Name = "Product2",
                 Description = "Description",
-                Picture = picture,
+                Pictures = picture2,
                 Category = Category.GRAIN,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -199,7 +224,7 @@ namespace Tests.UnitTests.Repositories
             var product3 = new Product {
                 Name = "Product3",
                 Description = "Description",
-                Picture = picture,
+                Pictures = picture3,
                 Category = Category.GRAIN,
                 Price = 10.11,
                 Unit = Unit.LITER,
@@ -211,21 +236,21 @@ namespace Tests.UnitTests.Repositories
 
             var createdProduct1 = await _productRepository.Save(product1);
 
-            var createdProducts2And3 = await _productRepository.SaveMany(new Product[] { product2, product3 });
+            var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 
             //Act
-            var foundProductsFromProducer1 = _productRepository.GetProducerProducts(createdProducer1.Id);
-            var foundProductsFromProducer2 = _productRepository.GetProducerProducts(createdProducer2.Id);
+            var foundProductsFromProducer1 = _productRepository.GetProducerProducts(createdProducer1.Id, 0, 2);
+            var foundProductsFromProducer2 = _productRepository.GetProducerProducts(createdProducer2.Id, 0, 2);
 
-            var isFoundProductsFromProducer2ContainsProduct1 = foundProductsFromProducer2.Any(product => product.Name == product1.Name);
-            var isFoundProductsFromProducer2ContainsProduct2 = foundProductsFromProducer2.Any(product => product.Name == product2.Name);
-            var isFoundProductsFromProducer2ContainsProduct3 = foundProductsFromProducer2.Any(product => product.Name == product3.Name);
+            var isFoundProductsFromProducer2ContainsProduct1 = foundProductsFromProducer2.Products.Any(product => product.Name == product1.Name);
+            var isFoundProductsFromProducer2ContainsProduct2 = foundProductsFromProducer2.Products.Any(product => product.Name == product2.Name);
+            var isFoundProductsFromProducer2ContainsProduct3 = foundProductsFromProducer2.Products.Any(product => product.Name == product3.Name);
 
             //Assert
-            Assert.Single(foundProductsFromProducer1);
-            Assert.Equal(foundProductsFromProducer1.First().Name, product1.Name);
+            Assert.Single(foundProductsFromProducer1.Products);
+            Assert.Equal(foundProductsFromProducer1.Products.First().Name, product1.Name);
 
-            Assert.Equal(2, foundProductsFromProducer2.Count());
+            Assert.Equal(2, foundProductsFromProducer2.Products.Count());
             Assert.False(isFoundProductsFromProducer2ContainsProduct1);
             Assert.True(isFoundProductsFromProducer2ContainsProduct2);
             Assert.True(isFoundProductsFromProducer2ContainsProduct3);
@@ -233,16 +258,17 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "GetProducerProducts")]
-        public void GetProducerProducts_GivenNotExistentProducerId_ReturnsEmptyList() {
+        public void GetProducerProducts_GivenNotExistentProducerId_ThrowsProducerDoesNotExistException() {
             //Arrange
             var producerId = Guid.NewGuid();
             var _productRepository = new ProductRepository(_databaseContext);
 
             //Act
-            var possibleProduct = _productRepository.GetProducerProducts(Guid.NewGuid());
-
+            void Act() {
+                var product = _productRepository.GetProducerProducts(Guid.NewGuid(), 0, 2);
+            }
             //Assert
-            Assert.Empty(possibleProduct);
+            Assert.Throws<ProducerDoesNotExistException>(() => Act());
         }
 
         [Fact]
@@ -254,7 +280,7 @@ namespace Tests.UnitTests.Repositories
             byte[] picture = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
             Guid producerId = Guid.NewGuid();
 
-            var products = new Product[]{
+            var products = new List<Product>(){
                 new Factories.Product.ProductFactory().Build(),
                 new Factories.Product.ProductFactory().Build()
             };
@@ -263,7 +289,7 @@ namespace Tests.UnitTests.Repositories
             var createdProducts = await productRepository.SaveMany(products);
 
             //Assert
-            Assert.Equal(createdProducts.Count(), products.Length);
+            Assert.Equal(createdProducts.Count(), products.Count());
             
         }
 

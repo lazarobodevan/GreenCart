@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "UFLl/P6+ZIgP04iqtAO+WJ22SgS4stUl1t/yve8afyFZ6F8Rz72U0Z7AxVZ1fWzUnOYknCAPLBnZ6TrBCX6uVw==",
+  "dgSpecHash": "hi+FRl5xhfEAmAtbNkXQ9f8hVJvmTSdf5/N3+YM/obx2X9bzf/mgZ90PBOrSaXR6PpaUEudhBois+O1wlbf8HA==",
   "success": true,
   "projectFilePath": "C:\\projs\\AgroFam\\backend_c#\\backend\\IntegrationTests\\IntegrationTests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.core\\3.7.300.27\\awssdk.core.3.7.300.27.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.extensions.netcore.setup\\3.7.300\\awssdk.extensions.netcore.setup.3.7.300.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.s3\\3.7.305.2\\awssdk.s3.3.7.305.2.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.common\\8.0.0\\entityframeworkcore.exceptions.common.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.postgresql\\8.0.0\\entityframeworkcore.exceptions.postgresql.8.0.0.nupkg.sha512",
