@@ -45,7 +45,7 @@ namespace backend.Picture.Repository {
                  */
                 var updatedPictures = new List<Models.Picture>();
                 var productId = newPictures.ElementAt(0).ProductId;
-                var productPictures = _context.Pictures.Where(p => p.ProductId == newPictures.ElementAt(0).ProductId).ToList();
+                var productPictures = _context.Pictures.Where(p => p.ProductId == productId).ToList();
                 foreach (var picture in newPictures) {
                     var foundPicture = productPictures.Find(p => p.Key == picture.Key);
                     if (foundPicture == null) {
@@ -72,16 +72,33 @@ namespace backend.Picture.Repository {
         }
 
 
-        public Models.Picture Delete(Guid pictureId) {
+        public Models.Picture Delete(Guid pictureKey) {
             try {
-                var picture = _context.Pictures.Find(pictureId);
-                if (picture != null) {
-                    var deletedPicture = _context.Pictures.Remove(picture);
+                var picture = _context.Pictures.Find(pictureKey);
+                if (picture == null) {
+                    throw new PictureDoesNotExistException();
                 }
-                throw new PictureDoesNotExistException();
 
-            }catch (Exception ex) {
+                var deletedPicture = _context.Pictures.Remove(picture);
+                _context.SaveChanges();
+                return deletedPicture.Entity;
+
+
+            } catch (Exception ex) {
                 throw new Exception($"Falha ao deletar a imagem do banco de dados: {ex.Message}");
+            }
+        }
+
+        public List<Models.Picture> FindPicturesFromProduct(Guid productId) {
+            try {
+                var pictures = _context.Pictures
+                    .Where(p => p.ProductId == productId)
+                    .OrderBy(p => p.Position)
+                    .ToList();
+
+                return pictures;
+            } catch (Exception ex) {
+                throw new Exception($"Falha ao buscar imagens do produto: {ex.Message}");
             }
         }
 
