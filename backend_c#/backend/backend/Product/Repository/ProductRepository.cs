@@ -54,11 +54,29 @@ public class ProductRepository : IProductRepository{
             throw new ProducerDoesNotExistException();
         }
 
-        var productsQuery = _context.Producers
-            .Where(producer => producer.Id == producerId && producer.DeletedAt == null)
-            .SelectMany(products => products.Products)
-            .Include(pictures => pictures.Pictures.Where(picture => picture.Position == 0))
-            .OrderBy(product => product.Name);
+        var productsQuery = _context.Products
+            .Where(product => 
+                product.ProducerId == producerId && 
+                product.Producer.DeletedAt == null 
+                && product.DeletedAt == null
+             )
+            .Select(product => new Models.Product {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                HarvestDate = product.HarvestDate,
+                Unit = product.Unit,
+                IsOrganic = product.IsOrganic,
+                AvailableQuantity = product.AvailableQuantity,
+                Category = product.Category,
+                Price = product.Price,
+                DeletedAt = product.DeletedAt,
+                CreatedAt = product.CreatedAt,
+                Pictures = product.Pictures.Where(picture => picture.Position == 0).ToList(),
+                ProducerId = producerId,
+            })
+            .OrderBy(product => product.Name)
+            .ToList();
 
         var totalProductsCount = productsQuery.Count();
         var pageCount = totalProductsCount / pageResults;

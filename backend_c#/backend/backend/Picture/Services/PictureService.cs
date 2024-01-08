@@ -17,6 +17,21 @@ namespace backend.Producer.Services {
             _BucketName = bucketName;
         }
 
+        public async Task<DeleteObjectResponse> DeleteImageAsync(Guid imageKey) {
+            try {
+                var deleteObjectRequest = new DeleteObjectRequest {
+                    BucketName = _BucketName,
+                    Key = imageKey.ToString()
+                };
+
+                return await _amazonS3.DeleteObjectAsync(deleteObjectRequest);
+            } catch(AmazonS3Exception ex) {
+                throw new AmazonS3Exception($"Falha ao deletar objeto: {ex.Message}");
+            }
+            
+            
+        }
+
         public async Task<List<string>> GetImagesAsync(Models.Product product) {
             try {
                 List<string> awsPictures = new List<string>();

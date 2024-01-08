@@ -1,5 +1,6 @@
 ﻿using backend.Contexts;
 using backend.Models;
+using backend.Picture.DTOs;
 using backend.Producer.Repository;
 using backend.Product.Enums;
 using backend.Product.Repository;
@@ -251,7 +252,7 @@ namespace Tests.UnitTests.Repositories
                 ProducerId = createdProducer2.Id,
             };
 
-            var createdProduct1 = await _productRepository.Save(product1);
+            var createdProduct1 = await _productRepository.Save(product1, new List<CreatePictureDTO>());
 
             var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 
@@ -342,7 +343,7 @@ namespace Tests.UnitTests.Repositories
                 ProducerId = createdProducer2.Id,
             };
 
-            var createdProduct1 = await _productRepository.Save(product1);
+            var createdProduct1 = await _productRepository.Save(product1, new List<CreatePictureDTO>());
 
             var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 

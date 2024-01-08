@@ -17,6 +17,7 @@ using Tests.Factories.Product;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using backend.Product.Exceptions;
 using backend.Product.DTOs;
+using backend.Picture.DTOs;
 
 namespace Tests.UnitTests.Repositories
 {
@@ -51,7 +52,7 @@ namespace Tests.UnitTests.Repositories
             var product = new Factories.Product.ProductFactory().Build();
 
             //Act
-            var createdProduct = await productRepository.Save(product);
+            var createdProduct = await productRepository.Save(product, new List<CreatePictureDTO>());
 
             //Assert
             Assert.NotNull( createdProduct );
@@ -71,7 +72,7 @@ namespace Tests.UnitTests.Repositories
 
             //Act
             async Task Act(){
-                var producer = await productRepository.Save(productEntity);
+                var producer = await productRepository.Save(productEntity, new List<CreatePictureDTO>());
             }
 
             //Assert
@@ -92,7 +93,7 @@ namespace Tests.UnitTests.Repositories
 
             //Act
             async Task Act() {
-                var producer = await productRepository.Save(productEntity);
+                var producer = await productRepository.Save(productEntity, new List<CreatePictureDTO>());
             }
 
             //Assert
@@ -110,7 +111,7 @@ namespace Tests.UnitTests.Repositories
             var product = new Factories.Product.ProductFactory().Build();
 
             //Act
-            var createdProduct = await productRepository.Save(product);
+            var createdProduct = await productRepository.Save(product, new List<CreatePictureDTO>());
             var possibleProduct = await productRepository.FindById(createdProduct.Id);
 
             //Assert
@@ -234,7 +235,7 @@ namespace Tests.UnitTests.Repositories
                 ProducerId = createdProducer2.Id,
             };
 
-            var createdProduct1 = await _productRepository.Save(product1);
+            var createdProduct1 = await _productRepository.Save(product1, new List<CreatePictureDTO>());
 
             var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 
@@ -301,7 +302,7 @@ namespace Tests.UnitTests.Repositories
             var product = new Factories.Product.ProductFactory().Build();
 
             //Act
-            var savedProduct = await repository.Save(product);
+            var savedProduct = await repository.Save(product, new List<CreatePictureDTO>());
             savedProduct.Name = "Updated Product";
             savedProduct.IsOrganic = false;
             savedProduct.UpdatedAt = DateTime.Now;
@@ -324,7 +325,7 @@ namespace Tests.UnitTests.Repositories
             var product = new Factories.Product.ProductFactory().Build();
 
             //Act
-            var createdProduct = await productRepository.Save(product);
+            var createdProduct = await productRepository.Save(product, new List<CreatePictureDTO>());
             Assert.Null(createdProduct.DeletedAt);
             var deletedProduct = await productRepository.Delete(createdProduct);
 

@@ -13,9 +13,9 @@ public class ListProductDTO{
         Name = product.Name;
         Description = product.Description;
         PicturesUrls = productPicturesUrls;
-        Category = product.Category;
+        Category = product.Category.ToString();
         Price = product.Price;
-        Unit = product.Unit;
+        Unit = product.Unit.ToString();
         AvailableQuantity = product.AvailableQuantity;
         IsOrganic = product.IsOrganic;
         HarvestDate = product.HarvestDate;
@@ -44,11 +44,11 @@ public class ListProductDTO{
 
     [JsonPropertyName("picture")] public List<ListPictureDTO> PicturesUrls{ get; set; }
 
-    [JsonPropertyName("category")] public Category Category{ get; set; }
+    [JsonPropertyName("category")] public string Category{ get; set; }
 
     [JsonPropertyName("price")] public double Price{ get; set; }
 
-    [JsonPropertyName("unit")] public Unit Unit{ get; set; }
+    [JsonPropertyName("unit")] public string Unit{ get; set; }
 
     [JsonPropertyName("availableQuantity")]
     public int AvailableQuantity{ get; set; }

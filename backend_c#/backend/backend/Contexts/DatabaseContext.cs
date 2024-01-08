@@ -10,7 +10,16 @@ public class DatabaseContext : DbContext, IDatabaseContextOptions{
     public DatabaseContext(){
     }
 
-    
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+        //Position must be unique between pictures of a product
+        modelBuilder.Entity<Models.Picture>()
+            .HasIndex(p => new { p.ProductId, p.Position })
+            .IsUnique();
+
+        base.OnModelCreating(modelBuilder);
+    }
+
 
     public virtual DbSet<Models.Producer> Producers{ get; set; }
     public virtual DbSet<Consumer> Consumers{ get; set; }

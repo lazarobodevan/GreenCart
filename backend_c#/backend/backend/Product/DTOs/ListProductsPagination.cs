@@ -7,5 +7,7 @@ namespace backend.Product.DTOs {
         public int CurrentPage { get; set; }
         public int Offset { get; set; }
         public List<ListProductDTO> Products { get; set; }
+        public string? NextUrl { get; set; }
+        public string? PreviousUrl { get; set ; }
     }
 }

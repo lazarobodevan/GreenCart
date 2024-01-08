@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Amazon.S3;
 using backend.Models;
 using backend.Picture.DTOs;
 using backend.Producer.Services;
 using backend.Product.DTOs;
 using backend.Product.Enums;
+using backend.Product.Exceptions;
 using backend.Product.Repository;
 using backend.Utils;
+using EntityFramework.Exceptions.Common;
 using Microsoft.AspNetCore.Http;
 
 namespace backend.Product.UseCases;
@@ -48,11 +51,25 @@ public class CreateProductUseCase{
                 ProductId = productEntity.Id
             });
         }
-        await pictureService.UploadImageAsync(picturesList, productEntity);
 
-        //TODO: Adicionar salvamento no repositório
-        var createdProduct = await repository.Save(productEntity, picturesList);
-        return createdProduct;
+        try {
+
+            await pictureService.UploadImageAsync(picturesList, productEntity);
+            var createdProduct = await repository.Save(productEntity, picturesList);
+            return createdProduct;
+
+        }catch(AmazonS3Exception ex) {
+            throw new AmazonS3Exception($"Falha ao fazer upload da imagem: {ex.Message}");
+
+        }catch(ReferenceConstraintException ex) {
+            await _RollbackS3(picturesList);
+            throw new ProducerDoesNotExistException();
+
+        }catch(Exception ex) {
+            await _RollbackS3(picturesList);
+            throw new Exception($"Erro ao criar produto: {ex.Message}");
+        }
+        
     }
 
     private List<CreatePictureDTO> _GeneratePicturesEntity(List<IFormFile> pictures, List<PictureRequestDTO> metadata) {
@@ -76,11 +93,13 @@ public class CreateProductUseCase{
         return pictureList;
     }
 
-    private bool _CheckIfValidFileName(string strPosition) {
-        int result;
-        if(int.TryParse(strPosition, out result) && result >= 0) {
-            return true;
+    private async Task _RollbackS3(List<CreatePictureDTO> pictures) {
+        foreach (var picture in pictures) {
+            try {
+                await pictureService.DeleteImageAsync(picture.Key);
+            } catch (AmazonS3Exception ex) {
+                throw new AmazonS3Exception($"Erro ao deletar imagem: {ex.Message}");
+            }
         }
-        throw new Exception($"Nome inválido do arquivo ${strPosition}");
     }
 }

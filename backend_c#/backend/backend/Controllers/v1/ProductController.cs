@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using backend.Models;
 using backend.Picture.DTOs;
+using backend.Producer.Repository;
 using backend.Producer.Services;
+using backend.Producer.UseCases;
 using backend.Product.DTOs;
 using backend.Product.Exceptions;
 using backend.Product.Repository;
 using backend.Product.UseCases;
+using backend.Producer.DTOs;
 using backend.Utils;
 using backend.Utils.Errors;
 using EntityFramework.Exceptions.Common;
@@ -22,16 +25,19 @@ namespace backend.Controllers.v1;
 public class ProductController : ControllerBase{
     private readonly CreateProductUseCase createProductUseCase;
     private readonly GetProducerProductsUseCase getProducerProductsUseCase;
+    private readonly FindProducerByIdUseCase getProducerByIdUseCase;
     private readonly IPictureService pictureService;
 
     private readonly IProductRepository repository;
+    private readonly IProducerRepository producerRepository;
 
-    public ProductController(IProductRepository repository, IPictureService _pictureService){
+    public ProductController(IProductRepository repository, IPictureService _pictureService, IProducerRepository _producerRepository){
         this.repository = repository;
         this.pictureService = _pictureService;
+        this.producerRepository = _producerRepository;
         createProductUseCase = new CreateProductUseCase(this.repository, pictureService);
         getProducerProductsUseCase = new GetProducerProductsUseCase(this.repository, pictureService);
-
+        getProducerByIdUseCase = new FindProducerByIdUseCase(this.producerRepository);
     }
 
     [HttpPost]
@@ -58,12 +64,14 @@ public class ProductController : ControllerBase{
     [HttpGet("producerId={producerId}")]
     public async Task<IActionResult> GetProductsFromProducer(Guid producerId, [FromQuery]int? page) {
         try {
-            var resultsPerPage = 10;
+            var resultsPerPage = 5;
+            var producer = await getProducerByIdUseCase.Execute(producerId);
             var products = await getProducerProductsUseCase.Execute(producerId, page ?? 0, resultsPerPage);
 
             return Ok(new ListProductsResponse() {
                 CurrentPage = page ?? 0,
                 Pages = products.Pages,
+                Producer = new ListProducerDTO(producer!),
                 Products = products.Products,
                 NextUrl = new PaginationUtils().GetNextUrl(page ?? 0, products.Pages, Request.PathBase),
                 PreviousUrl = new PaginationUtils().GetPreviousUrl(page ?? 0, Request.PathBase)

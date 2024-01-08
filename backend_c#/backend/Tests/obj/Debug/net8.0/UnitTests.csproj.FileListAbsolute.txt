@@ -126,3 +126,6 @@ C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\refint\UnitTests.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\ref\UnitTests.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\AWSSDK.Core.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\AWSSDK.Extensions.NETCore.Setup.dll
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\AWSSDK.S3.dll

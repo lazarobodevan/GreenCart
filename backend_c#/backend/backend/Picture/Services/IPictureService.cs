@@ -10,5 +10,7 @@ namespace backend.Producer.Services {
         Task<List<PutObjectResponse>> UploadImageAsync(List<CreatePictureDTO> pictures, Models.Product product);
 
         Task<List<string>> GetImagesAsync(Models.Product product);
+
+        Task<DeleteObjectResponse> DeleteImageAsync(Guid imageKey);
     }
 }
