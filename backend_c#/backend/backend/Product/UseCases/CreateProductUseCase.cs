@@ -46,8 +46,8 @@ public class CreateProductUseCase{
         var picturesList = _GeneratePicturesEntity(_productDTO.Pictures!, _productDTO.PicturesMetadata!);
         foreach (var picture in picturesList) {
             productEntity.Pictures.Add(new Models.Picture() {
-                Key = picture.Key,
-                Position = picture.Position,
+                Key = (Guid)picture.Key!,
+                Position = (int)picture.Position!,
                 ProductId = productEntity.Id
             });
         }
@@ -96,7 +96,7 @@ public class CreateProductUseCase{
     private async Task _RollbackS3(List<CreatePictureDTO> pictures) {
         foreach (var picture in pictures) {
             try {
-                await pictureService.DeleteImageAsync(picture.Key);
+                await pictureService.DeleteImageAsync((Guid)picture.Key!);
             } catch (AmazonS3Exception ex) {
                 throw new AmazonS3Exception($"Erro ao deletar imagem: {ex.Message}");
             }
