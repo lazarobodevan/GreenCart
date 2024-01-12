@@ -34,6 +34,6 @@ public class CreateProducerDTO{
     public string WhereToFind{ get; set; }
 
     public List<Models.Product>? Products{ get; set; }
-    public List<Order>? Orders{ get; set; }
+    public List<Models.Order>? Orders{ get; set; }
     public List<ConsumerFavProducer>? FavdByConsumers{ get; set; }
 }

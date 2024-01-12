@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using backend.Product.Enums;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace backend.Models;
 
@@ -10,22 +11,20 @@ public class Order{
     public Order(){
     }
 
-    public Order(Guid id, Consumer consumer, Producer producer, Product product, int quantity, string? consumerObs,
-        string? producerObs, Status status, DateTime createdAt, DateTime updatedAt, DateTime? acceptedAt,
-        DateTime? rejectedAt, DateTime? deletedAt){
-        Id = id;
-        Consumer = consumer;
-        Producer = producer;
-        Product = product;
-        Quantity = quantity;
-        ConsumerObs = consumerObs;
-        ProducerObs = producerObs;
-        Status = status;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        AcceptedAt = acceptedAt;
-        RejectedAt = rejectedAt;
-        DeletedAt = deletedAt;
+    public Order(Order order) {
+        Id = order.Id;
+        Consumer = order.Consumer;
+        Producer = order.Producer;
+        Product = order.Product;
+        Quantity = order.Quantity;
+        ConsumerObs = order.ConsumerObs;
+        ProducerObs = order.ProducerObs;
+        Status = order.Status;
+        CreatedAt = order.CreatedAt;
+        UpdatedAt = order.UpdatedAt;
+        AcceptedAt = order.AcceptedAt;
+        RejectedAt = order.RejectedAt;
+        DeletedAt = order.DeletedAt;
     }
 
     [Key] [Column("Id")] public Guid Id{ get; set; }

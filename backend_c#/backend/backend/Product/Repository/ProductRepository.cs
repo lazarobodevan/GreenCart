@@ -79,7 +79,7 @@ public class ProductRepository : IProductRepository{
             .ToList();
 
         var totalProductsCount = productsQuery.Count();
-        var pageCount = totalProductsCount / pageResults;
+        var pageCount = (int)Math.Ceiling((double)totalProductsCount / pageResults);
 
         page = Math.Min(page, (int)pageCount-1);
 
