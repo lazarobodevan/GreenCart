@@ -45,7 +45,7 @@ public class ProductRepository : IProductRepository{
                 .Include(p => p.Producer)
                 .FirstOrDefaultAsync(p => p.Id == productId && p.DeletedAt == null);
 
-            return possibleProduct;
+            return possibleProduct; 
         }
         catch (Exception e){
             throw new Exception("Erro inesperado ao buscar no banco de dados");
