@@ -8,7 +8,7 @@ namespace backend.Product.DTOs {
         public int CurrentPage { get; set; }
         public string? NextUrl { get; set; }
         public string? PreviousUrl { get; set; }
-        public ListProducerDTO Producer { get; set; }
+        public ListProducerDTO? Producer { get; set; }
         public List<ListProductDTO> Products { get; set; } = new List<ListProductDTO>();
     }
 }

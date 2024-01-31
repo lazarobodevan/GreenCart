@@ -180,7 +180,8 @@ namespace backend.Migrations
 
                     b.HasKey("Key");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId", "Position")
+                        .IsUnique();
 
                     b.ToTable("Pictures");
                 });
@@ -292,6 +293,11 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Name");
+
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("NormalizedName");
 
                     b.Property<double>("Price")
                         .HasColumnType("double precision")

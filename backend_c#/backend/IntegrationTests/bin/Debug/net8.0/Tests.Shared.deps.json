@@ -18,6 +18,39 @@
           "Tests.Shared.dll": {}
         }
       },
+      "AWSSDK.Core/3.7.300.27": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.300.27"
+          }
+        }
+      },
+      "AWSSDK.Extensions.NETCore.Setup/3.7.300": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.300.27",
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Extensions.NETCore.Setup.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.7.0"
+          }
+        }
+      },
+      "AWSSDK.S3/3.7.305.2": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.300.27"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.305.2"
+          }
+        }
+      },
       "coverlet.collector/6.0.0": {},
       "EntityFrameworkCore.Exceptions.Common/8.0.0": {
         "dependencies": {
@@ -1195,6 +1228,8 @@
       "xunit.runner.visualstudio/2.5.6": {},
       "backend/1.0.0": {
         "dependencies": {
+          "AWSSDK.Extensions.NETCore.Setup": "3.7.300",
+          "AWSSDK.S3": "3.7.305.2",
           "EntityFrameworkCore.Exceptions.PostgreSQL": "8.0.0",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.19.5",
@@ -1212,6 +1247,27 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/3.7.300.27": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-10LLdwPPtt9dtrFAQsYBzFGKcl+Ze7fonPab1dBrXELwOSoQ9uPxH+rhaKTCTa5XwUg8xpw26oYJ5vajlbjQHg==",
+      "path": "awssdk.core/3.7.300.27",
+      "hashPath": "awssdk.core.3.7.300.27.nupkg.sha512"
+    },
+    "AWSSDK.Extensions.NETCore.Setup/3.7.300": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zMxAHFYSAWHsVV9Cn96nE+V40agRCjT0etF10f0d/nFMMb1z7lecVwNadq9JYyqlDj+jsVRH9ydk4Al4v/1+jg==",
+      "path": "awssdk.extensions.netcore.setup/3.7.300",
+      "hashPath": "awssdk.extensions.netcore.setup.3.7.300.nupkg.sha512"
+    },
+    "AWSSDK.S3/3.7.305.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zjJME3ZpRRXRX59Ge+01IdHIgJ6NwSip0uFC1qwhp4sF3GYPuu9SXNafTp2ldK9xEW4l8XD2Inp5ruioq9qUFQ==",
+      "path": "awssdk.s3/3.7.305.2",
+      "hashPath": "awssdk.s3.3.7.305.2.nupkg.sha512"
     },
     "coverlet.collector/6.0.0": {
       "type": "package",

@@ -41,24 +41,25 @@ namespace UnitTests.UnitTests.UseCases.Product
             var storedProducts = new ListDatabaseProductsPagination() {
                 Pages = 1,
                 CurrentPage = 0,
+                Offset = 0,
                 Products = new List<backend.Models.Product>() {
                     new ProductFactory().WithName("1").Build(),
                     new ProductFactory().WithName("2").Build(),
                 }
             };
-            _productRepository.Setup(x => x.GetProducerProducts(It.IsAny<Guid>(), 0, 2)).Returns(storedProducts);
+            _productRepository.Setup(x => x.GetProducerProducts(It.IsAny<Guid>(), 0, 10, null)).Returns(storedProducts);
             _pictureServiceMock.Setup(x => x.GetImagesAsync(It.IsAny<backend.Models.Product>())).ReturnsAsync(new List<string>() { "link1", "link2"});
 
             GetProducerProductsUseCase getProducerProductsUseCase = new GetProducerProductsUseCase(_productRepository.Object, _pictureServiceMock.Object);
 
             //Act
-            var foundProductsPage0 = await getProducerProductsUseCase.Execute(Guid.NewGuid(), 0, 2);
+            var foundProductsPage0 = await getProducerProductsUseCase.Execute(Guid.NewGuid(), 0, null);
 
             //Assert
             Assert.NotNull(foundProductsPage0);
             Assert.Equal(2, foundProductsPage0.Products.Count());
-            Assert.Single(foundProductsPage0.Products.ElementAt(0).PicturesUrls);
-            Assert.Single(foundProductsPage0.Products.ElementAt(1).PicturesUrls);
+            Assert.Single(foundProductsPage0.Products.ElementAt(0).Pictures);
+            Assert.Single(foundProductsPage0.Products.ElementAt(1).Pictures);
         }
 
         [Fact]
@@ -70,7 +71,8 @@ namespace UnitTests.UnitTests.UseCases.Product
             _productRepository.Setup(x => x.GetProducerProducts(
                 It.IsAny<Guid>(), 
                 It.IsAny<int>(), 
-                It.IsAny<int>())
+                It.IsAny<int>(),
+                null)
             ).Throws(new ProducerDoesNotExistException());
 
             _pictureServiceMock.Setup(x => x.GetImagesAsync(It.IsAny<backend.Models.Product>())).ReturnsAsync(new List<string>() { "link1", "link2"});
@@ -80,7 +82,7 @@ namespace UnitTests.UnitTests.UseCases.Product
             //Act
             async Task Act()
             {
-                var foundProducts = await getProducerProductsUseCase.Execute(Guid.NewGuid(), 0, 5);
+                var foundProducts = await getProducerProductsUseCase.Execute(Guid.NewGuid(), 0, null);
             }
 
             //Assert

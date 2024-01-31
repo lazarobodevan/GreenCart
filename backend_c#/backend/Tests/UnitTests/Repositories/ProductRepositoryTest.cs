@@ -18,10 +18,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using backend.Product.Exceptions;
 using backend.Product.DTOs;
 using backend.Picture.DTOs;
+using backend.Producer.Services;
+using backend.Product.Models;
 
-namespace Tests.UnitTests.Repositories
-{
-    public class ProductRepositoryTest : IAsyncLifetime{
+namespace Tests.UnitTests.Repositories {
+    public class ProductRepositoryTest : IAsyncLifetime {
 
         private DbContextOptions<DatabaseContext> _dbContextOptions;
 
@@ -46,7 +47,7 @@ namespace Tests.UnitTests.Repositories
         [Fact]
         [Trait("OP", "Create")]
         public async Task Save_GivenProduct_ReturnsCreatedProduct() {
-            
+
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
             var product = new Factories.Product.ProductFactory().Build();
@@ -55,13 +56,13 @@ namespace Tests.UnitTests.Repositories
             var createdProduct = await productRepository.Save(product, new List<CreatePictureDTO>());
 
             //Assert
-            Assert.NotNull( createdProduct );
+            Assert.NotNull(createdProduct);
             Assert.NotEqual(Guid.Empty, createdProduct.Id);
         }
 
         [Fact]
         [Trait("OP", "Create")]
-        public async Task Save_GivenNotExistentProducerId_ThrowsProducerDoesNotExistException(){
+        public async Task Save_GivenNotExistentProducerId_ThrowsProducerDoesNotExistException() {
             //Arrange
             var _dbContext = new Mock<DatabaseContext>(_dbContextOptions);
             var productRepository = new ProductRepository(_dbContext.Object);
@@ -71,7 +72,7 @@ namespace Tests.UnitTests.Repositories
                 .Throws(new ReferenceConstraintException());
 
             //Act
-            async Task Act(){
+            async Task Act() {
                 var producer = await productRepository.Save(productEntity, new List<CreatePictureDTO>());
             }
 
@@ -115,7 +116,7 @@ namespace Tests.UnitTests.Repositories
             var possibleProduct = await productRepository.FindById(createdProduct.Id);
 
             //Assert
-            Assert.NotNull( possibleProduct );
+            Assert.NotNull(possibleProduct);
         }
 
         [Fact]
@@ -128,7 +129,7 @@ namespace Tests.UnitTests.Repositories
             var possibleProduct = await productRepository.FindById(Guid.NewGuid());
 
             //Assert
-            Assert.Null( possibleProduct );
+            Assert.Null(possibleProduct);
 
         }
 
@@ -144,6 +145,8 @@ namespace Tests.UnitTests.Repositories
             //Arrange
             var _productRepository = new ProductRepository(_databaseContext);
             var _producerRepository = new ProducerRepository(_databaseContext);
+
+            ProductFilterModel filterModel = new ProductFilterModel();
 
             var producer1 = new Producer {
                 Name = "Producer Test",
@@ -240,8 +243,8 @@ namespace Tests.UnitTests.Repositories
             var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 
             //Act
-            var foundProductsFromProducer1 = _productRepository.GetProducerProducts(createdProducer1.Id, 0, 2);
-            var foundProductsFromProducer2 = _productRepository.GetProducerProducts(createdProducer2.Id, 0, 2);
+            var foundProductsFromProducer1 = _productRepository.GetProducerProducts(createdProducer1.Id, 0, 2, filterModel);
+            var foundProductsFromProducer2 = _productRepository.GetProducerProducts(createdProducer2.Id, 0, 2, filterModel);
 
             var isFoundProductsFromProducer2ContainsProduct1 = foundProductsFromProducer2.Products.Any(product => product.Name == product1.Name);
             var isFoundProductsFromProducer2ContainsProduct2 = foundProductsFromProducer2.Products.Any(product => product.Name == product2.Name);
@@ -263,10 +266,11 @@ namespace Tests.UnitTests.Repositories
             //Arrange
             var producerId = Guid.NewGuid();
             var _productRepository = new ProductRepository(_databaseContext);
+            ProductFilterModel filterModel = new ProductFilterModel();
 
             //Act
             void Act() {
-                var product = _productRepository.GetProducerProducts(Guid.NewGuid(), 0, 2);
+                var product = _productRepository.GetProducerProducts(Guid.NewGuid(), 0, 2, filterModel);
             }
             //Assert
             Assert.Throws<ProducerDoesNotExistException>(() => Act());
@@ -291,7 +295,7 @@ namespace Tests.UnitTests.Repositories
 
             //Assert
             Assert.Equal(createdProducts.Count(), products.Count());
-            
+
         }
 
         [Fact]
@@ -331,8 +335,95 @@ namespace Tests.UnitTests.Repositories
 
             //Assert
             Assert.NotNull(deletedProduct);
-            Assert.NotEqual(DateTime.MinValue,deletedProduct.DeletedAt);
+            Assert.NotEqual(DateTime.MinValue, deletedProduct.DeletedAt);
         }
 
+        [Fact]
+        [Trait("OP", "Find")]
+        public async Task FindByFitler_GivenCategoryFilter_ReturnsFilteredProducts() {
+            //Arrange
+            ProductRepository productRepository = new ProductRepository(_databaseContext);
+            ProductFilterModel filterModel = new ProductFilterModel() {
+                Category = Category.FRUIT
+            };
+            List<CreatePictureDTO> createPictures = new List<CreatePictureDTO>();
+
+            List<backend.Models.Product> products = new List<Product> { 
+                new ProductFactory().WithName("Banana prata").WithPrice(15).WithCategory(Category.FRUIT).Build(), 
+                new ProductFactory().WithName("Abacaxi").WithPrice(14).WithCategory(Category.FRUIT).Build(),
+                new ProductFactory().WithName("Brócolis").WithPrice(6.99).WithCategory(Category.VEGETABLE).Build()
+            };
+
+            //Act
+            foreach (var product in products) {
+                await productRepository.Save(product, createPictures);
+            }
+            var filteredProducts = productRepository.FindByFilter(filterModel,0,10);
+
+            //Assert
+            Assert.Equal(2, filteredProducts.Products.Count());
+            Assert.Equal("Banana prata", filteredProducts.Products[0].Name);
+            Assert.Equal("Abacaxi", filteredProducts.Products[1].Name);
+            Assert.Equal(Category.FRUIT, filteredProducts.Products[0].Category);
+            Assert.Equal(Category.FRUIT, filteredProducts.Products[1].Category);
+        }
+
+        [Fact]
+        [Trait("OP", "Find")]
+        public async Task FindByFitler_GivenNameFilter_ReturnsFilteredProducts() {
+            //Arrange
+            ProductRepository productRepository = new ProductRepository(_databaseContext);
+            ProductFilterModel filterModel = new ProductFilterModel() {
+                Name = "brocól"
+            };
+            List<CreatePictureDTO> createPictures = new List<CreatePictureDTO>();
+
+            List<backend.Models.Product> products = new List<Product> {
+                new ProductFactory().WithName("Banana prata").WithPrice(15).WithCategory(Category.FRUIT).Build(),
+                new ProductFactory().WithName("Abacaxi").WithPrice(14).WithCategory(Category.FRUIT).Build(),
+                new ProductFactory().WithName("Brócolis").WithPrice(6.99).WithCategory(Category.VEGETABLE).Build()
+            };
+
+            //Act
+            foreach (var product in products) {
+                await productRepository.Save(product, createPictures);
+            }
+            var filteredProducts = productRepository.FindByFilter(filterModel, 0, 10);
+
+            //Assert
+            Assert.Single(filteredProducts.Products);
+            Assert.Equal("Brócolis", filteredProducts.Products[0].Name);
+        }
+
+        [Fact]
+        [Trait("OP", "Find")]
+        public async Task FindByFitler_GivenPriceFilter_ReturnsFilteredProducts() {
+            //Arrange
+            ProductRepository productRepository = new ProductRepository(_databaseContext);
+            ProductFilterModel filterModel = new ProductFilterModel() {
+                IsByPrice = true
+            };
+            List<CreatePictureDTO> createPictures = new List<CreatePictureDTO>();
+
+            List<backend.Models.Product> products = new List<Product> {
+                new ProductFactory().WithName("Banana prata").WithPrice(15).WithCategory(Category.FRUIT).Build(),
+                new ProductFactory().WithName("Abacaxi").WithPrice(14).WithCategory(Category.FRUIT).Build(),
+                new ProductFactory().WithName("Brócolis").WithPrice(6.99).WithCategory(Category.VEGETABLE).Build()
+            };
+
+            //Act
+            foreach (var product in products) {
+                await productRepository.Save(product, createPictures);
+            }
+            var filteredProducts = productRepository.FindByFilter(filterModel, 0, 10);
+
+            //Assert
+            Assert.Equal(6.99, filteredProducts.Products[0].Price);
+            Assert.Equal(14, filteredProducts.Products[1].Price);
+            Assert.Equal(15, filteredProducts.Products[2].Price);
+        }
+
+
     }
+
 }

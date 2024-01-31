@@ -18,18 +18,18 @@ public class CreateManyProductsUseCase{
         this.repository = repository;
     }
     
-    public async Task<List<Models.Product>> Execute(List<CreateProductDTO> productsDTO){
+    public async Task<List<backend.Models.Product>> Execute(List<CreateProductDTO> productsDTO){
 
         DateTime parsedDateTime;
 
-        List<Models.Product> productsEntities = new List<Models.Product>();
+        List<backend.Models.Product> productsEntities = new List<backend.Models.Product>();
         List<List<CreatePictureDTO>> createPictureDTOs = new List<List<CreatePictureDTO>>();
 
         foreach (var product in productsDTO){
             
             parsedDateTime = DateUtils.ConvertStringToDateTime(product.HarvestDate!, "dd/MM/yyyy");
             var productId = Guid.NewGuid();
-            var p = new Models.Product{
+            var p = new backend.Models.Product{
                 Id = productId,
                 Name = product.Name,
                 Description = product.Description,

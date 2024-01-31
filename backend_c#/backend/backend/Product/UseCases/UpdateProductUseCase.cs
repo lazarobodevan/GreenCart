@@ -13,7 +13,7 @@ public class UpdateProductUseCase{
         this.repository = repository;
     }
 
-    public async Task<Models.Product> Execute(UpdateProductDTO productDTO){
+    public async Task<backend.Models.Product> Execute(UpdateProductDTO productDTO){
         
         var possibleProduct = await repository.FindById(productDTO.Id);
         
@@ -25,7 +25,7 @@ public class UpdateProductUseCase{
             harvestDate = DateUtils.ConvertStringToDateTime(productDTO.HarvestDate, "dd/MM/yyyy");
 
 
-        var productEntity = new Models.Product{
+        var productEntity = new backend.Models.Product{
             Id = possibleProduct.Id,
             Name = productDTO.Name ?? possibleProduct.Name,
             AvailableQuantity = productDTO.AvailableQuantity ?? possibleProduct.AvailableQuantity,

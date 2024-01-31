@@ -1,4 +1,5 @@
 ﻿using backend.Contexts;
+using backend.Producer.Services;
 using backend.Product.Repository;
 using backend.Product.UseCases;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,11 @@ namespace Tests.UnitTests.UseCases
     public class GetProductByIdUseCaseTest {
         
         private readonly Mock<IProductRepository> _productRepositoryMock;
+        private readonly Mock<IPictureService> _pictureServiceMock;
 
         public GetProductByIdUseCaseTest() {
             _productRepositoryMock = new Mock<IProductRepository>();
+            _pictureServiceMock = new Mock<IPictureService>();
         }
 
         [Fact]
@@ -26,8 +29,10 @@ namespace Tests.UnitTests.UseCases
 
             //Arrange
             _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(new ProductFactory().Build());
+            _pictureServiceMock.Setup(x => x.GetImagesAsync(It.IsAny<backend.Models.Product>())).ReturnsAsync(new List<string>() { "link1" });
+            
 
-            GetProductByIdUseCase getProductByIdUseCase = new GetProductByIdUseCase(_productRepositoryMock.Object);
+            GetProductByIdUseCase getProductByIdUseCase = new GetProductByIdUseCase(_productRepositoryMock.Object, _pictureServiceMock.Object);
             ProductDTOFactory productFactory = new ProductDTOFactory();
 
             //Act
@@ -42,8 +47,9 @@ namespace Tests.UnitTests.UseCases
         public async Task FindById_GivenNotExistentProductId_ReturnsNull() {
             //Arrange
             _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Product?>(null));
+            _pictureServiceMock.Setup(x => x.GetImagesAsync(It.IsAny<backend.Models.Product>())).ReturnsAsync(new List<string>() { "link1" });
 
-            GetProductByIdUseCase getProductByIdUseCase = new GetProductByIdUseCase(_productRepositoryMock.Object);
+            GetProductByIdUseCase getProductByIdUseCase = new GetProductByIdUseCase(_productRepositoryMock.Object, _pictureServiceMock.Object);
             ProductDTOFactory productFactory = new ProductDTOFactory();
 
             //Act

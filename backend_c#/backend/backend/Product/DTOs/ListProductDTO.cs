@@ -4,15 +4,15 @@ using System.Text.Json.Serialization;
 using backend.Picture.DTOs;
 using backend.Producer.DTOs;
 using backend.Product.Enums;
-
+using backend.Models;
 namespace backend.Product.DTOs;
 
 public class ListProductDTO{
-    public ListProductDTO(Models.Product product, List<ListPictureDTO> productPicturesUrls){
+    public ListProductDTO(backend.Models.Product product, List<ListPictureDTO> productPicturesUrls){
         Id = product.Id;
         Name = product.Name;
         Description = product.Description;
-        PicturesUrls = productPicturesUrls;
+        Pictures = productPicturesUrls;
         Category = product.Category.ToString();
         Price = product.Price;
         Unit = product.Unit.ToString();
@@ -42,7 +42,7 @@ public class ListProductDTO{
 
     [JsonPropertyName("description")] public string? Description{ get; set; }
 
-    [JsonPropertyName("picture")] public List<ListPictureDTO> PicturesUrls{ get; set; }
+    [JsonPropertyName("pictures")] public List<ListPictureDTO> Pictures{ get; set; }
 
     [JsonPropertyName("category")] public string Category{ get; set; }
 

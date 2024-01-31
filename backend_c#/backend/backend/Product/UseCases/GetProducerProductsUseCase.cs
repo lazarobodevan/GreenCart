@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using backend.Picture.DTOs;
 using backend.Producer.Repository;
 using backend.Producer.Services;
 using backend.Product.DTOs;
+using backend.Product.Models;
 using backend.Product.Repository;
 
 namespace backend.Product.UseCases;
@@ -19,9 +21,11 @@ public class GetProducerProductsUseCase{
         this.pictureService = pictureService;
     }
 
-    public async Task<ListProductsPagination> Execute(Guid producerId, int page, int pageResults){
+    public async Task<ListProductsPagination> Execute(Guid producerId, int page, ProductFilterModel filterModel){
 
-        var productsPaginated = repository.GetProducerProducts(producerId, page, pageResults);
+        var pageResults = 10;
+
+        var productsPaginated = repository.GetProducerProducts(producerId, page, pageResults, _HasAtLeastOneFilterOption(filterModel) ? filterModel : null);
         
         List<ListProductDTO> listProductsDto = new List<ListProductDTO>();
 
@@ -43,5 +47,22 @@ public class GetProducerProductsUseCase{
             Offset = productsPaginated.Offset,
             Pages = productsPaginated.Pages
         };
+    }
+
+    private static bool _HasAtLeastOneFilterOption(ProductFilterModel filterModel) {
+        if(filterModel == null) return false;
+
+        Type type = typeof(ProductFilterModel);
+        PropertyInfo[] properties = type.GetProperties();
+
+        foreach (PropertyInfo property in properties) {
+            object? value = property.GetValue(filterModel);
+
+            if(value != null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -16,6 +16,7 @@ namespace Tests.Factories.Product
         {
             Id = Guid.NewGuid(),
             Name = "Product",
+            NormalizedName = "PRODUCT",
             Description = "Description",
             Pictures = new List<Picture>(),
             Category = Category.VEGETABLE,

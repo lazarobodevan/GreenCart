@@ -18,6 +18,9 @@ public class Product{
     [Column("Name")]
     public string Name{ get; set; }
 
+    [Column("NormalizedName")]
+    public string NormalizedName { get; set; }
+
     [Column("Description")] public string? Description{ get; set; }
 
     public List<Picture> Pictures { get; set; }

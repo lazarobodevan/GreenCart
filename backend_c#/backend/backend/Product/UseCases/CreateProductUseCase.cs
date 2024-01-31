@@ -24,14 +24,14 @@ public class CreateProductUseCase{
         pictureService = _pictureService;
     }
 
-    public async Task<Models.Product> Execute(CreateProductDTO _productDTO){
+    public async Task<backend.Models.Product> Execute(CreateProductDTO _productDTO){
         
         DateTime parsedDateTime = DateUtils.ConvertStringToDateTime(_productDTO.HarvestDate!, "dd/MM/yyyy");
         var productId = Guid.NewGuid();
-        var productEntity = new Models.Product{
+        var productEntity = new backend.Models.Product{
             Id = productId,
             Name = _productDTO.Name,
-            Pictures = new List<Models.Picture>(),
+            Pictures = new List<backend.Models.Picture>(),
             AvailableQuantity = (int)_productDTO.AvailableQuantity!,
             Category = (Category)_productDTO.Category!,
             HarvestDate = parsedDateTime,
@@ -45,7 +45,7 @@ public class CreateProductUseCase{
         
         var picturesList = _GeneratePicturesEntity(_productDTO.Pictures!, _productDTO.PicturesMetadata!);
         foreach (var picture in picturesList) {
-            productEntity.Pictures.Add(new Models.Picture() {
+            productEntity.Pictures.Add(new backend.Models.Picture() {
                 Key = (Guid)picture.Key!,
                 Position = (int)picture.Position!,
                 ProductId = productEntity.Id

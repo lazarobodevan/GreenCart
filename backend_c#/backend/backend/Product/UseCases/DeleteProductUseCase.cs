@@ -11,7 +11,7 @@ public class DeleteProductUseCase{
         this.repository = repository;
     }
 
-    public async Task<Models.Product> Execute(Guid productId){
+    public async Task<backend.Models.Product> Execute(Guid productId){
         var possibleProduct = await repository.FindById(productId);
 
         if (possibleProduct != null){

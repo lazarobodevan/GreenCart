@@ -1,5 +1,6 @@
 ﻿using backend.Picture.DTOs;
 using backend.Product.DTOs;
+using backend.Product.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,10 +8,11 @@ using System.Threading.Tasks;
 namespace backend.Product.Repository;
 
 public interface IProductRepository{
-    Task<Models.Product> Save(Models.Product product, List<CreatePictureDTO> pictures);
-    Task<Models.Product?> FindById(Guid productId);
-    ListDatabaseProductsPagination GetProducerProducts(Guid producerId, int page, int pageResults);
-    Task<List<Models.Product>> SaveMany(List<Models.Product> products);
-    Models.Product Update(Models.Product product);
-    Task<Models.Product> Delete(Models.Product product);
+    Task<backend.Models.Product> Save(backend.Models.Product product, List<CreatePictureDTO> pictures);
+    Task<backend.Models.Product?> FindById(Guid productId);
+    ListDatabaseProductsPagination GetProducerProducts(Guid producerId, int page, int pageResults, ProductFilterModel? filterModel);
+    ListDatabaseProductsPagination FindByFilter(ProductFilterModel filterModel, int page, int pageResults);
+    Task<List<backend.Models.Product>> SaveMany(List<backend.Models.Product> products);
+    backend.Models.Product Update(backend.Models.Product product);
+    Task<backend.Models.Product> Delete(backend.Models.Product product);
 }
