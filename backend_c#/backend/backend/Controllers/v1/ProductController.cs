@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Product.Models;
 using backend.Product.Enums;
 using backend.Shared.Classes;
+using backend.ProducerPicture.Services;
 
 namespace backend.Controllers.v1;
 
@@ -32,18 +33,20 @@ public class ProductController : ControllerBase{
     private readonly FindProducerByIdUseCase getProducerByIdUseCase;
     private readonly GetProductByIdUseCase getProductByIdUseCase;
 
-    private readonly IProductPictureService pictureService;
+    private readonly IProductPictureService productPictureService;
+    private readonly IProducerPictureService producerPictureService;
     private readonly IProductRepository repository;
     private readonly IProducerRepository producerRepository;
 
-    public ProductController(IProductRepository repository, IProductPictureService _pictureService, IProducerRepository _producerRepository){
+    public ProductController(IProductRepository repository, IProductPictureService _pictureService, IProducerRepository _producerRepository, IProducerPictureService producerPictureService){
         this.repository = repository;
-        this.pictureService = _pictureService;
+        this.productPictureService = _pictureService;
         this.producerRepository = _producerRepository;
-        createProductUseCase = new CreateProductUseCase(this.repository, pictureService);
-        getProducerProductsUseCase = new GetProducerProductsUseCase(this.repository, pictureService);
-        getProducerByIdUseCase = new FindProducerByIdUseCase(this.producerRepository);
-        getProductByIdUseCase = new GetProductByIdUseCase(this.repository, pictureService);
+        this.producerPictureService = producerPictureService;
+        createProductUseCase = new CreateProductUseCase(this.repository, productPictureService);
+        getProducerProductsUseCase = new GetProducerProductsUseCase(this.repository, productPictureService);
+        getProducerByIdUseCase = new FindProducerByIdUseCase(this.producerRepository, producerPictureService);
+        getProductByIdUseCase = new GetProductByIdUseCase(this.repository, productPictureService);
     }
 
     [HttpPost]
@@ -91,7 +94,7 @@ public class ProductController : ControllerBase{
 
             return Ok(new ListProductsResponse() {
                 
-                Producer = new ListProducerDTO(producer!, null),
+                Producer = producer,
                 Products = new Pagination<List<ListProductDTO>>() {
                     CurrentPage = page ?? 0,
                     Pages = products.Pages,

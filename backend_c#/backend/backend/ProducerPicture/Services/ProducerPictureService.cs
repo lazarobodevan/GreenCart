@@ -34,7 +34,7 @@ namespace backend.ProducerPicture.Services {
             try {
                 var getObjectRequest = new GetPreSignedUrlRequest {
                     BucketName = _BucketName,
-                    Key = $"{producer.Id}/",
+                    Key = $"{producer.Id}/{producer.Id}",
                     Expires = DateTime.UtcNow.AddHours(5),
                     Protocol = Protocol.HTTPS,
                 };

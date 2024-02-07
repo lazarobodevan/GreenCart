@@ -17,6 +17,7 @@ namespace backend.Controllers.v1;
 public class ProducerController : ControllerBase{
     private readonly CreateProducerUseCase createProducerUseCase;
     private readonly FindNearProducersUseCase findNearProducersUseCase;
+    private readonly FindProducerByIdUseCase findProducerByIdUseCase;
 
     private readonly IProducerRepository repository;
     private readonly IProducerPictureService producerPictureService;
@@ -26,6 +27,7 @@ public class ProducerController : ControllerBase{
         this.producerPictureService = producerPictureService;
         createProducerUseCase = new CreateProducerUseCase(this.repository, this.producerPictureService);
         findNearProducersUseCase = new FindNearProducersUseCase(this.repository);
+        findProducerByIdUseCase = new FindProducerByIdUseCase(this.repository, producerPictureService);
     }
 
     [HttpPost]
@@ -37,6 +39,18 @@ public class ProducerController : ControllerBase{
             return StatusCode(StatusCodes.Status201Created, new ListProducerDTO(createdProducer, null));
         }
         catch (Exception ex){
+            var error = ExceptionUtils.FormatExceptionResponse(ex);
+            return StatusCode(StatusCodes.Status500InternalServerError, error);
+        }
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProducerById([FromRoute] Guid id) {
+        try {
+            var foundProducer = await findProducerByIdUseCase.Execute(id);
+
+            return Ok(foundProducer);
+        }catch (Exception ex) {
             var error = ExceptionUtils.FormatExceptionResponse(ex);
             return StatusCode(StatusCodes.Status500InternalServerError, error);
         }
