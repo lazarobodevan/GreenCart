@@ -164,28 +164,6 @@ namespace backend.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("backend.Models.Picture", b =>
-                {
-                    b.Property<Guid>("Key")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("Key");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("integer")
-                        .HasColumnName("Position");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Key");
-
-                    b.HasIndex("ProductId", "Position")
-                        .IsUnique();
-
-                    b.ToTable("Pictures");
-                });
-
             modelBuilder.Entity("backend.Models.Producer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -197,11 +175,6 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("AttendedCities");
-
-                    b.Property<string>("CPF")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("CPF");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -215,6 +188,10 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Email");
+
+                    b.Property<bool>("HasProfilePicture")
+                        .HasColumnType("boolean")
+                        .HasColumnName("HasProfilePicture");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -230,10 +207,6 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Password");
-
-                    b.Property<byte[]>("Picture")
-                        .HasColumnType("bytea")
-                        .HasColumnName("Picture");
 
                     b.Property<string>("Telephone")
                         .IsRequired()
@@ -321,6 +294,28 @@ namespace backend.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("backend.Models.ProductPicture", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("Key");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("Position");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId", "Position")
+                        .IsUnique();
+
+                    b.ToTable("ProductPictures");
+                });
+
             modelBuilder.Entity("backend.Models.ConsumerFavProducer", b =>
                 {
                     b.HasOne("backend.Models.Consumer", "Consumer")
@@ -367,17 +362,6 @@ namespace backend.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("backend.Models.Picture", b =>
-                {
-                    b.HasOne("backend.Models.Product", "Product")
-                        .WithMany("Pictures")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("backend.Models.Product", b =>
                 {
                     b.HasOne("backend.Models.Producer", "Producer")
@@ -387,6 +371,17 @@ namespace backend.Migrations
                         .IsRequired();
 
                     b.Navigation("Producer");
+                });
+
+            modelBuilder.Entity("backend.Models.ProductPicture", b =>
+                {
+                    b.HasOne("backend.Models.Product", "Product")
+                        .WithMany("Pictures")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("backend.Models.Consumer", b =>

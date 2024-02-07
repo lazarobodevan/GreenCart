@@ -11,7 +11,7 @@ public class ListProducerDTO{
         Email = producer.Email;
         OriginCity = producer.OriginCity;
         Telephone = producer.Telephone;
-        Picture = producer.Picture != null && pictureDTO != null ? new ListProducerPictureDTO() {
+        Picture = producer.HasProfilePicture && pictureDTO != null ? new ListProducerPictureDTO() {
             ProducerId = producer.Id,
             Url = pictureDTO.Url
         } : null;

@@ -21,7 +21,6 @@ public class UpdateProducerUseCase{
             Id = updateProducerDTO.Id,
             Name = updateProducerDTO.Name ?? possibleProducer.Name,
             AttendedCities = updateProducerDTO.AttendedCities ?? possibleProducer.AttendedCities,
-            CPF = updateProducerDTO.CPF ?? possibleProducer.CPF,
             Email = updateProducerDTO.Email ?? possibleProducer.Email,
             Password = updateProducerDTO.Password ?? possibleProducer.Password,
             OriginCity = updateProducerDTO.OriginCity ?? possibleProducer.OriginCity,

@@ -7,6 +7,7 @@ using Amazon.S3;
 using backend.Contexts;
 using backend.Producer.Repository;
 using backend.Producer.Services;
+using backend.ProducerPicture.Services;
 using backend.Product.Enums;
 using backend.Product.Repository;
 using EntityFramework.Exceptions.PostgreSQL;
@@ -72,6 +73,15 @@ builder.Services.AddScoped<IProductPictureService, ProductPictureService>(provid
     var amazonS3 = provider.GetRequiredService<IAmazonS3>();
 
     return new ProductPictureService(
+        amazonS3,
+        builder.Configuration.GetValue<string>("AmazonS3:BucketName")!
+    );
+});
+
+builder.Services.AddScoped<IProducerPictureService, ProducerPictureService>(provider => {
+    var amazonS3 = provider.GetRequiredService<IAmazonS3>();
+
+    return new ProducerPictureService(
         amazonS3,
         builder.Configuration.GetValue<string>("AmazonS3:BucketName")!
     );

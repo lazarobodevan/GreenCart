@@ -17,7 +17,6 @@ namespace Tests.Factories.Producer
             Email = "test@test.com",
             AttendedCities = "City1;City2;City3",
             FavdByConsumers = new List<ConsumerFavProducer>(),
-            CPF = "111.111.111-11",
             OriginCity = "City1",
             Password = "123",
             Telephone = "(31) 99999-9999",
@@ -45,11 +44,6 @@ namespace Tests.Factories.Producer
 
         public ProducerDTOFactory WithFavdByConsumers(List<ConsumerFavProducer> favs) {
             createProducerDto.FavdByConsumers = favs;
-            return this;
-        }
-
-        public ProducerDTOFactory WithCPF(string cpf) {
-            createProducerDto.CPF = cpf;
             return this;
         }
 

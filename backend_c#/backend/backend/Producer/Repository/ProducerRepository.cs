@@ -39,10 +39,7 @@ public class ProducerRepository : IProducerRepository{
 
     public async Task<Models.Producer> Save(Models.Producer producer){
         producer.CreatedAt = DateTime.Now;
-        Console.WriteLine("*********************************************************************************");
-        Console.WriteLine(producer.Name);
         var createdProducer = await _context.Producers.AddAsync(producer);
-        Console.WriteLine(createdProducer.Entity.Id);
         await _context.SaveChangesAsync();
         return createdProducer.Entity;
     }

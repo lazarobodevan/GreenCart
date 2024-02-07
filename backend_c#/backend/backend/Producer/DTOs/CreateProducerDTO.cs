@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using backend.Models;
+using backend.ProducerPicture.DTOs;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.Producer.DTOs;
 
@@ -22,10 +24,7 @@ public class CreateProducerDTO{
     [Required(ErrorMessage = "Celular é obrigatório")]
     public string Telephone{ get; set; }
 
-    [Column("Picture")] public byte[]? Picture{ get; set; }
-
-    [Required(ErrorMessage = "CPF é obrigatório")]
-    public string CPF{ get; set; }
+    public IFormFile? Picture{ get; set; }
 
     [Required(ErrorMessage = "Cidades atendidas é obrigatório")]
     public string AttendedCities{ get; set; }

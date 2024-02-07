@@ -2,6 +2,7 @@
 using backend.Models;
 using backend.Producer.Repository;
 using backend.Producer.UseCases;
+using backend.ProducerPicture.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace Tests.UnitTests.UseCases.Producer
     public class FindProducerByIdUseCaseTest {
 
         private readonly Mock<IProducerRepository> _producerRepository;
+        private readonly Mock<IProducerPictureService> _producerPictureServiceMock;
         private ProducerDTOFactory producerFactory = new ProducerDTOFactory();
 
         public FindProducerByIdUseCaseTest() {
             _producerRepository = new Mock<IProducerRepository>();
+            _producerPictureServiceMock = new Mock<IProducerPictureService>();
         }
 
         [Fact]
@@ -28,8 +31,9 @@ namespace Tests.UnitTests.UseCases.Producer
             var producerId = Guid.NewGuid();
             _producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer {Id = producerId});
             _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(new backend.Models.Producer { Id = producerId });
+            _producerPictureServiceMock.Setup(x => x.GetProfilePictureAsync(It.IsAny<backend.Models.Producer>())).ReturnsAsync("link");
 
-            CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object);
+            CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object, _producerPictureServiceMock.Object);
             FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object);
 
             var producer = producerFactory.Build();

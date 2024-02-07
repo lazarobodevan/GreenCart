@@ -16,7 +16,6 @@ namespace Tests.Factories.Producer
             AttendedCities = "City1;City2;City3",
             CreatedAt = DateTime.Now,
             FavdByConsumers = new List<ConsumerFavProducer>(),
-            CPF = "111.111.111-11",
             OriginCity = "City1",
             Password = "123",
             Telephone = "(31) 99999-9999",
@@ -50,12 +49,6 @@ namespace Tests.Factories.Producer
         public ProducerFactory WithFavdByConsumers(List<ConsumerFavProducer> favd)
         {
             ProducerEntity.FavdByConsumers = favd;
-            return this;
-        }
-
-        public ProducerFactory WithCPF(string CPF)
-        {
-            ProducerEntity.CPF = CPF;
             return this;
         }
 

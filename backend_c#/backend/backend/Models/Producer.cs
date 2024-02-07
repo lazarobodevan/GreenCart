@@ -17,8 +17,6 @@ public class Producer{
         Password = producer.Password;
         OriginCity = producer.OriginCity;
         Telephone = producer.Telephone;
-        Picture = producer.Picture;
-        CPF = producer.CPF;
         AttendedCities = producer.AttendedCities;
         WhereToFind = producer.WhereToFind;
         FavdByConsumers = producer.FavdByConsumers;
@@ -39,13 +37,8 @@ public class Producer{
 
     [Required] [Column("Telephone")] public string Telephone{ get; set; }
 
-    [Column("ProfilePicture")] 
-    [ForeignKey("ProducerPicture")] 
-    public Guid ProfilePictureKey { get; set; }
-
-    [Column("Picture")] public ProducerPicture? Picture{ get; set; }
-
-    [Required] [Column("CPF")] public string CPF{ get; set; }
+    [Required]
+    [Column("HasProfilePicture")] public bool HasProfilePicture { get; set; }
 
     [Required] [Column("AttendedCities")] public string AttendedCities{ get; set; }
 

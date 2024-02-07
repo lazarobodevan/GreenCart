@@ -48,7 +48,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
@@ -94,7 +93,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
@@ -133,7 +131,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
@@ -159,7 +156,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
@@ -192,7 +188,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "CITY1;CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
@@ -204,7 +199,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-12",
                 OriginCity = "City3",
                 Password = "123",
                 Telephone = "(31) 99999-9990",
@@ -287,7 +281,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
@@ -306,7 +299,6 @@ namespace Tests.UnitTests.Repositories
             producer.WhereToFind = "Local";
             producer.Email = "test2@test.com";
             producer.AttendedCities = "City1";
-            producer.CPF = "011.111.111-11";
             producer.OriginCity = "City2";
             producer.Password = "321";
 
@@ -322,7 +314,6 @@ namespace Tests.UnitTests.Repositories
             Assert.NotEqual(updatedProducer.Telephone, createdProducer.Telephone);
             Assert.NotEqual(updatedProducer.WhereToFind, createdProducer.WhereToFind);
             Assert.NotEqual(updatedProducer.Email, createdProducer.Email);
-            Assert.NotEqual(updatedProducer.CPF, createdProducer.CPF);
             Assert.NotEqual(updatedProducer.OriginCity, createdProducer.OriginCity);
             Assert.NotEqual(updatedProducer.Password, createdProducer.Password);
         }
@@ -337,7 +328,6 @@ namespace Tests.UnitTests.Repositories
                 AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                CPF = "111.111.111-11",
                 OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",

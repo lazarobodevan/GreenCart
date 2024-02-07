@@ -5,6 +5,7 @@ using backend.Producer.DTOs;
 using backend.Producer.Repository;
 using backend.Producer.UseCases;
 using backend.ProducerPicture.DTOs;
+using backend.ProducerPicture.Services;
 using backend.Utils.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +19,17 @@ public class ProducerController : ControllerBase{
     private readonly FindNearProducersUseCase findNearProducersUseCase;
 
     private readonly IProducerRepository repository;
+    private readonly IProducerPictureService producerPictureService;
 
-    public ProducerController(IProducerRepository repository){
+    public ProducerController(IProducerRepository repository, IProducerPictureService producerPictureService){
         this.repository = repository;
-        createProducerUseCase = new CreateProducerUseCase(this.repository);
+        this.producerPictureService = producerPictureService;
+        createProducerUseCase = new CreateProducerUseCase(this.repository, this.producerPictureService);
         findNearProducersUseCase = new FindNearProducersUseCase(this.repository);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProducerAsync([FromBody] CreateProducerDTO producerDto){
+    public async Task<IActionResult> CreateProducerAsync([FromForm] CreateProducerDTO producerDto){
         if (producerDto == null) return BadRequest("Corpo é obrigatório");
 
         try{

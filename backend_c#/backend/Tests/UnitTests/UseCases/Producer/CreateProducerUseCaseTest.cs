@@ -3,6 +3,8 @@ using backend.Models;
 using backend.Producer.DTOs;
 using backend.Producer.Repository;
 using backend.Producer.UseCases;
+using backend.ProducerPicture.DTOs;
+using backend.ProducerPicture.Services;
 using backend.Utils.Errors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -21,9 +23,11 @@ namespace Tests.UnitTests.UseCases.Producer
 
         private ProducerDTOFactory producerFactory = new ProducerDTOFactory();
         private Mock<IProducerRepository> producerRepository;
+        private Mock<IProducerPictureService> producerPictureService;
 
         public CreateProducerUseCaseTest() {
             producerRepository = new Mock<IProducerRepository>();
+            producerPictureService = new Mock<IProducerPictureService>();
         }
 
 
@@ -34,8 +38,9 @@ namespace Tests.UnitTests.UseCases.Producer
             //Arrange
             producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer());
             producerRepository.Setup(x => x.FindByEmail(It.IsAny<string>())).Returns(Task.FromResult<backend.Models.Producer?>(null));
+            producerPictureService.Setup(x => x.UploadProfilePictureAsync(It.IsAny<backend.Models.Producer>(), It.IsAny<CreateProducerPictureDTO>())).ReturnsAsync(new Amazon.S3.Model.PutObjectResponse());
 
-            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object);
+            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object, producerPictureService.Object);
 
             var producer = producerFactory.Build();
 
@@ -52,8 +57,9 @@ namespace Tests.UnitTests.UseCases.Producer
             //Arrange
             producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer());
             producerRepository.Setup(x => x.FindByEmail(It.IsAny<string>())).ReturnsAsync(new backend.Models.Producer());
+            producerPictureService.Setup(x => x.UploadProfilePictureAsync(It.IsAny<backend.Models.Producer>(), It.IsAny<CreateProducerPictureDTO>())).ReturnsAsync(new Amazon.S3.Model.PutObjectResponse());
 
-            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object);
+            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object, producerPictureService.Object);
 
             var producer = producerFactory.Build();
 
