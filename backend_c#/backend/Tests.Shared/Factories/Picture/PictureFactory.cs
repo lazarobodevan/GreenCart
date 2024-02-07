@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using backend.Models;
 namespace Tests.Shared.Factories.Picture {
     public class PictureFactory {
-        private backend.Models.Picture picture = new() {
-            Key = Guid.NewGuid(),
+        private backend.Models.ProductPicture picture = new() {
+            Id = Guid.NewGuid(),
             Position = 0,
             ProductId = Guid.NewGuid(),
         };
 
-        public backend.Models.Picture Build() {
+        public backend.Models.ProductPicture Build() {
             return picture;
         }
 
         public PictureFactory WithKey(Guid key) {
-            picture.Key = key;
+            picture.Id = key;
             return this;
         }
 

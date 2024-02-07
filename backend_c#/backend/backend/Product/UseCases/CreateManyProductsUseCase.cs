@@ -23,7 +23,7 @@ public class CreateManyProductsUseCase{
         DateTime parsedDateTime;
 
         List<backend.Models.Product> productsEntities = new List<backend.Models.Product>();
-        List<List<CreatePictureDTO>> createPictureDTOs = new List<List<CreatePictureDTO>>();
+        List<List<CreateProductPictureDTO>> createPictureDTOs = new List<List<CreateProductPictureDTO>>();
 
         foreach (var product in productsDTO){
             
@@ -50,16 +50,16 @@ public class CreateManyProductsUseCase{
     }
 
 
-    private List<CreatePictureDTO> _SaveImages(List<IFormFile> pictures, Guid productId) {
+    private List<CreateProductPictureDTO> _SaveImages(List<IFormFile> pictures, Guid productId) {
         //TODO: Padronizar o nome dos arquivos para fazer salvamento em massa de varios
         //produtos com varias imagens
         //TODO: Adicionar validação do nome do arquivo
         
         //Na criação de um novo produto, so pode fazer upload de uma imagem
-        List<CreatePictureDTO> picturesEntity = new List<CreatePictureDTO>();
+        List<CreateProductPictureDTO> picturesEntity = new List<CreateProductPictureDTO>();
 
         foreach (var picture in pictures) {
-            picturesEntity.Add(new CreatePictureDTO() {
+            picturesEntity.Add(new CreateProductPictureDTO() {
                 Key = Guid.NewGuid(),
                 Stream = picture.OpenReadStream(),
                 Position = 1

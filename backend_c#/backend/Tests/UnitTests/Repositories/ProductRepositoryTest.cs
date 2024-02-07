@@ -53,7 +53,7 @@ namespace Tests.UnitTests.Repositories {
             var product = new Factories.Product.ProductFactory().Build();
 
             //Act
-            var createdProduct = await productRepository.Save(product, new List<CreatePictureDTO>());
+            var createdProduct = await productRepository.Save(product, new List<CreateProductPictureDTO>());
 
             //Assert
             Assert.NotNull(createdProduct);
@@ -73,7 +73,7 @@ namespace Tests.UnitTests.Repositories {
 
             //Act
             async Task Act() {
-                var producer = await productRepository.Save(productEntity, new List<CreatePictureDTO>());
+                var producer = await productRepository.Save(productEntity, new List<CreateProductPictureDTO>());
             }
 
             //Assert
@@ -94,7 +94,7 @@ namespace Tests.UnitTests.Repositories {
 
             //Act
             async Task Act() {
-                var producer = await productRepository.Save(productEntity, new List<CreatePictureDTO>());
+                var producer = await productRepository.Save(productEntity, new List<CreateProductPictureDTO>());
             }
 
             //Assert
@@ -108,12 +108,15 @@ namespace Tests.UnitTests.Repositories {
         public async Task FindById_GivenProduct_ReturnsFoundProduct() {
             //Arrange
             var productRepository = new ProductRepository(_databaseContext);
+            var producerRepostory = new ProducerRepository(_databaseContext);
 
-            var product = new Factories.Product.ProductFactory().Build();
+            var producer = new Factories.Producer.ProducerFactory().Build();
+            var createdProducer = await producerRepostory.Save(producer);
+            var product = new Factories.Product.ProductFactory().WithProducerId(createdProducer.Id).Build();
 
             //Act
-            var createdProduct = await productRepository.Save(product, new List<CreatePictureDTO>());
-            var possibleProduct = await productRepository.FindById(createdProduct.Id);
+            var createdProduct = await productRepository.Save(product, new List<CreateProductPictureDTO>());
+            var possibleProduct = productRepository.FindById(createdProduct.Id);
 
             //Assert
             Assert.NotNull(possibleProduct);
@@ -126,7 +129,7 @@ namespace Tests.UnitTests.Repositories {
             var productRepository = new ProductRepository(_databaseContext);
 
             //Act
-            var possibleProduct = await productRepository.FindById(Guid.NewGuid());
+            var possibleProduct = productRepository.FindById(Guid.NewGuid());
 
             //Assert
             Assert.Null(possibleProduct);
@@ -180,23 +183,23 @@ namespace Tests.UnitTests.Repositories {
             var productId2 = Guid.NewGuid();
             var productId3 = Guid.NewGuid();
 
-            var picture1 = new List<Picture>() {
-                new Picture() {
-                    Key = Guid.NewGuid(),
+            var picture1 = new List<ProductPicture>() {
+                new ProductPicture() {
+                    Id = Guid.NewGuid(),
                     Position = 0,
                     ProductId = productId1,
                 }
             };
-            var picture2 = new List<Picture>() {
-                new Picture(){
-                    Key = Guid.NewGuid(),
+            var picture2 = new List<ProductPicture>() {
+                new ProductPicture(){
+                    Id = Guid.NewGuid(),
                     Position = 0,
                     ProductId = productId2,
                 }
             };
-            var picture3 = new List<Picture>() {
-                new Picture() {
-                    Key = Guid.NewGuid(),
+            var picture3 = new List<ProductPicture>() {
+                new ProductPicture() {
+                    Id = Guid.NewGuid(),
                     Position = 0,
                     ProductId = productId3,
                 }
@@ -238,7 +241,7 @@ namespace Tests.UnitTests.Repositories {
                 ProducerId = createdProducer2.Id,
             };
 
-            var createdProduct1 = await _productRepository.Save(product1, new List<CreatePictureDTO>());
+            var createdProduct1 = await _productRepository.Save(product1, new List<CreateProductPictureDTO>());
 
             var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
 
@@ -246,15 +249,15 @@ namespace Tests.UnitTests.Repositories {
             var foundProductsFromProducer1 = _productRepository.GetProducerProducts(createdProducer1.Id, 0, 2, filterModel);
             var foundProductsFromProducer2 = _productRepository.GetProducerProducts(createdProducer2.Id, 0, 2, filterModel);
 
-            var isFoundProductsFromProducer2ContainsProduct1 = foundProductsFromProducer2.Products.Any(product => product.Name == product1.Name);
-            var isFoundProductsFromProducer2ContainsProduct2 = foundProductsFromProducer2.Products.Any(product => product.Name == product2.Name);
-            var isFoundProductsFromProducer2ContainsProduct3 = foundProductsFromProducer2.Products.Any(product => product.Name == product3.Name);
+            var isFoundProductsFromProducer2ContainsProduct1 = foundProductsFromProducer2.Data.Any(product => product.Name == product1.Name);
+            var isFoundProductsFromProducer2ContainsProduct2 = foundProductsFromProducer2.Data.Any(product => product.Name == product2.Name);
+            var isFoundProductsFromProducer2ContainsProduct3 = foundProductsFromProducer2.Data.Any(product => product.Name == product3.Name);
 
             //Assert
-            Assert.Single(foundProductsFromProducer1.Products);
-            Assert.Equal(foundProductsFromProducer1.Products.First().Name, product1.Name);
+            Assert.Single(foundProductsFromProducer1.Data);
+            Assert.Equal(foundProductsFromProducer1.Data.First().Name, product1.Name);
 
-            Assert.Equal(2, foundProductsFromProducer2.Products.Count());
+            Assert.Equal(2, foundProductsFromProducer2.Data.Count());
             Assert.False(isFoundProductsFromProducer2ContainsProduct1);
             Assert.True(isFoundProductsFromProducer2ContainsProduct2);
             Assert.True(isFoundProductsFromProducer2ContainsProduct3);
@@ -306,7 +309,7 @@ namespace Tests.UnitTests.Repositories {
             var product = new Factories.Product.ProductFactory().Build();
 
             //Act
-            var savedProduct = await repository.Save(product, new List<CreatePictureDTO>());
+            var savedProduct = await repository.Save(product, new List<CreateProductPictureDTO>());
             savedProduct.Name = "Updated Product";
             savedProduct.IsOrganic = false;
             savedProduct.UpdatedAt = DateTime.Now;
@@ -329,7 +332,7 @@ namespace Tests.UnitTests.Repositories {
             var product = new Factories.Product.ProductFactory().Build();
 
             //Act
-            var createdProduct = await productRepository.Save(product, new List<CreatePictureDTO>());
+            var createdProduct = await productRepository.Save(product, new List<CreateProductPictureDTO>());
             Assert.Null(createdProduct.DeletedAt);
             var deletedProduct = await productRepository.Delete(createdProduct);
 
@@ -346,7 +349,7 @@ namespace Tests.UnitTests.Repositories {
             ProductFilterModel filterModel = new ProductFilterModel() {
                 Category = Category.FRUIT
             };
-            List<CreatePictureDTO> createPictures = new List<CreatePictureDTO>();
+            List<CreateProductPictureDTO> createPictures = new List<CreateProductPictureDTO>();
 
             List<backend.Models.Product> products = new List<Product> { 
                 new ProductFactory().WithName("Banana prata").WithPrice(15).WithCategory(Category.FRUIT).Build(), 
@@ -361,11 +364,11 @@ namespace Tests.UnitTests.Repositories {
             var filteredProducts = productRepository.FindByFilter(filterModel,0,10);
 
             //Assert
-            Assert.Equal(2, filteredProducts.Products.Count());
-            Assert.Equal("Banana prata", filteredProducts.Products[0].Name);
-            Assert.Equal("Abacaxi", filteredProducts.Products[1].Name);
-            Assert.Equal(Category.FRUIT, filteredProducts.Products[0].Category);
-            Assert.Equal(Category.FRUIT, filteredProducts.Products[1].Category);
+            Assert.Equal(2, filteredProducts.Data.Count());
+            Assert.Equal("Banana prata", filteredProducts.Data[0].Name);
+            Assert.Equal("Abacaxi", filteredProducts.Data[1].Name);
+            Assert.Equal(Category.FRUIT, filteredProducts.Data[0].Category);
+            Assert.Equal(Category.FRUIT, filteredProducts.Data[1].Category);
         }
 
         [Fact]
@@ -376,7 +379,7 @@ namespace Tests.UnitTests.Repositories {
             ProductFilterModel filterModel = new ProductFilterModel() {
                 Name = "brocól"
             };
-            List<CreatePictureDTO> createPictures = new List<CreatePictureDTO>();
+            List<CreateProductPictureDTO> createPictures = new List<CreateProductPictureDTO>();
 
             List<backend.Models.Product> products = new List<Product> {
                 new ProductFactory().WithName("Banana prata").WithPrice(15).WithCategory(Category.FRUIT).Build(),
@@ -391,8 +394,8 @@ namespace Tests.UnitTests.Repositories {
             var filteredProducts = productRepository.FindByFilter(filterModel, 0, 10);
 
             //Assert
-            Assert.Single(filteredProducts.Products);
-            Assert.Equal("Brócolis", filteredProducts.Products[0].Name);
+            Assert.Single(filteredProducts.Data);
+            Assert.Equal("Brócolis", filteredProducts.Data[0].Name);
         }
 
         [Fact]
@@ -403,7 +406,7 @@ namespace Tests.UnitTests.Repositories {
             ProductFilterModel filterModel = new ProductFilterModel() {
                 IsByPrice = true
             };
-            List<CreatePictureDTO> createPictures = new List<CreatePictureDTO>();
+            List<CreateProductPictureDTO> createPictures = new List<CreateProductPictureDTO>();
 
             List<backend.Models.Product> products = new List<Product> {
                 new ProductFactory().WithName("Banana prata").WithPrice(15).WithCategory(Category.FRUIT).Build(),
@@ -418,9 +421,9 @@ namespace Tests.UnitTests.Repositories {
             var filteredProducts = productRepository.FindByFilter(filterModel, 0, 10);
 
             //Assert
-            Assert.Equal(6.99, filteredProducts.Products[0].Price);
-            Assert.Equal(14, filteredProducts.Products[1].Price);
-            Assert.Equal(15, filteredProducts.Products[2].Price);
+            Assert.Equal(6.99, filteredProducts.Data[0].Price);
+            Assert.Equal(14, filteredProducts.Data[1].Price);
+            Assert.Equal(15, filteredProducts.Data[2].Price);
         }
 
 

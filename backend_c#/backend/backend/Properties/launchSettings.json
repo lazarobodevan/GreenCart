@@ -8,9 +8,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5212",
+      "applicationUrl": "http://0.0.0.0:5001",
       "windowsAuthentication": false,
-      "anonymousAuthentication": true
+      "anonymousAuthentication": true,
+      "ListenAddress": "192.168.1.3:5000"
     },
     "testing": {
       "commandName": "Project",

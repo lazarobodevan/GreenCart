@@ -13,7 +13,7 @@ public class DatabaseContext : DbContext, IDatabaseContextOptions{
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
         //Position must be unique between pictures of a product
-        modelBuilder.Entity<Models.Picture>()
+        modelBuilder.Entity<Models.ProductPicture>()
             .HasIndex(p => new { p.ProductId, p.Position })
             .IsUnique();
 
@@ -25,5 +25,5 @@ public class DatabaseContext : DbContext, IDatabaseContextOptions{
     public virtual DbSet<Models.Consumer> Consumers{ get; set; }
     public virtual DbSet<Models.Order> Orders{ get; set; }
     public virtual DbSet<Models.Product> Products{ get; set; }
-    public virtual DbSet<Models.Picture> Pictures { get; set; }
+    public virtual DbSet<Models.ProductPicture> Pictures { get; set; }
 }

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using backend.Product.Models;
 using backend.Product.Enums;
+using backend.Shared.Classes;
 
 namespace backend.Controllers.v1;
 
@@ -31,11 +32,11 @@ public class ProductController : ControllerBase{
     private readonly FindProducerByIdUseCase getProducerByIdUseCase;
     private readonly GetProductByIdUseCase getProductByIdUseCase;
 
-    private readonly IPictureService pictureService;
+    private readonly IProductPictureService pictureService;
     private readonly IProductRepository repository;
     private readonly IProducerRepository producerRepository;
 
-    public ProductController(IProductRepository repository, IPictureService _pictureService, IProducerRepository _producerRepository){
+    public ProductController(IProductRepository repository, IProductPictureService _pictureService, IProducerRepository _producerRepository){
         this.repository = repository;
         this.pictureService = _pictureService;
         this.producerRepository = _producerRepository;
@@ -52,7 +53,7 @@ public class ProductController : ControllerBase{
 
             var createdProduct = await createProductUseCase.Execute(productDTO);
 
-            ListProductDTO listCreatedProducts = new ListProductDTO(createdProduct, new List<ListPictureDTO>());
+            ListProductDTO listCreatedProducts = new ListProductDTO(createdProduct, new List<ListProductPictureDTO>());
 
             return StatusCode(StatusCodes.Status201Created, listCreatedProducts);
         }
@@ -89,12 +90,14 @@ public class ProductController : ControllerBase{
             var products = await getProducerProductsUseCase.Execute(producerId, page ?? 0, filterModel);
 
             return Ok(new ListProductsResponse() {
-                CurrentPage = page ?? 0,
-                Pages = products.Pages,
-                Producer = new ListProducerDTO(producer!),
-                Products = products.Products,
-                NextUrl = new PaginationUtils().GetNextUrl(page ?? 0, products.Pages, Request.PathBase),
-                PreviousUrl = new PaginationUtils().GetPreviousUrl(page ?? 0, Request.PathBase)
+                
+                Producer = new ListProducerDTO(producer!, null),
+                Products = new Pagination<List<ListProductDTO>>() {
+                    CurrentPage = page ?? 0,
+                    Pages = products.Pages,
+                    NextUrl = new PaginationUtils().GetNextUrl(page ?? 0, products.Pages, Request.PathBase),
+                    PreviousUrl = new PaginationUtils().GetPreviousUrl(page ?? 0, Request.PathBase)
+                }
             });
 
         } catch (ProducerDoesNotExistException ex) {

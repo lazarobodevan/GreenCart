@@ -1,16 +1,20 @@
-﻿using System;
+﻿using backend.ProducerPicture.DTOs;
+using System;
 using System.Text.Json.Serialization;
 
 namespace backend.Producer.DTOs;
 
 public class ListProducerDTO{
-    public ListProducerDTO(Models.Producer producer){
+    public ListProducerDTO(Models.Producer producer, ListProducerPictureDTO? pictureDTO){
         Id = producer.Id;
         Name = producer.Name;
         Email = producer.Email;
         OriginCity = producer.OriginCity;
         Telephone = producer.Telephone;
-        Picture = producer.Picture;
+        Picture = producer.Picture != null && pictureDTO != null ? new ListProducerPictureDTO() {
+            ProducerId = producer.Id,
+            Url = pictureDTO.Url
+        } : null;
         AttendedCities = producer.AttendedCities;
         WhereToFind = producer.WhereToFind;
         CreatedAt = producer.CreatedAt;
@@ -31,7 +35,7 @@ public class ListProducerDTO{
 
     [JsonPropertyName("telephone")] public string Telephone{ get; set; }
 
-    [JsonPropertyName("picture")] public byte[]? Picture{ get; set; }
+    [JsonPropertyName("picture")] public ListProducerPictureDTO? Picture{ get; set; }
 
     [JsonPropertyName("attendedCities")] public string AttendedCities{ get; set; }
 

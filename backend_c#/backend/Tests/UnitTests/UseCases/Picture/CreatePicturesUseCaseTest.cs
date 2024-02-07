@@ -17,11 +17,11 @@ namespace UnitTests.UnitTests.UseCases.Picture {
     public class CreatePicturesUseCaseTest {
         
         private Mock<IPictureRepository> _pictureRepositoryMock;
-        private Mock<IPictureService> _pictureServiceMock;
+        private Mock<IProductPictureService> _pictureServiceMock;
 
         public CreatePicturesUseCaseTest() {
             _pictureRepositoryMock = new Mock<IPictureRepository>();
-            _pictureServiceMock = new Mock<IPictureService>();
+            _pictureServiceMock = new Mock<IProductPictureService>();
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
             //Arrange
             CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object);
             var productId = Guid.NewGuid();
-            var storedPictures = new List<backend.Models.Picture>() {
+            var storedPictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
                     .WithProductId(productId)
                     .Build(),
@@ -39,7 +39,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
                     .Build(),
             };
 
-            var newPicture = new List<backend.Models.Picture>() {
+            var newPicture = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
                     .WithProductId(productId)
                     .WithPosition(2)
@@ -51,16 +51,16 @@ namespace UnitTests.UnitTests.UseCases.Picture {
                 .Returns(storedPictures);
 
             _pictureRepositoryMock.Setup(x => 
-                x.Create(It.IsAny<List<backend.Models.Picture>>()))
+                x.Create(It.IsAny<List<backend.Models.ProductPicture>>()))
                 .ReturnsAsync(newPicture);
 
             _pictureServiceMock.Setup(x => 
-                x.UploadImageAsync(It.IsAny<List<CreatePictureDTO>>(), It.IsAny<backend.Models.Product>()))
+                x.UploadImageAsync(It.IsAny<List<CreateProductPictureDTO>>(), It.IsAny<backend.Models.Product>()))
                 .ReturnsAsync(new List<Amazon.S3.Model.PutObjectResponse>()
             );
 
             //Act
-            var createdPictures = await createPicturesUseCase.Execute(new List<CreatePictureDTO>(), new backend.Models.Product());
+            var createdPictures = await createPicturesUseCase.Execute(new List<CreateProductPictureDTO>(), new backend.Models.Product());
 
             //Assert
             Assert.Single(createdPictures);
@@ -71,7 +71,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
             //Arrange
             CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object);
             var productId = Guid.NewGuid();
-            var storedPictures = new List<backend.Models.Picture>() {
+            var storedPictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
                     .WithProductId(productId)
                     .Build(),
@@ -81,7 +81,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
                     .Build(),
             };
 
-            var newPictures = new List<CreatePictureDTO>() {
+            var newPictures = new List<CreateProductPictureDTO>() {
                 new CreatePictureDTOFactory().Build(),
                 new CreatePictureDTOFactory().Build()
             };
@@ -105,7 +105,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
             //Arrange
             CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object);
             var productId = Guid.NewGuid();
-            var storedPictures = new List<backend.Models.Picture>() {
+            var storedPictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
                     .WithProductId(productId)
                     .Build(),
@@ -115,7 +115,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
                     .Build(),
             };
 
-            var newPictures = new List<CreatePictureDTO>() {
+            var newPictures = new List<CreateProductPictureDTO>() {
                 new CreatePictureDTOFactory()
                     .WithPosition(3)
                     .Build(),
@@ -129,7 +129,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
                 .Returns(storedPictures);
 
             _pictureServiceMock.Setup(x => 
-                x.UploadImageAsync(It.IsAny<List<CreatePictureDTO>>(), It.IsAny<backend.Models.Product>()))
+                x.UploadImageAsync(It.IsAny<List<CreateProductPictureDTO>>(), It.IsAny<backend.Models.Product>()))
                 .ThrowsAsync(new AmazonS3Exception("Erro"));
 
             //Act

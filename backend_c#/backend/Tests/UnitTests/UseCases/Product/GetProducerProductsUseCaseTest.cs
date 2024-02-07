@@ -15,6 +15,7 @@ using backend.Product.DTOs;
 using Tests.Factories.Product;
 using backend.Product.Exceptions;
 using backend.Producer.Services;
+using backend.Shared.Classes;
 
 namespace UnitTests.UnitTests.UseCases.Product
 {
@@ -23,13 +24,13 @@ namespace UnitTests.UnitTests.UseCases.Product
 
         private readonly Mock<IProductRepository> _productRepository;
         private readonly Mock<IProducerRepository> _producerRepository;
-        private readonly Mock<IPictureService> _pictureServiceMock;
+        private readonly Mock<IProductPictureService> _pictureServiceMock;
 
         public GetProducerProductsUseCaseTest()
         {
             _productRepository = new Mock<IProductRepository>();
             _producerRepository = new Mock<IProducerRepository>();
-            _pictureServiceMock = new Mock<IPictureService>();
+            _pictureServiceMock = new Mock<IProductPictureService>();
         }
 
         [Fact]
@@ -38,11 +39,11 @@ namespace UnitTests.UnitTests.UseCases.Product
         {
             //Arrange
 
-            var storedProducts = new ListDatabaseProductsPagination() {
+            var storedProducts = new Pagination<backend.Models.Product>() {
                 Pages = 1,
                 CurrentPage = 0,
                 Offset = 0,
-                Products = new List<backend.Models.Product>() {
+                Data = new List<backend.Models.Product>() {
                     new ProductFactory().WithName("1").Build(),
                     new ProductFactory().WithName("2").Build(),
                 }
@@ -57,9 +58,9 @@ namespace UnitTests.UnitTests.UseCases.Product
 
             //Assert
             Assert.NotNull(foundProductsPage0);
-            Assert.Equal(2, foundProductsPage0.Products.Count());
-            Assert.Single(foundProductsPage0.Products.ElementAt(0).Pictures);
-            Assert.Single(foundProductsPage0.Products.ElementAt(1).Pictures);
+            Assert.Equal(2, foundProductsPage0.Data.Count());
+            Assert.Single(foundProductsPage0.Data.ElementAt(0).Pictures);
+            Assert.Single(foundProductsPage0.Data.ElementAt(1).Pictures);
         }
 
         [Fact]

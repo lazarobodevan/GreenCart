@@ -39,7 +39,7 @@ namespace UnitTests.UnitTests.Repositories {
         public async Task Create_GivenPictureEntity_ReturnsCreatedImage() {
             //Arrange
             var pictureRepository = new PictureRepository(_databaseContext);
-            var pictures = new List<backend.Models.Picture>() {
+            var pictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory().Build(),
                 new PictureFactory().Build()
             };
@@ -58,9 +58,9 @@ namespace UnitTests.UnitTests.Repositories {
             //Arrange
             var mockContext = new Mock<DatabaseContext>(_dbContextOptions);
             var pictureRepository = new PictureRepository(mockContext.Object);
-            var pictures = new List<Picture>() { new Picture(), new Picture() };
+            var pictures = new List<ProductPicture>() { new ProductPicture(), new ProductPicture() };
 
-            mockContext.Setup(x => x.Pictures.AddAsync(It.IsAny<Picture>(), It.IsAny<CancellationToken>())).ThrowsAsync(It.IsAny<Exception>());
+            mockContext.Setup(x => x.Pictures.AddAsync(It.IsAny<ProductPicture>(), It.IsAny<CancellationToken>())).ThrowsAsync(It.IsAny<Exception>());
 
             //Act
             async Task _Act(){
@@ -79,7 +79,7 @@ namespace UnitTests.UnitTests.Repositories {
             var picturesId = new List<Guid>() { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() };
             var productId = Guid.NewGuid();
             var producerId = Guid.NewGuid();
-            var pictures = new List<Picture>() {
+            var pictures = new List<ProductPicture>() {
                 new PictureFactory()
                     .WithKey(picturesId.ElementAt(0))
                     .WithProductId(productId)
@@ -96,7 +96,7 @@ namespace UnitTests.UnitTests.Repositories {
                     .Build()
             };
             
-            var pictureToSwitch = new List<Picture>(){  
+            var pictureToSwitch = new List<ProductPicture>(){  
                 new PictureFactory()
                     .WithKey(picturesId.ElementAt(0))
                     .WithProductId(productId)
@@ -106,7 +106,7 @@ namespace UnitTests.UnitTests.Repositories {
 
             // Picture A (1) goes to Position 0 (B)
             // Then Picture B goes to 0 and A goes to 1
-            var expected = new List<Picture>() {
+            var expected = new List<ProductPicture>() {
                 new PictureFactory()
                     .WithKey(picturesId.ElementAt(1))
                     .WithPosition(0)
@@ -130,7 +130,7 @@ namespace UnitTests.UnitTests.Repositories {
 
             //Assert
             for(int i = 0; i < pictures.Count; i++) {
-                Assert.Equal(expected.ElementAt(i).Key, switchedPictures.ElementAt(i).Key);
+                Assert.Equal(expected.ElementAt(i).Id, switchedPictures.ElementAt(i).Id);
                 Assert.Equal(expected.ElementAt(i).Position, switchedPictures.ElementAt(i).Position);
             }
         }
@@ -139,7 +139,7 @@ namespace UnitTests.UnitTests.Repositories {
         public async Task Delete_GivenPictureKey_ReturnsDeletedPicture() {
             //Arrange
             var productId = Guid.NewGuid();
-            var pictures = new List<Picture>() { 
+            var pictures = new List<ProductPicture>() { 
                 new PictureFactory()
                     .WithProductId(productId)
                     .Build() 
@@ -148,11 +148,11 @@ namespace UnitTests.UnitTests.Repositories {
 
             //Act
             var createdPictures = await pictureRepository.Create(pictures);
-            var deletedPicture = pictureRepository.Delete(createdPictures.ElementAt(0).Key);
+            var deletedPicture = pictureRepository.Delete(createdPictures.ElementAt(0).Id);
             var picturesFromProduct = pictureRepository.FindPicturesFromProduct(productId);
 
             //Assert
-            Assert.Equal(createdPictures.ElementAt(0).Key, deletedPicture.Key);
+            Assert.Equal(createdPictures.ElementAt(0).Id, deletedPicture.Id);
             Assert.Empty(picturesFromProduct);
         }
 
@@ -161,7 +161,7 @@ namespace UnitTests.UnitTests.Repositories {
             //Arrange
             var pictureRepository = new PictureRepository(_databaseContext);
             var productId = Guid.NewGuid();
-            var pictures = new List<backend.Models.Picture>() {
+            var pictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
                     .WithProductId(productId)
                     .Build(),

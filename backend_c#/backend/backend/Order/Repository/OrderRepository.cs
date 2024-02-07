@@ -4,6 +4,7 @@ using backend.Order.DTOs;
 using backend.Order.Exceptions;
 using backend.Product.Enums;
 using backend.Product.Exceptions;
+using backend.Shared.Classes;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ namespace backend.Order.Repository {
             throw new NotImplementedException();
         }
 
-        public ListOrdersPagination GetOrdersFromConsumer(Guid consumerId, int page, int pageResults) {
+        public Pagination<Models.Order> GetOrdersFromConsumer(Guid consumerId, int page, int pageResults) {
             var ordersExists = _dbContext.Orders.Any<Models.Order>(order => order.ConsumerId == consumerId && order.DeletedAt == null);
 
             var ordersQuery = _dbContext.Orders.Where(order =>
@@ -68,15 +69,15 @@ namespace backend.Order.Repository {
                 .Take((int)pageResults)
                 .ToList();
 
-            return new ListOrdersPagination() {
+            return new Pagination<backend.Models.Order>() {
                 Pages = totalOrdersCount,
                 CurrentPage = page,
-                Orders = orders,
+                Data = orders,
 
             };
         }
 
-        public ListOrdersPagination GetOrdersFromProducer(Guid producerId, int page, int pageResults) {
+        public Pagination<Models.Order> GetOrdersFromProducer(Guid producerId, int page, int pageResults) {
             var ordersExists = _dbContext.Orders.Any<Models.Order>(order => order.ProducerId == producerId && order.DeletedAt == null);
 
             var ordersQuery = _dbContext.Orders.Where(order =>
@@ -97,10 +98,10 @@ namespace backend.Order.Repository {
                 .Take((int)pageResults)
                 .ToList();
 
-            return new ListOrdersPagination() {
+            return new Pagination<Models.Order>() {
                 Pages = pageCount,
                 CurrentPage = page,
-                Orders = orders,
+                Data = orders,
 
             };
         }

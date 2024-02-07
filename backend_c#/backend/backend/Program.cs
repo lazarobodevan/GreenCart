@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Amazon;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
@@ -6,9 +7,11 @@ using Amazon.S3;
 using backend.Contexts;
 using backend.Producer.Repository;
 using backend.Producer.Services;
+using backend.Product.Enums;
 using backend.Product.Repository;
 using EntityFramework.Exceptions.PostgreSQL;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +44,7 @@ if (builder.Environment.IsDevelopment()){
         options.UseNpgsql(builder.Configuration.GetValue<String>("ConnectionStrings:Dev"));
         options.UseExceptionProcessor();
     });
+
 }
 
 if (builder.Environment.IsProduction()){
@@ -64,10 +68,10 @@ builder.Services.AddScoped<IAmazonS3>(provider => {
 });
 
 // Registra o PictureService
-builder.Services.AddScoped<IPictureService, PictureService>(provider => {
+builder.Services.AddScoped<IProductPictureService, ProductPictureService>(provider => {
     var amazonS3 = provider.GetRequiredService<IAmazonS3>();
 
-    return new PictureService(
+    return new ProductPictureService(
         amazonS3,
         builder.Configuration.GetValue<string>("AmazonS3:BucketName")!
     );

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using backend.ProducerPicture.DTOs;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Producer.DTOs;
@@ -17,7 +18,7 @@ public class UpdateProducerDTO{
 
     public string? Telephone{ get; set; }
 
-    public byte[]? Picture{ get; set; }
+    public CreateProducerPictureDTO? Picture{ get; set; }
 
     public string? CPF{ get; set; }
 

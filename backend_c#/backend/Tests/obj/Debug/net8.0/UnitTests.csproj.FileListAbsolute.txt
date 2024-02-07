@@ -8,7 +8,9 @@ C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.sourcelink.
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\testhost.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.deps.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.runtimeconfig.json
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\appsettings.Development.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\appsettings.json
+C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\appsettings.Staging.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\secrets.example.json
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\backend.exe
 C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\Tests.Shared.deps.json
@@ -127,5 +129,3 @@ C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\refint\UnitTests.dll
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\UnitTests.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\Tests\obj\Debug\net8.0\ref\UnitTests.dll
-C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\appsettings.Development.json
-C:\projs\AgroFam\backend_c#\backend\Tests\bin\Debug\net8.0\appsettings.Staging.json

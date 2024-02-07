@@ -10,24 +10,6 @@ public class Producer{
     public Producer(){
     }
 
-    public Producer(Guid id, string name, string email, string password, string origin_City, string telephone,
-        byte[]? picture, string cPF, string attended_Cities, string where_to_Find, DateTime createdAt,
-        DateTime updatedAt, DateTime? deletedAt){
-        Id = id;
-        Name = name;
-        Email = email;
-        Password = password;
-        OriginCity = origin_City;
-        Telephone = telephone;
-        Picture = picture;
-        CPF = cPF;
-        AttendedCities = attended_Cities;
-        WhereToFind = where_to_Find;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        DeletedAt = deletedAt;
-    }
-
     public Producer(Producer producer){
         Id = producer.Id;
         Name = producer.Name;
@@ -57,7 +39,11 @@ public class Producer{
 
     [Required] [Column("Telephone")] public string Telephone{ get; set; }
 
-    [Column("Picture")] public byte[]? Picture{ get; set; }
+    [Column("ProfilePicture")] 
+    [ForeignKey("ProducerPicture")] 
+    public Guid ProfilePictureKey { get; set; }
+
+    [Column("Picture")] public ProducerPicture? Picture{ get; set; }
 
     [Required] [Column("CPF")] public string CPF{ get; set; }
 

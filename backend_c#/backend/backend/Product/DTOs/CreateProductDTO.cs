@@ -37,7 +37,7 @@ public class CreateProductDTO{
     public List<IFormFile>? Pictures{ get; set; }
 
     [Required(ErrorMessage ="Metadados são obrigatórios")]
-    public List<PictureRequestDTO>? PicturesMetadata { get; set; }
+    public List<ProductPictureRequestDTO>? PicturesMetadata { get; set; }
 
     [Required(ErrorMessage = "Categoria é obrigatório")]
     [JsonConverter(typeof(JsonStringEnumConverter))]

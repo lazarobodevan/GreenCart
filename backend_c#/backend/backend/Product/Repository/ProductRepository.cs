@@ -7,6 +7,7 @@ using backend.Picture.DTOs;
 using backend.Product.DTOs;
 using backend.Product.Exceptions;
 using backend.Product.Models;
+using backend.Shared.Classes;
 using backend.Utils;
 using EntityFramework.Exceptions.Common;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,7 +22,7 @@ public class ProductRepository : IProductRepository{
         _context = context;
     }
 
-    public async Task<backend.Models.Product> Save(backend.Models.Product product, List<CreatePictureDTO> pictures){
+    public async Task<backend.Models.Product> Save(backend.Models.Product product, List<CreateProductPictureDTO> pictures){
         try{
             product.CreatedAt = DateTime.Now;
             product.NormalizedName = new StringUtils().NormalizeString(product.Name);
@@ -39,11 +40,13 @@ public class ProductRepository : IProductRepository{
         }
     }
 
-    public async Task<backend.Models.Product?> FindById(Guid productId){
+    public backend.Models.Product? FindById(Guid productId){
         try{
-            var possibleProduct = await _context.Products.Include(p => p.Pictures)
+            var possibleProduct = _context.Products.
+                Where(p => p.Id == productId && p.DeletedAt == null)
                 .Include(p => p.Producer)
-                .FirstOrDefaultAsync(p => p.Id == productId && p.DeletedAt == null);
+                .Include(p => p.Pictures)
+                .FirstOrDefault();
 
             return possibleProduct; 
         }
@@ -52,7 +55,7 @@ public class ProductRepository : IProductRepository{
         }
     }
 
-    public ListDatabaseProductsPagination GetProducerProducts(Guid producerId, int page, int pageResults, ProductFilterModel? filterModel) {
+    public Pagination<backend.Models.Product> GetProducerProducts(Guid producerId, int page, int pageResults, ProductFilterModel? filterModel) {
 
         var producerExists = _context.Producers.Any<backend.Models.Producer>(producer => producer.Id == producerId && producer.DeletedAt == null);
 
@@ -104,9 +107,9 @@ public class ProductRepository : IProductRepository{
             .Take((int)pageResults)
             .ToList();
 
-        return new ListDatabaseProductsPagination() {
+        return new Pagination<backend.Models.Product>() {
             CurrentPage = page,
-            Products = products,
+            Data = products,
             Pages = pageCount,
             Offset = offset
         };
@@ -162,7 +165,7 @@ public class ProductRepository : IProductRepository{
         }
     }
 
-    public ListDatabaseProductsPagination FindByFilter(ProductFilterModel filterModel, int page, int pageResults) {
+    public Pagination<backend.Models.Product> FindByFilter(ProductFilterModel filterModel, int page, int pageResults) {
         try {
             var query = _context.Products.AsQueryable();
 
@@ -178,9 +181,9 @@ public class ProductRepository : IProductRepository{
                 .Take((int)pageResults)
                 .ToList();
 
-            return new ListDatabaseProductsPagination() {
+            return new Pagination<backend.Models.Product>() {
                 CurrentPage = page,
-                Products = products,
+                Data = products,
                 Pages = pageCount,
                 Offset = offset
             };

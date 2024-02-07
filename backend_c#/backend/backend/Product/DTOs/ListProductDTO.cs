@@ -5,10 +5,11 @@ using backend.Picture.DTOs;
 using backend.Producer.DTOs;
 using backend.Product.Enums;
 using backend.Models;
+using backend.ProducerPicture.DTOs;
 namespace backend.Product.DTOs;
 
 public class ListProductDTO{
-    public ListProductDTO(backend.Models.Product product, List<ListPictureDTO> productPicturesUrls){
+    public ListProductDTO(backend.Models.Product product, List<ListProductPictureDTO> productPicturesUrls){
         Id = product.Id;
         Name = product.Name;
         Description = product.Description;
@@ -22,7 +23,6 @@ public class ListProductDTO{
         Producer = product.Producer != null ? new ListProducerDTO() {
             Id = product.Producer.Id,
             Name = product.Producer.Name,
-            Picture = product.Producer.Picture,
             Email = product.Producer.Email,
             OriginCity = product.Producer.OriginCity,
             AttendedCities = product.Producer.AttendedCities,
@@ -42,7 +42,7 @@ public class ListProductDTO{
 
     [JsonPropertyName("description")] public string? Description{ get; set; }
 
-    [JsonPropertyName("pictures")] public List<ListPictureDTO> Pictures{ get; set; }
+    [JsonPropertyName("pictures")] public List<ListProductPictureDTO> Pictures{ get; set; }
 
     [JsonPropertyName("category")] public string Category{ get; set; }
 

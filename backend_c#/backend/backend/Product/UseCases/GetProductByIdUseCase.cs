@@ -13,24 +13,24 @@ namespace backend.Product.UseCases;
 
 public class GetProductByIdUseCase{
     private readonly IProductRepository repository;
-    private readonly IPictureService pictureService;
+    private readonly IProductPictureService pictureService;
 
-    public GetProductByIdUseCase(IProductRepository repository, IPictureService pictureService){
+    public GetProductByIdUseCase(IProductRepository repository, IProductPictureService pictureService){
         this.repository = repository;
         this.pictureService = pictureService;
     }
 
     public async Task<ListProductDTO?> Execute(Guid id){
 
-        var productEntity = await repository.FindById(id);
+        var productEntity = repository.FindById(id);
         if(productEntity == null) {
             return null;
         }
         //TODO: obter imagens do S3
         List<string> s3Urls = await pictureService.GetImagesAsync(productEntity); 
-        List<ListPictureDTO> pictures = new List<ListPictureDTO>();
+        List<ListProductPictureDTO> pictures = new List<ListProductPictureDTO>();
         for(int i = 0; i < productEntity.Pictures.Count(); i++) {
-            pictures.Add(new ListPictureDTO() {
+            pictures.Add(new ListProductPictureDTO() {
                 Position = productEntity.Pictures.ElementAt(i).Position,
                 ProductId = productEntity.Pictures.ElementAt(i).ProductId,
                 Url = s3Urls.ElementAt(i)

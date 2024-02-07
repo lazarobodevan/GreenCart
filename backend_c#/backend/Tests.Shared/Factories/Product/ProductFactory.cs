@@ -18,7 +18,7 @@ namespace Tests.Factories.Product
             Name = "Product",
             NormalizedName = "PRODUCT",
             Description = "Description",
-            Pictures = new List<Picture>(),
+            Pictures = new List<ProductPicture>(),
             Category = Category.VEGETABLE,
             Price = 10.11,
             Unit = Unit.LITER,
@@ -46,7 +46,7 @@ namespace Tests.Factories.Product
             return this;
         }
 
-        public ProductFactory WithPicture(List<Picture> pictures)
+        public ProductFactory WithPicture(List<ProductPicture> pictures)
         {
             ProductEntity.Pictures = pictures;
             return this;

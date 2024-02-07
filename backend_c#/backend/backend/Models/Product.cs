@@ -23,7 +23,7 @@ public class Product{
 
     [Column("Description")] public string? Description{ get; set; }
 
-    public List<Picture> Pictures { get; set; }
+    public List<ProductPicture> Pictures { get; set; }
 
     [Required(ErrorMessage = "Categoria é obrigatório")]
     [Column("Category")]

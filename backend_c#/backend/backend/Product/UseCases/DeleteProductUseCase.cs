@@ -12,7 +12,7 @@ public class DeleteProductUseCase{
     }
 
     public async Task<backend.Models.Product> Execute(Guid productId){
-        var possibleProduct = await repository.FindById(productId);
+        var possibleProduct = repository.FindById(productId);
 
         if (possibleProduct != null){
             possibleProduct.DeletedAt = DateTime.Now;

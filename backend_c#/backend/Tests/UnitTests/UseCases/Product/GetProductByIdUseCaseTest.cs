@@ -16,11 +16,11 @@ namespace Tests.UnitTests.UseCases
     public class GetProductByIdUseCaseTest {
         
         private readonly Mock<IProductRepository> _productRepositoryMock;
-        private readonly Mock<IPictureService> _pictureServiceMock;
+        private readonly Mock<IProductPictureService> _pictureServiceMock;
 
         public GetProductByIdUseCaseTest() {
             _productRepositoryMock = new Mock<IProductRepository>();
-            _pictureServiceMock = new Mock<IPictureService>();
+            _pictureServiceMock = new Mock<IProductPictureService>();
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace Tests.UnitTests.UseCases
         public async Task FindById_GivenProductId_ReturnsFoundProduct() {
 
             //Arrange
-            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(new ProductFactory().Build());
+            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(new ProductFactory().Build());
             _pictureServiceMock.Setup(x => x.GetImagesAsync(It.IsAny<backend.Models.Product>())).ReturnsAsync(new List<string>() { "link1" });
             
 
@@ -46,7 +46,7 @@ namespace Tests.UnitTests.UseCases
         [Trait("OP", "FindById")]
         public async Task FindById_GivenNotExistentProductId_ReturnsNull() {
             //Arrange
-            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Product?>(null));
+            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns((Guid id) => null);
             _pictureServiceMock.Setup(x => x.GetImagesAsync(It.IsAny<backend.Models.Product>())).ReturnsAsync(new List<string>() { "link1" });
 
             GetProductByIdUseCase getProductByIdUseCase = new GetProductByIdUseCase(_productRepositoryMock.Object, _pictureServiceMock.Object);

@@ -17,9 +17,9 @@ namespace backend.Product.UseCases;
 
 public class CreateProductUseCase{
     private readonly IProductRepository repository;
-    private readonly IPictureService pictureService;
+    private readonly IProductPictureService pictureService;
 
-    public CreateProductUseCase(IProductRepository _repository, IPictureService _pictureService){
+    public CreateProductUseCase(IProductRepository _repository, IProductPictureService _pictureService){
         repository = _repository;
         pictureService = _pictureService;
     }
@@ -31,7 +31,7 @@ public class CreateProductUseCase{
         var productEntity = new backend.Models.Product{
             Id = productId,
             Name = _productDTO.Name,
-            Pictures = new List<backend.Models.Picture>(),
+            Pictures = new List<backend.Models.ProductPicture>(),
             AvailableQuantity = (int)_productDTO.AvailableQuantity!,
             Category = (Category)_productDTO.Category!,
             HarvestDate = parsedDateTime,
@@ -45,8 +45,8 @@ public class CreateProductUseCase{
         
         var picturesList = _GeneratePicturesEntity(_productDTO.Pictures!, _productDTO.PicturesMetadata!);
         foreach (var picture in picturesList) {
-            productEntity.Pictures.Add(new backend.Models.Picture() {
-                Key = (Guid)picture.Key!,
+            productEntity.Pictures.Add(new backend.Models.ProductPicture() {
+                Id = (Guid)picture.Key!,
                 Position = (int)picture.Position!,
                 ProductId = productEntity.Id
             });
@@ -72,9 +72,9 @@ public class CreateProductUseCase{
         
     }
 
-    private List<CreatePictureDTO> _GeneratePicturesEntity(List<IFormFile> pictures, List<PictureRequestDTO> metadata) {
+    private List<CreateProductPictureDTO> _GeneratePicturesEntity(List<IFormFile> pictures, List<ProductPictureRequestDTO> metadata) {
 
-        List<CreatePictureDTO> pictureList = new List<CreatePictureDTO>();
+        List<CreateProductPictureDTO> pictureList = new List<CreateProductPictureDTO>();
 
         foreach (var picture in pictures) {
 
@@ -83,7 +83,7 @@ public class CreateProductUseCase{
                 throw new Exception($"Metadado faltante para imagem {picture.Name}");
             }
 
-            pictureList.Add(new CreatePictureDTO() {
+            pictureList.Add(new CreateProductPictureDTO() {
                 Key = Guid.NewGuid(),
                 Position = (int)position,
                 Stream = picture.OpenReadStream(),
@@ -93,7 +93,7 @@ public class CreateProductUseCase{
         return pictureList;
     }
 
-    private async Task _RollbackS3(List<CreatePictureDTO> pictures) {
+    private async Task _RollbackS3(List<CreateProductPictureDTO> pictures) {
         foreach (var picture in pictures) {
             try {
                 await pictureService.DeleteImageAsync((Guid)picture.Key!);

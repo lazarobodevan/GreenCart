@@ -25,7 +25,6 @@ public class UpdateProducerUseCase{
             Email = updateProducerDTO.Email ?? possibleProducer.Email,
             Password = updateProducerDTO.Password ?? possibleProducer.Password,
             OriginCity = updateProducerDTO.OriginCity ?? possibleProducer.OriginCity,
-            Picture = updateProducerDTO.Picture ?? possibleProducer.Picture,
             Telephone = updateProducerDTO.Telephone ?? possibleProducer.Telephone,
             WhereToFind = updateProducerDTO.WhereToFind ?? possibleProducer.WhereToFind,
             UpdatedAt = DateTime.Now

@@ -6,7 +6,9 @@ C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.csproj.Core
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cs
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cache
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.sourcelink.json
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\appsettings.Development.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\appsettings.json
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\appsettings.Staging.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\secrets.example.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\backend.exe
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\backend.deps.json
@@ -108,5 +110,3 @@ C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\refint\backend.dll
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.pdb
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\ref\backend.dll
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\appsettings.Development.json
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\appsettings.Staging.json

@@ -32,7 +32,7 @@ namespace Tests.UnitTests.UseCases.Product
                 .WithName("Updated Product")
                 .Build();
 
-            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(product);
+            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(product);
             _productRepositoryMock.Setup(x => x.Update(It.IsAny<backend.Models.Product>())).Returns(updatedProductEntity);
 
             UpdateProductUseCase updateProductUsecase = new UpdateProductUseCase(_productRepositoryMock.Object);
@@ -51,7 +51,7 @@ namespace Tests.UnitTests.UseCases.Product
         [Trait("OP", "Update")]
         public async Task Update_GivenNotExistentProduct_ThrowsException() {
             //Arrange
-            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Product?>(null));
+            _productRepositoryMock.Setup(x => x.FindById(It.IsAny<Guid>())).Returns((Guid id) => null);
 
             UpdateProductUseCase updateProductUseCase = new UpdateProductUseCase(_productRepositoryMock.Object);
 

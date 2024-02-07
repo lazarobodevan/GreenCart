@@ -15,7 +15,7 @@ public class UpdateProductUseCase{
 
     public async Task<backend.Models.Product> Execute(UpdateProductDTO productDTO){
         
-        var possibleProduct = await repository.FindById(productDTO.Id);
+        var possibleProduct = repository.FindById(productDTO.Id);
         
         DateTime harvestDate = new DateTime();
 

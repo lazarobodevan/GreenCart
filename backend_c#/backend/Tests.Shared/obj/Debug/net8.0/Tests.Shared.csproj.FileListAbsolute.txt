@@ -8,7 +8,9 @@ C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\Tests.Shared.s
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\testhost.dll
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\backend.deps.json
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\backend.runtimeconfig.json
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\appsettings.Development.json
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\appsettings.json
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\appsettings.Staging.json
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\secrets.example.json
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\backend.exe
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\testhost.exe
@@ -120,5 +122,3 @@ C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\refint\Tests.S
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\Tests.Shared.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\Tests.Shared.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\ref\Tests.Shared.dll
-C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\appsettings.Development.json
-C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\appsettings.Staging.json

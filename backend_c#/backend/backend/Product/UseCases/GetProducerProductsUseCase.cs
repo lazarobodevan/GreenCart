@@ -9,19 +9,20 @@ using backend.Producer.Services;
 using backend.Product.DTOs;
 using backend.Product.Models;
 using backend.Product.Repository;
+using backend.Shared.Classes;
 
 namespace backend.Product.UseCases;
 
 public class GetProducerProductsUseCase{
     private readonly IProductRepository repository;
-    private readonly IPictureService pictureService;
+    private readonly IProductPictureService pictureService;
 
-    public GetProducerProductsUseCase(IProductRepository repository, IPictureService pictureService) {
+    public GetProducerProductsUseCase(IProductRepository repository, IProductPictureService pictureService) {
         this.repository = repository;
         this.pictureService = pictureService;
     }
 
-    public async Task<ListProductsPagination> Execute(Guid producerId, int page, ProductFilterModel filterModel){
+    public async Task<Pagination<ListProductDTO>> Execute(Guid producerId, int page, ProductFilterModel filterModel){
 
         var pageResults = 10;
 
@@ -29,20 +30,20 @@ public class GetProducerProductsUseCase{
         
         List<ListProductDTO> listProductsDto = new List<ListProductDTO>();
 
-        foreach (var product in productsPaginated.Products) {
+        foreach (var product in productsPaginated.Data) {
 
-            List<ListPictureDTO> productPicturesUrls = new List<ListPictureDTO>();
+            List<ListProductPictureDTO> productPicturesUrls = new List<ListProductPictureDTO>();
 
             var url = await pictureService.GetImagesAsync(product);
-            productPicturesUrls.Add(new ListPictureDTO() {
+            productPicturesUrls.Add(new ListProductPictureDTO() {
                 ProductId = product.Id,
                 Url = url.ElementAt(0) ?? "",
             });
 
             listProductsDto.Add(new ListProductDTO(product, productPicturesUrls));
         }
-        return new ListProductsPagination() {
-            Products = listProductsDto,
+        return new Pagination<ListProductDTO>() {
+            Data = listProductsDto,
             CurrentPage = productsPaginated.CurrentPage,
             Offset = productsPaginated.Offset,
             Pages = productsPaginated.Pages

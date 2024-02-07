@@ -79,7 +79,7 @@ namespace UnitTests.UnitTests.Repositories {
 
             //Assert
             Assert.NotNull(foundOrders);
-            Assert.Single(foundOrders.Orders);
+            Assert.Single(foundOrders.Data);
             Assert.Equal(1, foundOrders.Pages);
             Assert.Equal(0, foundOrders.CurrentPage);
         }
@@ -103,7 +103,7 @@ namespace UnitTests.UnitTests.Repositories {
 
             //Assert
             Assert.NotNull(foundOrders);
-            Assert.Single(foundOrders.Orders);
+            Assert.Single(foundOrders.Data);
             Assert.Equal(1, foundOrders.Pages);
             Assert.Equal(0, foundOrders.CurrentPage);
         }

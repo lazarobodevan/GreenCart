@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace Tests.Shared.Factories.Picture {
     public class CreatePictureDTOFactory {
 
-        private CreatePictureDTO _pictureDTO = new CreatePictureDTO() {
+        private CreateProductPictureDTO _pictureDTO = new CreateProductPictureDTO() {
             Key = Guid.NewGuid(),
             Position = 0,
             Stream = new MemoryStream()
         };
 
-        public CreatePictureDTO Build() {
+        public CreateProductPictureDTO Build() {
             return _pictureDTO;
         }
 

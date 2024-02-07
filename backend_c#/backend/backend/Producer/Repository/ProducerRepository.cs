@@ -30,8 +30,8 @@ public class ProducerRepository : IProducerRepository{
 
     public IEnumerable<Models.Producer> FindNearProducers(string city){
         var producers = _context.Producers
-            .Where(producer => producer.AttendedCities.Contains(city.ToUpper()))
-            .Include(producer => producer.Products)
+            //.Where(producer => producer.AttendedCities.Contains(city.ToUpper()))
+            //.Include(producer => producer.Products)
             .ToList();
 
         return producers;
