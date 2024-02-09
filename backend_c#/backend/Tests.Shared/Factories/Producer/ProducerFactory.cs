@@ -1,4 +1,5 @@
 ﻿using backend.Models;
+using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,12 @@ namespace Tests.Factories.Producer
         private backend.Models.Producer ProducerEntity = new backend.Models.Producer {
             Name = "Producer Test",
             Email = "test@test.com",
-            AttendedCities = "City1;City2;City3",
             CreatedAt = DateTime.Now,
             FavdByConsumers = new List<ConsumerFavProducer>(),
-            OriginCity = "City1",
             Password = "123",
             Telephone = "(31) 99999-9999",
+            Latitude = -19.888205998447116, 
+            Longitude = -44.43328138170118 ,
             WhereToFind = "Local de encontro"
         };
 
@@ -40,21 +41,9 @@ namespace Tests.Factories.Producer
             return this;
         }
 
-        public ProducerFactory WithAttendedCities(string attendedCities)
-        {
-            ProducerEntity.AttendedCities = attendedCities;
-            return this;
-        }
-
         public ProducerFactory WithFavdByConsumers(List<ConsumerFavProducer> favd)
         {
             ProducerEntity.FavdByConsumers = favd;
-            return this;
-        }
-
-        public ProducerFactory WithOriginCity(string originCity)
-        {
-            ProducerEntity.OriginCity = originCity;
             return this;
         }
 
@@ -67,6 +56,11 @@ namespace Tests.Factories.Producer
         public ProducerFactory WithTelephone(string telephone)
         {
             ProducerEntity.Telephone = telephone;
+            return this;
+        }
+
+        public ProducerFactory WithLatitude(double latitude) {
+            ProducerEntity.Latitude = latitude;
             return this;
         }
 

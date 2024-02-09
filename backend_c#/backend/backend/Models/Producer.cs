@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetTopologySuite.Geometries;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,9 +16,7 @@ public class Producer{
         Name = producer.Name;
         Email = producer.Email;
         Password = producer.Password;
-        OriginCity = producer.OriginCity;
         Telephone = producer.Telephone;
-        AttendedCities = producer.AttendedCities;
         WhereToFind = producer.WhereToFind;
         FavdByConsumers = producer.FavdByConsumers;
         CreatedAt = producer.CreatedAt;
@@ -33,14 +32,18 @@ public class Producer{
 
     [Required] [Column("Password")] public string Password{ get; set; }
 
-    [Required] [Column("OriginCity")] public string OriginCity{ get; set; }
+    [Required] 
+    [Column("Latitude")] 
+    public double Latitude{ get; set; }
+
+    [Required]
+    [Column("Longitude")]
+    public double Longitude { get; set; }
 
     [Required] [Column("Telephone")] public string Telephone{ get; set; }
 
     [Required]
     [Column("HasProfilePicture")] public bool HasProfilePicture { get; set; }
-
-    [Required] [Column("AttendedCities")] public string AttendedCities{ get; set; }
 
     [Required] [Column("WhereToFind")] public string WhereToFind{ get; set; }
 

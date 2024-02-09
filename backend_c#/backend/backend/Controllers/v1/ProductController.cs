@@ -38,7 +38,12 @@ public class ProductController : ControllerBase{
     private readonly IProductRepository repository;
     private readonly IProducerRepository producerRepository;
 
-    public ProductController(IProductRepository repository, IProductPictureService _pictureService, IProducerRepository _producerRepository, IProducerPictureService producerPictureService){
+    public ProductController(
+        IProductRepository repository, 
+        IProductPictureService _pictureService, 
+        IProducerRepository _producerRepository,
+        IProducerPictureService producerPictureService){
+
         this.repository = repository;
         this.productPictureService = _pictureService;
         this.producerRepository = _producerRepository;

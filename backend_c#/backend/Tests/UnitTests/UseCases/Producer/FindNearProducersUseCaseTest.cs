@@ -1,5 +1,7 @@
 ﻿using backend.Producer.Repository;
 using backend.Producer.UseCases;
+using backend.ProducerPicture.Services;
+using backend.Shared.Classes;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -11,42 +13,49 @@ namespace Tests.UnitTests.UseCases.Producer
 {
     public class FindNearProducersUseCaseTest {
         private Mock<IProducerRepository> _producerRepositoryMock;
+        private Mock<IProducerPictureService> _producerPictureService;
 
         public FindNearProducersUseCaseTest() { 
             _producerRepositoryMock = new Mock<IProducerRepository>();
+            _producerPictureService = new Mock<IProducerPictureService>();
         }
 
         [Fact]
         [Trait("OP","FindNearProducers")]
-        public void FindNearProducers_GivenCityName_ReturnsListOfProducers() {
+        public async Task FindNearProducers_GivenCityName_ReturnsListOfProducers() {
 
             //Arrange
-            _producerRepositoryMock.Setup(x => x.FindNearProducers(It.IsAny<string>())).Returns(new List<backend.Models.Producer> {
-                new backend.Models.Producer(),
-                new backend.Models.Producer(),
+            _producerRepositoryMock.Setup(x => x.FindNearProducers(It.IsAny<Location>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new Pagination<backend.Models.Producer> {
+                Data = new List<backend.Models.Producer>(){
+                    new backend.Models.Producer(),
+                    new backend.Models.Producer(),
+                }
             });
-            FindNearProducersUseCase findNearProducersUseCase = new FindNearProducersUseCase(_producerRepositoryMock.Object);
+            _producerPictureService.Setup(x => x.GetProfilePictureAsync(It.IsAny<backend.Models.Producer>())).ReturnsAsync("link");
+            FindNearProducersUseCase findNearProducersUseCase = new FindNearProducersUseCase(_producerRepositoryMock.Object, _producerPictureService.Object);
 
             //Act
-            var foundProducers = findNearProducersUseCase.Execute(It.IsAny<string>());
+            var foundProducers = await findNearProducersUseCase.Execute(It.IsAny<Location>(), It.IsAny<int>(), It.IsAny<int>());
 
             //Assert
-            Assert.Equal(2, foundProducers.Count());
+            Assert.Equal(2, foundProducers.Data.Count());
         }
 
         [Fact]
         [Trait("OP", "FindNearProducers")]
-        public void FindNearProducers_GivenCityName_ReturnsEmptyListOfProducers() {
+        public async Task FindNearProducers_GivenCityName_ReturnsEmptyListOfProducers() {
             //Arrange
-            _producerRepositoryMock.Setup(x => x.FindNearProducers(It.IsAny<string>())).Returns(new List<backend.Models.Producer>());
-            FindNearProducersUseCase findNearProducersUseCase = new FindNearProducersUseCase(_producerRepositoryMock.Object);
+            _producerRepositoryMock.Setup(x => x.FindNearProducers(It.IsAny<Location>(), It.IsAny<int>(), It.IsAny<int>())).Returns(new Pagination<backend.Models.Producer>());
+            _producerPictureService.Setup(x => x.GetProfilePictureAsync(It.IsAny<backend.Models.Producer>())).ReturnsAsync("link");
+
+            FindNearProducersUseCase findNearProducersUseCase = new FindNearProducersUseCase(_producerRepositoryMock.Object, _producerPictureService.Object);
 
             //Act
-            var foundProducers = findNearProducersUseCase.Execute(It.IsAny<string>());
+            var foundProducers = await findNearProducersUseCase.Execute(It.IsAny<Location>(), It.IsAny<int>(), It.IsAny<int>());
 
             //Assert
             Assert.NotNull(foundProducers);
-            Assert.Empty(foundProducers);
+            Assert.Empty(foundProducers.Data);
         }
     }
 }

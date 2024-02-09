@@ -131,3 +131,4 @@ C:\projs\AgroFam\backend_c#\backend\IntegrationTests\obj\Debug\net8.0\refint\Int
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\obj\Debug\net8.0\IntegrationTests.pdb
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\obj\Debug\net8.0\IntegrationTests.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\obj\Debug\net8.0\ref\IntegrationTests.dll
+C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\NetTopologySuite.dll

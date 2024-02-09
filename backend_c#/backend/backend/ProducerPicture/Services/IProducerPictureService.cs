@@ -9,7 +9,7 @@ namespace backend.ProducerPicture.Services {
     public interface IProducerPictureService {
         Task<PutObjectResponse> UploadProfilePictureAsync(Models.Producer producer, CreateProducerPictureDTO pictureDTO);
 
-        Task<string> GetProfilePictureAsync(Models.Producer producer);
+        Task<string?> GetProfilePictureAsync(Models.Producer producer);
 
         Task<DeleteObjectResponse> DeleteImageAsync(Guid imageKey);
     }

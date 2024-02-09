@@ -26,13 +26,12 @@ public class CreateProducerDTO{
 
     public IFormFile? Picture{ get; set; }
 
-    [Required(ErrorMessage = "Cidades atendidas é obrigatório")]
-    public string AttendedCities{ get; set; }
+    [Required(ErrorMessage = "Latitude é obrigatória")]
+    public double? Latitude{ get; set; }
 
-    [Required(ErrorMessage = "Onde te encontrar é obrigatório")]
-    public string WhereToFind{ get; set; }
+    [Required(ErrorMessage = "Longitude é obrigatória")]
+    public double? Longitude{ get; set; }
 
-    public List<Models.Product>? Products{ get; set; }
-    public List<Models.Order>? Orders{ get; set; }
-    public List<ConsumerFavProducer>? FavdByConsumers{ get; set; }
+    [Required(ErrorMessage ="Onde te encontrar é obrigatório")]
+    public string WhereToFind { get; set; }
 }

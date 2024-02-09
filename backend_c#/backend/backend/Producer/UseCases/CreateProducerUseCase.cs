@@ -34,13 +34,12 @@ public class CreateProducerUseCase{
         var producer = new Models.Producer {
             Name = producerDTO.Name,
             Email = producerDTO.Email,
-            AttendedCities = producerDTO.AttendedCities,
             FavdByConsumers = new List<ConsumerFavProducer>(),
             HasProfilePicture = producerDTO.Picture != null,
-            OriginCity = producerDTO.OriginCity,
             Password = producerDTO.Password,
             Telephone = producerDTO.Telephone,
-            WhereToFind = producerDTO.WhereToFind,
+            Latitude = (double)producerDTO.Latitude!,
+            Longitude = (double)producerDTO.Longitude!,
             CreatedAt = DateTime.Now
         };
 

@@ -9,13 +9,11 @@ public class ListProducerDTO{
         Id = producer.Id;
         Name = producer.Name;
         Email = producer.Email;
-        OriginCity = producer.OriginCity;
         Telephone = producer.Telephone;
         Picture = producer.HasProfilePicture && pictureDTO != null ? new ListProducerPictureDTO() {
             ProducerId = producer.Id,
             Url = pictureDTO.Url
         } : null;
-        AttendedCities = producer.AttendedCities;
         WhereToFind = producer.WhereToFind;
         CreatedAt = producer.CreatedAt;
         UpdatedAt = producer.UpdatedAt;
@@ -31,7 +29,7 @@ public class ListProducerDTO{
 
     [JsonPropertyName("email")] public string Email{ get; set; }
 
-    [JsonPropertyName("originCity")] public string OriginCity{ get; set; }
+    [JsonPropertyName("location")] public string Location{ get; set; }
 
     [JsonPropertyName("telephone")] public string Telephone{ get; set; }
 
@@ -40,6 +38,10 @@ public class ListProducerDTO{
     [JsonPropertyName("attendedCities")] public string AttendedCities{ get; set; }
 
     [JsonPropertyName("whereToFind")] public string WhereToFind{ get; set; }
+
+    [JsonPropertyName("latitude")] public string Latitude { get; set; }
+
+    [JsonPropertyName("longitude")] public string Longitude { get; set; }
 
     [JsonPropertyName("createdAt")] public DateTime CreatedAt{ get; set; }
 

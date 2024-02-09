@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "K2WiEXZjHQ047vghLj5zksDRl+6BjvJpf7OQNZGN68jWcazawqthyWESaif5bTfc24HBmCywCBHt7mKVPr1Npg==",
+  "dgSpecHash": "R6yBrWJclC8WLhlna6ooCNQQbh/zu1KN6bKuJ093aQtIbnXQ4fouOn7MY9O5tfcZaxXBwdHB8j9tklb/fnvC+g==",
   "success": true,
   "projectFilePath": "C:\\projs\\AgroFam\\backend_c#\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\Lázaro\\.nuget\\packages\\awssdk.s3\\3.7.305.2\\awssdk.s3.3.7.305.2.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.common\\8.0.0\\entityframeworkcore.exceptions.common.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.postgresql\\8.0.0\\entityframeworkcore.exceptions.postgresql.8.0.0.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\geocoordinate.netcore\\1.0.0.1\\geocoordinate.netcore.1.0.0.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
@@ -36,6 +37,7 @@
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\nettopologysuite\\2.5.0\\nettopologysuite.2.5.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
@@ -51,6 +53,7 @@
     "C:\\Users\\Lázaro\\.nuget\\packages\\system.composition.runtime\\6.0.0\\system.composition.runtime.6.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\system.composition.typedparts\\6.0.0\\system.composition.typedparts.6.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\system.reflection.metadata\\6.0.1\\system.reflection.metadata.6.0.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",

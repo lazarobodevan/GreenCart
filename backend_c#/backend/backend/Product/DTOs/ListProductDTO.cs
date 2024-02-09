@@ -24,8 +24,6 @@ public class ListProductDTO{
             Id = product.Producer.Id,
             Name = product.Producer.Name,
             Email = product.Producer.Email,
-            OriginCity = product.Producer.OriginCity,
-            AttendedCities = product.Producer.AttendedCities,
             WhereToFind = product.Producer.WhereToFind,
         }: null;
         CreatedAt = product.CreatedAt;

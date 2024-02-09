@@ -4,9 +4,11 @@ using backend.Picture.DTOs;
 using backend.Producer.Repository;
 using backend.Product.Enums;
 using backend.Product.Repository;
+using GeoCoordinatePortable;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
+using NetTopologySuite.Geometries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,10 +47,8 @@ namespace Tests.UnitTests.Repositories
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
                 WhereToFind = "Local de encontro"
@@ -90,10 +90,8 @@ namespace Tests.UnitTests.Repositories
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
                 WhereToFind = "Local de encontro"
@@ -128,10 +126,8 @@ namespace Tests.UnitTests.Repositories
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
                 WhereToFind = "Local de encontro"
@@ -153,10 +149,8 @@ namespace Tests.UnitTests.Repositories
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
                 WhereToFind = "Local de encontro"
@@ -174,100 +168,110 @@ namespace Tests.UnitTests.Repositories
 
         [Fact]
         [Trait("OP", "FindNearProducers")]
-        public async Task FindNearProducers_GivenCity1_ReturnsOneProducerFromCity1() {
-            //TODO: Waiting for development
+        public async Task FindNearProducers_GivenCityOfFlorestal_ReturnsTwoProducersNearby() {
+            //Arrange
+
+            GeoCoordinate florestal = new() {
+                Latitude = -19.88818771861369,
+                Longitude = -44.43324160008131,
+            };
+
+            backend.Shared.Classes.Location myLocation = new() {
+                Latitude = -19.8959282622104,
+                Longitude = -44.436909544476336,
+                RadiusInKm = 40
+            };
+
+            //Para de Minas is about 20Km far from Florestal
+            GeoCoordinate parademinas = new() {
+                Latitude = -19.863470386911303,
+                Longitude = -44.59249910032828,
+            };
+
+            var producer1ParaDeMinas = new Producer {
+                Name = "Producer Test",
+                Email = "test@test.com",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                Password = "123",
+                Telephone = "(31) 99999-9999",
+                WhereToFind = "Local de encontro",
+                Latitude = florestal.Latitude,
+                Longitude = florestal.Longitude,
+            };
+            var producer2ParaDeMinas = new Producer {
+                Name = "Producer Test2",
+                Email = "test2@test.com",
+                CreatedAt = DateTime.Now,
+                FavdByConsumers = new List<ConsumerFavProducer>(),
+                Password = "123",
+                Telephone = "(31) 99999-9990",
+                WhereToFind = "Local de encontro2",
+                Latitude = parademinas.Latitude,
+                Longitude = parademinas.Longitude,
+            };
+
+            var createdProducer1 = await _producerRepository.Save(producer1ParaDeMinas);
+            var createdProducer2 = await _producerRepository.Save(producer2ParaDeMinas);
+
+            //Act
+            var producersFromCityFlorestal = _producerRepository.FindNearProducers(myLocation, 0, 10);
+
+            Assert.Equal(2,producersFromCityFlorestal.Data.Count());
         }
 
         [Fact]
         [Trait("OP", "FindNearProducers")]
-        public async Task FindNearProducers_GivenCity2_ReturnsTwoProducersFromCity2() {
+        public async Task FindNearProducers_GivenCityOfFlorestal_ReturnsOneProducerNearby() {
             //Arrange
-            var producer1 = new Producer {
+
+            GeoCoordinate florestal = new() {
+                Latitude = -19.88818771861369,
+                Longitude = -44.43324160008131,
+            };
+
+            backend.Shared.Classes.Location myLocation = new() {
+                Latitude = -19.8959282622104,
+                Longitude = -44.436909544476336,
+                RadiusInKm = 1
+            };
+
+            //Para de Minas is about 20Km far from Florestal
+            GeoCoordinate parademinas = new() {
+                Latitude = -19.863470386911303,
+                Longitude = -44.59249910032828,
+            };
+
+            var producer1ParaDeMinas = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "CITY1;CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                WhereToFind = "Local de encontro"
+                WhereToFind = "Local de encontro",
+                Latitude = florestal.Latitude,
+                Longitude = florestal.Longitude,
             };
-            var producer2 = new Producer {
+            var producer2ParaDeMinas = new Producer {
                 Name = "Producer Test2",
                 Email = "test2@test.com",
-                AttendedCities = "CITY2;CITY3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City3",
                 Password = "123",
                 Telephone = "(31) 99999-9990",
-                WhereToFind = "Local de encontro2"
+                WhereToFind = "Local de encontro2",
+                Latitude = parademinas.Latitude,
+                Longitude = parademinas.Longitude,
             };
 
-            var createdProducer1 = await _producerRepository.Save(producer1);
-            var createdProducer2 = await _producerRepository.Save(producer2);
-
-            var product1Id = Guid.NewGuid();
-            var product2Id = Guid.NewGuid();
-            var product3Id = Guid.NewGuid();
-
-            var product1 = new Product {
-                Id = product1Id,
-                Name = "Product1",
-                Description = "Description",
-                Pictures = new List<ProductPicture>() { new PictureFactory().WithProductId(product1Id).Build() },
-                Category = Category.VEGETABLE,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = createdProducer1.Id,
-            };
-            var product2 = new Product {
-                Id= product2Id,
-                Name = "Product2",
-                Description = "Description",
-                Pictures = new List<ProductPicture>() { new PictureFactory().WithProductId(product2Id).Build() },
-                Category = Category.GRAIN,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = createdProducer2.Id,
-            };
-            var product3 = new Product {
-                Id= product3Id,
-                Name = "Product3",
-                Description = "Description",
-                Pictures = new List<ProductPicture>() { new PictureFactory().WithProductId(product1Id).Build() },
-                Category = Category.GRAIN,
-                Price = 10.11,
-                Unit = Unit.LITER,
-                AvailableQuantity = 1,
-                IsOrganic = true,
-                HarvestDate = DateTime.Now,
-                ProducerId = createdProducer2.Id,
-            };
-
-            var createdProduct1 = await _productRepository.Save(product1, new List<CreateProductPictureDTO>());
-
-            var createdProducts2And3 = await _productRepository.SaveMany(new List<Product>() { product2, product3 });
+            var createdProducer1 = await _producerRepository.Save(producer1ParaDeMinas);
+            var createdProducer2 = await _producerRepository.Save(producer2ParaDeMinas);
 
             //Act
-            var producersFromCity2 = _producerRepository.FindNearProducers("city2").ToList();
+            var producersFromCityFlorestal = _producerRepository.FindNearProducers(myLocation,0,10);
 
-            var isProducersFromCity2ContainsProducer1 = producersFromCity2.Any(producer => producer.Name.Contains(producer1.Name));
-            var isProducersFromCity2ContainsProducer2 = producersFromCity2.Any(producer => producer.Name.Contains(producer2.Name));
-
-            //Assert
-            Assert.True(isProducersFromCity2ContainsProducer1);
-            Assert.True(isProducersFromCity2ContainsProducer2);
-            Assert.Equal(2,producersFromCity2.Count());
-            Assert.NotNull(producersFromCity2.ToList().ElementAt(0).Products);
-            Assert.NotNull(producersFromCity2.ToList().ElementAt(1).Products);
+            Assert.Single(producersFromCityFlorestal.Data);
         }
 
         [Fact]
@@ -278,13 +282,13 @@ namespace Tests.UnitTests.Repositories
                 Id = Guid.NewGuid(),
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                WhereToFind = "Local de encontro"
+                WhereToFind = "Local de encontro",
+                Latitude = -19.888246354235864, 
+                Longitude = -44.43324651298572
             };
             
 
@@ -298,9 +302,9 @@ namespace Tests.UnitTests.Repositories
             producer.Telephone = "(31) 99999-9991";
             producer.WhereToFind = "Local";
             producer.Email = "test2@test.com";
-            producer.AttendedCities = "City1";
-            producer.OriginCity = "City2";
             producer.Password = "321";
+            producer.Latitude = -44.43324651298572;
+            producer.Longitude = -19.888246354235864;
 
             var updatedProducer = await _producerRepository.Update(producer);
 
@@ -314,8 +318,9 @@ namespace Tests.UnitTests.Repositories
             Assert.NotEqual(updatedProducer.Telephone, createdProducer.Telephone);
             Assert.NotEqual(updatedProducer.WhereToFind, createdProducer.WhereToFind);
             Assert.NotEqual(updatedProducer.Email, createdProducer.Email);
-            Assert.NotEqual(updatedProducer.OriginCity, createdProducer.OriginCity);
             Assert.NotEqual(updatedProducer.Password, createdProducer.Password);
+            Assert.NotEqual(updatedProducer.Latitude, createdProducer.Latitude);
+            Assert.NotEqual(updatedProducer.Longitude, createdProducer.Longitude);
         }
 
         [Fact]
@@ -325,10 +330,8 @@ namespace Tests.UnitTests.Repositories
             var producer = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
                 WhereToFind = "Local de encontro"

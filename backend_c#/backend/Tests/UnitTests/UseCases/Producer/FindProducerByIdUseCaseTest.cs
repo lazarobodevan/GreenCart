@@ -34,7 +34,7 @@ namespace Tests.UnitTests.UseCases.Producer
             _producerPictureServiceMock.Setup(x => x.GetProfilePictureAsync(It.IsAny<backend.Models.Producer>())).ReturnsAsync("link");
 
             CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object, _producerPictureServiceMock.Object);
-            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object);
+            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object, _producerPictureServiceMock.Object);
 
             var producer = producerFactory.Build();
 
@@ -53,7 +53,9 @@ namespace Tests.UnitTests.UseCases.Producer
 
             //Arrange
             _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).Returns(Task.FromResult<backend.Models.Producer?>(null));
-            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object);
+            _producerPictureServiceMock.Setup(x => x.GetProfilePictureAsync(It.IsAny<backend.Models.Producer>())).ReturnsAsync("link");
+
+            FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object, _producerPictureServiceMock.Object);
 
             //Act
             var foundProducer = await findProducerByIdUseCase.Execute(Guid.NewGuid());

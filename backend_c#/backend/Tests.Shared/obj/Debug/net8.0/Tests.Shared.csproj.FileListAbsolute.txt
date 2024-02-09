@@ -122,3 +122,5 @@ C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\refint\Tests.S
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\Tests.Shared.pdb
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\Tests.Shared.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\ref\Tests.Shared.dll
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\GeoCoordinate.NetCore.dll

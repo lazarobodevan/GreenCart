@@ -15,12 +15,11 @@ namespace Tests.Factories.Producer
         {
             Name = "Producer Test",
             Email = "test@test.com",
-            AttendedCities = "City1;City2;City3",
-            FavdByConsumers = new List<ConsumerFavProducer>(),
             OriginCity = "City1",
             Password = "123",
             Telephone = "(31) 99999-9999",
-            WhereToFind = "Local de encontro"
+            Latitude = -19.888198431735574, 
+            Longitude = -44.43326797065677
         };
 
         public CreateProducerDTO Build() {
@@ -37,13 +36,13 @@ namespace Tests.Factories.Producer
             return this;
         }
 
-        public ProducerDTOFactory WithAttendedCities(string attendedCities) {
-            createProducerDto.AttendedCities = attendedCities;
+        public ProducerDTOFactory WithLatitude(double latitude) {
+            createProducerDto.Latitude = latitude;
             return this;
         }
 
-        public ProducerDTOFactory WithFavdByConsumers(List<ConsumerFavProducer> favs) {
-            createProducerDto.FavdByConsumers = favs;
+        public ProducerDTOFactory WithLongitude(double longitude) {
+            createProducerDto.Longitude = longitude;
             return this;
         }
 

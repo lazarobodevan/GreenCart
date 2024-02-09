@@ -154,10 +154,8 @@ namespace Tests.UnitTests.Repositories {
             var producer1 = new Producer {
                 Name = "Producer Test",
                 Email = "test@test.com",
-                AttendedCities = "City1;City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City1",
                 Password = "123",
                 Telephone = "(31) 99999-9999",
                 WhereToFind = "Local de encontro"
@@ -165,10 +163,8 @@ namespace Tests.UnitTests.Repositories {
             var producer2 = new Producer {
                 Name = "Producer Test2",
                 Email = "test2@test.com",
-                AttendedCities = "City2;City3",
                 CreatedAt = DateTime.Now,
                 FavdByConsumers = new List<ConsumerFavProducer>(),
-                OriginCity = "City3",
                 Password = "123",
                 Telephone = "(31) 99999-9990",
                 WhereToFind = "Local de encontro2"

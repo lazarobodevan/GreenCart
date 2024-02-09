@@ -20,12 +20,12 @@ public class UpdateProducerUseCase{
         var producerEntity = new Models.Producer{
             Id = updateProducerDTO.Id,
             Name = updateProducerDTO.Name ?? possibleProducer.Name,
-            AttendedCities = updateProducerDTO.AttendedCities ?? possibleProducer.AttendedCities,
             Email = updateProducerDTO.Email ?? possibleProducer.Email,
             Password = updateProducerDTO.Password ?? possibleProducer.Password,
-            OriginCity = updateProducerDTO.OriginCity ?? possibleProducer.OriginCity,
             Telephone = updateProducerDTO.Telephone ?? possibleProducer.Telephone,
             WhereToFind = updateProducerDTO.WhereToFind ?? possibleProducer.WhereToFind,
+            Latitude = updateProducerDTO.Latitude ?? possibleProducer.Latitude,
+            Longitude = updateProducerDTO.Longitude ?? possibleProducer.Longitude,
             UpdatedAt = DateTime.Now
         };
 

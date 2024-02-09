@@ -171,11 +171,6 @@ namespace backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("Id");
 
-                    b.Property<string>("AttendedCities")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("AttendedCities");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("CreatedAt");
@@ -193,15 +188,18 @@ namespace backend.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("HasProfilePicture");
 
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision")
+                        .HasColumnName("Latitude");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision")
+                        .HasColumnName("Longitude");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Name");
-
-                    b.Property<string>("OriginCity")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("OriginCity");
 
                     b.Property<string>("Password")
                         .IsRequired()

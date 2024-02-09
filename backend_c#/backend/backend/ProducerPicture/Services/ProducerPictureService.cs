@@ -30,8 +30,9 @@ namespace backend.ProducerPicture.Services {
             }
         }
 
-        public async Task<string> GetProfilePictureAsync(Models.Producer producer) {
+        public async Task<string?> GetProfilePictureAsync(Models.Producer producer) {
             try {
+                if (!producer.HasProfilePicture) return null;
                 var getObjectRequest = new GetPreSignedUrlRequest {
                     BucketName = _BucketName,
                     Key = $"{producer.Id}/{producer.Id}",

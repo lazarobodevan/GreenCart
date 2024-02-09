@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using backend.Models;
 using backend.Producer.DTOs;
 using backend.Producer.Repository;
 using backend.Producer.UseCases;
 using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
+using backend.Shared.Classes;
+using backend.Utils;
 using backend.Utils.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +29,7 @@ public class ProducerController : ControllerBase{
         this.repository = repository;
         this.producerPictureService = producerPictureService;
         createProducerUseCase = new CreateProducerUseCase(this.repository, this.producerPictureService);
-        findNearProducersUseCase = new FindNearProducersUseCase(this.repository);
+        findNearProducersUseCase = new FindNearProducersUseCase(this.repository, this.producerPictureService);
         findProducerByIdUseCase = new FindProducerByIdUseCase(this.repository, producerPictureService);
     }
 
@@ -57,23 +60,27 @@ public class ProducerController : ControllerBase{
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetProducers() {
+    public async Task<IActionResult> GetProducers(
+        [FromQuery] ProducerSearchParamentersDTO searchParameters,
+        [FromQuery] int? page
+        ) {
         try {
-            var producers = findNearProducersUseCase.Execute("City");
+            int resultsPerPage = 10;
 
-            List<ListProducerDTO> listProducersDtos = new List<ListProducerDTO>();
+            var producersPagination = await findNearProducersUseCase.Execute(
+                new Shared.Classes.Location() {
+                    Latitude = (double)searchParameters.Latitude!,
+                    Longitude = (double)searchParameters.Longitude!,
+                    RadiusInKm = (int)searchParameters.RadiusInKm!
+                },
+                page ?? 0,
+                resultsPerPage
+            );
 
-            foreach(var producer in producers) { 
-                listProducersDtos.Add(new ListProducerDTO(
-                    producer, 
-                    new ListProducerPictureDTO() { 
-                        ProducerId = producer.Id, 
-                        Url = ""}
-                    )
-                );
-            }
+            producersPagination.NextUrl = new PaginationUtils().GetNextUrl(page ?? 0, producersPagination.Pages, Request.PathBase);
+            producersPagination.PreviousUrl = new PaginationUtils().GetPreviousUrl(page ?? 0, Request.PathBase);
 
-            return Ok(listProducersDtos);
+            return Ok(producersPagination);
 
         }catch (Exception ex) {
             var error = ExceptionUtils.FormatExceptionResponse(ex);
