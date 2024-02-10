@@ -29,8 +29,8 @@ namespace Tests.UnitTests.UseCases.Producer
         public async Task FindById_GivenProducerId_ReturnsProducer() {
             //Arrange
             var producerId = Guid.NewGuid();
-            _producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer {Id = producerId});
-            _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(new backend.Models.Producer { Id = producerId });
+            _producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new ProducerFactory().WithId(producerId).Build());
+            _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(new ProducerFactory().WithId(producerId).Build());
             _producerPictureServiceMock.Setup(x => x.GetProfilePictureAsync(It.IsAny<backend.Models.Producer>())).ReturnsAsync("link");
 
             CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object, _producerPictureServiceMock.Object);

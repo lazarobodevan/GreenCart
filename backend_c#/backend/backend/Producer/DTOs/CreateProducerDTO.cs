@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using backend.Models;
 using backend.ProducerPicture.DTOs;
 using Microsoft.AspNetCore.Http;
+using ThirdParty.Json.LitJson;
 
 namespace backend.Producer.DTOs;
 

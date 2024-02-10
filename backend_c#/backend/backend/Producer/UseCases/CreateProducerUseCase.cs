@@ -7,6 +7,7 @@ using backend.Producer.DTOs;
 using backend.Producer.Repository;
 using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
+using NetTopologySuite;
 
 namespace backend.Producer.UseCases;
 
@@ -31,15 +32,18 @@ public class CreateProducerUseCase{
 
         if (possibleProducer != null) throw new Exception("Usuário já cadastrado");
 
+        var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326); // SRID para WGS84
+        var locationPoint = geometryFactory.CreatePoint(new NetTopologySuite.Geometries.Coordinate((double)producerDTO.Longitude!, (double)producerDTO.Latitude!));
+
         var producer = new Models.Producer {
             Name = producerDTO.Name,
             Email = producerDTO.Email,
             FavdByConsumers = new List<ConsumerFavProducer>(),
+            WhereToFind = producerDTO.WhereToFind,
             HasProfilePicture = producerDTO.Picture != null,
             Password = producerDTO.Password,
             Telephone = producerDTO.Telephone,
-            Latitude = (double)producerDTO.Latitude!,
-            Longitude = (double)producerDTO.Longitude!,
+            Location = locationPoint,
             CreatedAt = DateTime.Now
         };
 

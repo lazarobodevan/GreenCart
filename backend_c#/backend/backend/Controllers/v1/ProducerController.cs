@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using backend.Models;
 using backend.Producer.DTOs;
+using backend.Producer.Queries;
 using backend.Producer.Repository;
 using backend.Producer.UseCases;
 using backend.ProducerPicture.DTOs;
@@ -60,8 +61,9 @@ public class ProducerController : ControllerBase{
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetProducers(
-        [FromQuery] ProducerSearchParamentersDTO searchParameters,
+    public async Task<IActionResult> GetProducersNearby(
+        [FromQuery] ProducerSearchNearbyQuery searchParameters,
+        [FromQuery] ProducerFilterQuery? filterQuery,
         [FromQuery] int? page
         ) {
         try {
@@ -74,7 +76,8 @@ public class ProducerController : ControllerBase{
                     RadiusInKm = (int)searchParameters.RadiusInKm!
                 },
                 page ?? 0,
-                resultsPerPage
+                resultsPerPage,
+                filterQuery
             );
 
             producersPagination.NextUrl = new PaginationUtils().GetNextUrl(page ?? 0, producersPagination.Pages, Request.PathBase);

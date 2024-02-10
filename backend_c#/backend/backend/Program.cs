@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.IO;
 using Amazon;
 using Amazon.Extensions.NETCore.Setup;
@@ -17,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,8 +43,12 @@ if (builder.Environment.IsStaging()){
 if (builder.Environment.IsDevelopment()){
     Console.WriteLine("Running in development mode");
     Console.WriteLine(builder.Configuration.GetValue<String>("ConnectionStrings:Test"));
+    var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetValue<String>("ConnectionStrings:Dev"));
+    dataSourceBuilder.UseNetTopologySuite();
+    var dataSource = dataSourceBuilder.Build();
     builder.Services.AddDbContext<DatabaseContext>(options => {
-        options.UseNpgsql(builder.Configuration.GetValue<String>("ConnectionStrings:Dev"));
+        
+        options.UseNpgsql(dataSource, o => o.UseNetTopologySuite());
         options.UseExceptionProcessor();
     });
 
@@ -89,6 +95,7 @@ builder.Services.AddScoped<IProducerPictureService, ProducerPictureService>(prov
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
+CultureInfo.CurrentCulture = new CultureInfo("en-US");
 
 var app = builder.Build();
 

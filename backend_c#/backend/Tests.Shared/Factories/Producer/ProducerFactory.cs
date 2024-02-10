@@ -18,9 +18,8 @@ namespace Tests.Factories.Producer
             FavdByConsumers = new List<ConsumerFavProducer>(),
             Password = "123",
             Telephone = "(31) 99999-9999",
-            Latitude = -19.888205998447116, 
-            Longitude = -44.43328138170118 ,
-            WhereToFind = "Local de encontro"
+            WhereToFind = "Local de encontro",
+            Location = new Point(new Coordinate(0,0))
         };
 
         public ProducerFactory WithId(Guid id)
@@ -59,14 +58,14 @@ namespace Tests.Factories.Producer
             return this;
         }
 
-        public ProducerFactory WithLatitude(double latitude) {
-            ProducerEntity.Latitude = latitude;
-            return this;
-        }
-
         public ProducerFactory WithWhereToFind(string whereToFind)
         {
             ProducerEntity.WhereToFind = whereToFind;
+            return this;
+        }
+
+        public ProducerFactory WithLocation(Coordinate coordinate) {
+            ProducerEntity.Location = new Point(coordinate);
             return this;
         }
 

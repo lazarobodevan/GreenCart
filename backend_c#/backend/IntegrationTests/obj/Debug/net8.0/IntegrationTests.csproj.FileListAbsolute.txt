@@ -132,3 +132,7 @@ C:\projs\AgroFam\backend_c#\backend\IntegrationTests\obj\Debug\net8.0\Integratio
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\obj\Debug\net8.0\IntegrationTests.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\obj\Debug\net8.0\ref\IntegrationTests.dll
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\GeoCoordinate.NetCore.dll
+C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\NetTopologySuite.IO.PostGis.dll
+C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\Npgsql.NetTopologySuite.dll

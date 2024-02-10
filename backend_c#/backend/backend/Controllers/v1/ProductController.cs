@@ -88,7 +88,7 @@ public class ProductController : ControllerBase{
 
 
         try {
-            ProductFilterModel filterModel = new ProductFilterModel() {
+            ProductFilterQuery filterModel = new ProductFilterQuery() {
                 Name = name,
                 Category = category,
                 IsByPrice = isByPrice,

@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace backend.Contexts;
 
@@ -16,7 +17,8 @@ public class DatabaseContext : DbContext, IDatabaseContextOptions{
         modelBuilder.Entity<Models.ProductPicture>()
             .HasIndex(p => new { p.ProductId, p.Position })
             .IsUnique();
-
+        modelBuilder.Entity<Models.Producer>().Property(p => p.Location).HasColumnType("geography (point)");
+        modelBuilder.HasPostgresExtension("postgis");
         base.OnModelCreating(modelBuilder);
     }
 

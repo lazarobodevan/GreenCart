@@ -124,3 +124,6 @@ C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\Tests.Shared.g
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\obj\Debug\net8.0\ref\Tests.Shared.dll
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\NetTopologySuite.dll
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\GeoCoordinate.NetCore.dll
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\NetTopologySuite.IO.PostGis.dll
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\Npgsql.NetTopologySuite.dll

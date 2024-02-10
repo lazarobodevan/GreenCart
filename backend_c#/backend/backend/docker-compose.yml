@@ -2,22 +2,13 @@
     
     services:
       postgres:
-        image: postgres:14.1-alpine
+        image: postgis/postgis
         environment:
           POSTGRES_USER: ${DB_USERNAME}
           POSTGRES_PASSWORD: ${DB_PASSWORD}
           PGDATA: /data/postgres
         volumes:
-          - postgres:/var/lib/postgresql/data
+          - ./data/postgis:/var/lib/postgresql/data
         ports:
           - "5432:5432"
-        networks:
-          - postgres
-        restart: unless-stopped
-    
-    networks:
-      postgres:
-        driver: bridge
-    
-    volumes:
-        postgres:
+        restart: always

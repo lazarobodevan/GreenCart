@@ -24,8 +24,6 @@ public class UpdateProducerUseCase{
             Password = updateProducerDTO.Password ?? possibleProducer.Password,
             Telephone = updateProducerDTO.Telephone ?? possibleProducer.Telephone,
             WhereToFind = updateProducerDTO.WhereToFind ?? possibleProducer.WhereToFind,
-            Latitude = updateProducerDTO.Latitude ?? possibleProducer.Latitude,
-            Longitude = updateProducerDTO.Longitude ?? possibleProducer.Longitude,
             UpdatedAt = DateTime.Now
         };
 

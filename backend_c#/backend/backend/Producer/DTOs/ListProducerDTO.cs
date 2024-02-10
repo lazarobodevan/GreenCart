@@ -1,4 +1,5 @@
 ﻿using backend.ProducerPicture.DTOs;
+using NetTopologySuite.Geometries;
 using System;
 using System.Text.Json.Serialization;
 
@@ -14,6 +15,10 @@ public class ListProducerDTO{
             ProducerId = producer.Id,
             Url = pictureDTO.Url
         } : null;
+        Latitude = producer.Location.Y;
+        Longitude = producer.Location.X;
+        RatingsAvg = producer.RatingsAvg;
+        RatingsCount = producer.RatingsCount;
         WhereToFind = producer.WhereToFind;
         CreatedAt = producer.CreatedAt;
         UpdatedAt = producer.UpdatedAt;
@@ -29,19 +34,21 @@ public class ListProducerDTO{
 
     [JsonPropertyName("email")] public string Email{ get; set; }
 
-    [JsonPropertyName("location")] public string Location{ get; set; }
-
     [JsonPropertyName("telephone")] public string Telephone{ get; set; }
 
     [JsonPropertyName("picture")] public ListProducerPictureDTO? Picture{ get; set; }
 
-    [JsonPropertyName("attendedCities")] public string AttendedCities{ get; set; }
-
     [JsonPropertyName("whereToFind")] public string WhereToFind{ get; set; }
 
-    [JsonPropertyName("latitude")] public string Latitude { get; set; }
+    [JsonPropertyName("latitude")] public double Latitude { get; set; }
 
-    [JsonPropertyName("longitude")] public string Longitude { get; set; }
+    [JsonPropertyName("location")] public Point Location { get; set; }
+
+    [JsonPropertyName("longitude")] public double Longitude { get; set; }
+
+    [JsonPropertyName("ratingsAvg")] public double RatingsAvg { get; set; }
+
+    [JsonPropertyName("ratingsCount")] public int RatingsCount { get; set; }
 
     [JsonPropertyName("createdAt")] public DateTime CreatedAt{ get; set; }
 

@@ -112,3 +112,7 @@ C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.genruntimec
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\ref\backend.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\NetTopologySuite.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\GeoCoordinate.NetCore.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\NetTopologySuite.IO.PostGis.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\EFCoreNpgsqlNetTopologySuite.cs

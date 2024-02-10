@@ -75,6 +75,14 @@
           }
         }
       },
+      "GeoCoordinate.NetCore/1.0.0.1": {
+        "runtime": {
+          "lib/netstandard1.6/GeoCoordinate.NetCore.dll": {
+            "assemblyVersion": "1.0.0.1",
+            "fileVersion": "1.0.0.1"
+          }
+        }
+      },
       "Microsoft.CodeCoverage/17.8.0": {
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {
@@ -493,6 +501,17 @@
           }
         }
       },
+      "NetTopologySuite.IO.PostGis/2.1.0": {
+        "dependencies": {
+          "NetTopologySuite": "2.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/NetTopologySuite.IO.PostGis.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
+      },
       "Newtonsoft.Json/13.0.1": {
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
@@ -521,6 +540,31 @@
         },
         "runtime": {
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.0.0"
+          }
+        }
+      },
+      "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/8.0.0": {
+        "dependencies": {
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0",
+          "Npgsql.NetTopologySuite": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.0.0"
+          }
+        }
+      },
+      "Npgsql.NetTopologySuite/8.0.0": {
+        "dependencies": {
+          "NetTopologySuite": "2.5.0",
+          "NetTopologySuite.IO.PostGis": "2.1.0",
+          "Npgsql": "8.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Npgsql.NetTopologySuite.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.0.0"
           }
@@ -1243,10 +1287,13 @@
           "AWSSDK.Extensions.NETCore.Setup": "3.7.300",
           "AWSSDK.S3": "3.7.305.2",
           "EntityFrameworkCore.Exceptions.PostgreSQL": "8.0.0",
+          "GeoCoordinate.NetCore": "1.0.0.1",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.19.5",
           "NetTopologySuite": "2.5.0",
+          "NetTopologySuite.IO.PostGis": "2.1.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0",
+          "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "8.0.0",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
@@ -1302,6 +1349,13 @@
       "sha512": "sha512-TRWtcUfSJIpS9KibsvozAHKwwWdkF91Lq4ecTxfeB/IVM30J/GRM5MCP7RL9i78463B5BPXpfDtGAejrKJ6plA==",
       "path": "entityframeworkcore.exceptions.postgresql/8.0.0",
       "hashPath": "entityframeworkcore.exceptions.postgresql.8.0.0.nupkg.sha512"
+    },
+    "GeoCoordinate.NetCore/1.0.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VrR5MLkh0u2qka79JcQ/GUrgHwGidayCA7nKy2430qYX/JHdrHLgwp1MuBTSsygWs0s2V6GQ0Hp8HUMatHiWFw==",
+      "path": "geocoordinate.netcore/1.0.0.1",
+      "hashPath": "geocoordinate.netcore.1.0.0.1.nupkg.sha512"
     },
     "Microsoft.CodeCoverage/17.8.0": {
       "type": "package",
@@ -1478,6 +1532,13 @@
       "path": "nettopologysuite/2.5.0",
       "hashPath": "nettopologysuite.2.5.0.nupkg.sha512"
     },
+    "NetTopologySuite.IO.PostGis/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3W8XTFz8iP6GQ5jDXK1/LANHiU+988k1kmmuPWNKcJLpmSg6CvFpbTpz+s4+LBzkAp64wHGOldSlkSuzYfrIKA==",
+      "path": "nettopologysuite.io.postgis/2.1.0",
+      "hashPath": "nettopologysuite.io.postgis.2.1.0.nupkg.sha512"
+    },
     "Newtonsoft.Json/13.0.1": {
       "type": "package",
       "serviceable": true,
@@ -1498,6 +1559,20 @@
       "sha512": "sha512-GDXiMS9peEdjSCU/rfgyHruio7q6tYuywGaktqEi6UPQ6ILechp3fVVX+dHXkIXt4nklCBzYVWkzFrSL9ubKUA==",
       "path": "npgsql.entityframeworkcore.postgresql/8.0.0",
       "hashPath": "npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512"
+    },
+    "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-B6BKAdg2PNjBQvYqFJ200L9TOe96V4G4T0dkopoxZN4/muANUy+OHS+pdv5Jk/ui5o0XgQ0fQqauR+1e0/4g3A==",
+      "path": "npgsql.entityframeworkcore.postgresql.nettopologysuite/8.0.0",
+      "hashPath": "npgsql.entityframeworkcore.postgresql.nettopologysuite.8.0.0.nupkg.sha512"
+    },
+    "Npgsql.NetTopologySuite/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-H9DJmVrLlyhZJj5SQVzPTHbeK4eQ84ZldP/HNHU74t4ingy4q8lxSuJ0/0sUXwYLHNsg1OwZi9G+RRUCg+vZbA==",
+      "path": "npgsql.nettopologysuite/8.0.0",
+      "hashPath": "npgsql.nettopologysuite.8.0.0.nupkg.sha512"
     },
     "NuGet.Frameworks/6.5.0": {
       "type": "package",

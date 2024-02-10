@@ -55,7 +55,7 @@ public class ProductRepository : IProductRepository{
         }
     }
 
-    public Pagination<backend.Models.Product> GetProducerProducts(Guid producerId, int page, int pageResults, ProductFilterModel? filterModel) {
+    public Pagination<backend.Models.Product> GetProducerProducts(Guid producerId, int page, int pageResults, ProductFilterQuery? filterModel) {
 
         var producerExists = _context.Producers.Any<backend.Models.Producer>(producer => producer.Id == producerId && producer.DeletedAt == null);
 
@@ -165,7 +165,7 @@ public class ProductRepository : IProductRepository{
         }
     }
 
-    public Pagination<backend.Models.Product> FindByFilter(ProductFilterModel filterModel, int page, int pageResults) {
+    public Pagination<backend.Models.Product> FindByFilter(ProductFilterQuery filterModel, int page, int pageResults) {
         try {
             var query = _context.Products.AsQueryable();
 
@@ -193,7 +193,7 @@ public class ProductRepository : IProductRepository{
         }
     }
 
-    private IQueryable<backend.Models.Product> _ApplyFilters(IQueryable<backend.Models.Product> query, ProductFilterModel filterModel) {
+    private IQueryable<backend.Models.Product> _ApplyFilters(IQueryable<backend.Models.Product> query, ProductFilterQuery filterModel) {
 
         //Find products that are existent. This is due to soft deletion.
         query = query.Where(p => p.DeletedAt == null);

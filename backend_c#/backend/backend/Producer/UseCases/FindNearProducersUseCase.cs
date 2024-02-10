@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Producer.DTOs;
+using backend.Producer.Queries;
 using backend.Producer.Repository;
 using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
@@ -18,9 +19,9 @@ public class FindNearProducersUseCase{
         _pictureService = pictureService;
     }
 
-    public async Task<Pagination<ListProducerDTO>> Execute(Location myLocation, int page, int pageResults){
+    public async Task<Pagination<ListProducerDTO>> Execute(Location myLocation, int page, int pageResults, ProducerFilterQuery? filterQuery){
 
-        var foundProducers = _repository.FindNearProducers(myLocation, page, pageResults);
+        var foundProducers = _repository.FindNearProducers(myLocation, page, pageResults, filterQuery);
 
         var profilePicturesTasks = foundProducers.Data.Select(p => _pictureService.GetProfilePictureAsync(p)).ToArray();
         var profilePictures = await Task.WhenAll(profilePicturesTasks);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Contexts;
 
@@ -20,6 +21,7 @@ namespace backend.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("backend.Models.Consumer", b =>
@@ -192,6 +194,10 @@ namespace backend.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("Latitude");
 
+                    b.Property<Point>("Location")
+                        .IsRequired()
+                        .HasColumnType("geography (point)");
+
                     b.Property<double>("Longitude")
                         .HasColumnType("double precision")
                         .HasColumnName("Longitude");
@@ -201,10 +207,23 @@ namespace backend.Migrations
                         .HasColumnType("text")
                         .HasColumnName("Name");
 
+                    b.Property<string>("NormalizedName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("NormalizedName");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("Password");
+
+                    b.Property<double>("RatingsAvg")
+                        .HasColumnType("double precision")
+                        .HasColumnName("RatingsAvg");
+
+                    b.Property<int>("RatingsCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("RatingsCount");
 
                     b.Property<string>("Telephone")
                         .IsRequired()
@@ -314,6 +333,51 @@ namespace backend.Migrations
                     b.ToTable("ProductPictures");
                 });
 
+            modelBuilder.Entity("backend.Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("Id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("ConsumerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ConsumerId");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("CreatedAt");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("DeleteddAt");
+
+                    b.Property<Guid>("ProducerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ProducerId");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("ProductId");
+
+                    b.Property<int>("RatingNumber")
+                        .HasColumnType("integer")
+                        .HasColumnName("RatingNumber");
+
+                    b.Property<string>("RatingText")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("RatingText");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProducerId");
+
+                    b.ToTable("Rating");
+                });
+
             modelBuilder.Entity("backend.Models.ConsumerFavProducer", b =>
                 {
                     b.HasOne("backend.Models.Consumer", "Consumer")
@@ -382,6 +446,15 @@ namespace backend.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("backend.Models.Rating", b =>
+                {
+                    b.HasOne("backend.Models.Producer", null)
+                        .WithMany("Ratings")
+                        .HasForeignKey("ProducerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("backend.Models.Consumer", b =>
                 {
                     b.Navigation("FavdProducers");
@@ -396,6 +469,8 @@ namespace backend.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Products");
+
+                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("backend.Models.Product", b =>

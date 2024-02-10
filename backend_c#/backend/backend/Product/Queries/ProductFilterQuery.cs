@@ -2,7 +2,7 @@
 using System;
 
 namespace backend.Product.Models {
-    public class ProductFilterModel {
+    public class ProductFilterQuery {
         public string? Name { get; set; }
         public Category? Category { get; set; }
         public bool? IsByPrice { get; set; }

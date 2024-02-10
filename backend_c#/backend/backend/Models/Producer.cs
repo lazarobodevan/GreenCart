@@ -18,6 +18,7 @@ public class Producer{
         Password = producer.Password;
         Telephone = producer.Telephone;
         WhereToFind = producer.WhereToFind;
+        Location = producer.Location;
         FavdByConsumers = producer.FavdByConsumers;
         CreatedAt = producer.CreatedAt;
         UpdatedAt = producer.UpdatedAt;
@@ -28,17 +29,17 @@ public class Producer{
 
     [Required] [Column("Name")] public string Name{ get; set; }
 
+    [Required]
+    [Column("NormalizedName")]
+    public string NormalizedName { get; set; }
+
     [Required] [Column("Email")] public string Email{ get; set; }
 
     [Required] [Column("Password")] public string Password{ get; set; }
 
-    [Required] 
-    [Column("Latitude")] 
-    public double Latitude{ get; set; }
-
+    [Column(TypeName ="geography (point)")]
     [Required]
-    [Column("Longitude")]
-    public double Longitude { get; set; }
+    public Point Location { get; set; }
 
     [Required] [Column("Telephone")] public string Telephone{ get; set; }
 
@@ -47,9 +48,18 @@ public class Producer{
 
     [Required] [Column("WhereToFind")] public string WhereToFind{ get; set; }
 
+    [Required]
+    [Column("RatingsCount")]
+    public int RatingsCount { get; set; }
+
+    [Required]
+    [Column("RatingsAvg")]
+    public double RatingsAvg { get; set; }
+
     public List<Product>? Products{ get; set; }
     public List<Order>? Orders{ get; set; }
     public List<ConsumerFavProducer> FavdByConsumers{ get; set; }
+    public List<Rating>? Ratings { get; set; }
 
     [Column("CreatedAt")] public DateTime CreatedAt{ get; set; }
 

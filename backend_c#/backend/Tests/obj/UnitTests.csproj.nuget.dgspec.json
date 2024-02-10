@@ -80,7 +80,15 @@
               "target": "Package",
               "version": "[2.5.0, )"
             },
+            "NetTopologySuite.IO.PostGis": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": {
               "target": "Package",
               "version": "[8.0.0, )"
             },

@@ -22,7 +22,7 @@ public class GetProducerProductsUseCase{
         this.pictureService = pictureService;
     }
 
-    public async Task<Pagination<ListProductDTO>> Execute(Guid producerId, int page, ProductFilterModel filterModel){
+    public async Task<Pagination<ListProductDTO>> Execute(Guid producerId, int page, ProductFilterQuery filterModel){
 
         var pageResults = 10;
 
@@ -50,10 +50,10 @@ public class GetProducerProductsUseCase{
         };
     }
 
-    private static bool _HasAtLeastOneFilterOption(ProductFilterModel filterModel) {
+    private static bool _HasAtLeastOneFilterOption(ProductFilterQuery filterModel) {
         if(filterModel == null) return false;
 
-        Type type = typeof(ProductFilterModel);
+        Type type = typeof(ProductFilterQuery);
         PropertyInfo[] properties = type.GetProperties();
 
         foreach (PropertyInfo property in properties) {

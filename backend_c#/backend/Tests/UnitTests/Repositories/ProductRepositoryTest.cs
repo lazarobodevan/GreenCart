@@ -20,6 +20,7 @@ using backend.Product.DTOs;
 using backend.Picture.DTOs;
 using backend.Producer.Services;
 using backend.Product.Models;
+using NetTopologySuite.Geometries;
 
 namespace Tests.UnitTests.Repositories {
     public class ProductRepositoryTest : IAsyncLifetime {
@@ -149,7 +150,7 @@ namespace Tests.UnitTests.Repositories {
             var _productRepository = new ProductRepository(_databaseContext);
             var _producerRepository = new ProducerRepository(_databaseContext);
 
-            ProductFilterModel filterModel = new ProductFilterModel();
+            ProductFilterQuery filterModel = new ProductFilterQuery();
 
             var producer1 = new Producer {
                 Name = "Producer Test",
@@ -158,7 +159,8 @@ namespace Tests.UnitTests.Repositories {
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 Password = "123",
                 Telephone = "(31) 99999-9999",
-                WhereToFind = "Local de encontro"
+                WhereToFind = "Local de encontro",
+                Location = new Point(new Coordinate(0,0))
             };
             var producer2 = new Producer {
                 Name = "Producer Test2",
@@ -167,7 +169,8 @@ namespace Tests.UnitTests.Repositories {
                 FavdByConsumers = new List<ConsumerFavProducer>(),
                 Password = "123",
                 Telephone = "(31) 99999-9990",
-                WhereToFind = "Local de encontro2"
+                WhereToFind = "Local de encontro2",
+                Location = new Point(new Coordinate(0, 0))
             };
 
             var createdProducer1 = await _producerRepository.Save(producer1);
@@ -263,7 +266,7 @@ namespace Tests.UnitTests.Repositories {
             //Arrange
             var producerId = Guid.NewGuid();
             var _productRepository = new ProductRepository(_databaseContext);
-            ProductFilterModel filterModel = new ProductFilterModel();
+            ProductFilterQuery filterModel = new ProductFilterQuery();
 
             //Act
             void Act() {
@@ -340,7 +343,7 @@ namespace Tests.UnitTests.Repositories {
         public async Task FindByFitler_GivenCategoryFilter_ReturnsFilteredProducts() {
             //Arrange
             ProductRepository productRepository = new ProductRepository(_databaseContext);
-            ProductFilterModel filterModel = new ProductFilterModel() {
+            ProductFilterQuery filterModel = new ProductFilterQuery() {
                 Category = Category.FRUIT
             };
             List<CreateProductPictureDTO> createPictures = new List<CreateProductPictureDTO>();
@@ -370,7 +373,7 @@ namespace Tests.UnitTests.Repositories {
         public async Task FindByFitler_GivenNameFilter_ReturnsFilteredProducts() {
             //Arrange
             ProductRepository productRepository = new ProductRepository(_databaseContext);
-            ProductFilterModel filterModel = new ProductFilterModel() {
+            ProductFilterQuery filterModel = new ProductFilterQuery() {
                 Name = "brocól"
             };
             List<CreateProductPictureDTO> createPictures = new List<CreateProductPictureDTO>();
@@ -397,7 +400,7 @@ namespace Tests.UnitTests.Repositories {
         public async Task FindByFitler_GivenPriceFilter_ReturnsFilteredProducts() {
             //Arrange
             ProductRepository productRepository = new ProductRepository(_databaseContext);
-            ProductFilterModel filterModel = new ProductFilterModel() {
+            ProductFilterQuery filterModel = new ProductFilterQuery() {
                 IsByPrice = true
             };
             List<CreateProductPictureDTO> createPictures = new List<CreateProductPictureDTO>();

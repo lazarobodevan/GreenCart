@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "R6yBrWJclC8WLhlna6ooCNQQbh/zu1KN6bKuJ093aQtIbnXQ4fouOn7MY9O5tfcZaxXBwdHB8j9tklb/fnvC+g==",
+  "dgSpecHash": "gY3PdMeSTXiOAjawPaDee972H8/2dzhwkdLHJ0Wqz+YypDvObwLUWnRbIqmKvBi9WfdMYCoufxJRlIsdPuPznQ==",
   "success": true,
   "projectFilePath": "C:\\projs\\AgroFam\\backend_c#\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
@@ -38,8 +38,11 @@
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.5\\microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\nettopologysuite\\2.5.0\\nettopologysuite.2.5.0.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\nettopologysuite.io.postgis\\2.1.0\\nettopologysuite.io.postgis.2.1.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql.nettopologysuite\\8.0.0\\npgsql.entityframeworkcore.postgresql.nettopologysuite.8.0.0.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\npgsql.nettopologysuite\\8.0.0\\npgsql.nettopologysuite.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
