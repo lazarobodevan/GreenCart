@@ -9,6 +9,7 @@ using backend.Producer.UseCases;
 using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
 using backend.Shared.Classes;
+using backend.Shared.Queries;
 using backend.Utils;
 using backend.Utils.Errors;
 using Microsoft.AspNetCore.Http;
@@ -62,7 +63,7 @@ public class ProducerController : ControllerBase{
 
     [HttpGet]
     public async Task<IActionResult> GetProducersNearby(
-        [FromQuery] ProducerSearchNearbyQuery searchParameters,
+        [FromQuery] SearchNearbyQuery searchParameters,
         [FromQuery] ProducerFilterQuery? filterQuery,
         [FromQuery] int? page
         ) {

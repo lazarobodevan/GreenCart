@@ -21,6 +21,7 @@ using backend.Product.Models;
 using backend.Product.Enums;
 using backend.Shared.Classes;
 using backend.ProducerPicture.Services;
+using backend.Shared.Queries;
 
 namespace backend.Controllers.v1;
 
@@ -32,6 +33,7 @@ public class ProductController : ControllerBase{
     private readonly GetProducerProductsUseCase getProducerProductsUseCase;
     private readonly FindProducerByIdUseCase getProducerByIdUseCase;
     private readonly GetProductByIdUseCase getProductByIdUseCase;
+    private readonly GetNearbyProductsUseCase getNearbyProductsUseCase;
 
     private readonly IProductPictureService productPictureService;
     private readonly IProducerPictureService producerPictureService;
@@ -52,6 +54,7 @@ public class ProductController : ControllerBase{
         getProducerProductsUseCase = new GetProducerProductsUseCase(this.repository, productPictureService);
         getProducerByIdUseCase = new FindProducerByIdUseCase(this.producerRepository, producerPictureService);
         getProductByIdUseCase = new GetProductByIdUseCase(this.repository, productPictureService);
+        getNearbyProductsUseCase = new GetNearbyProductsUseCase(this.repository, this.productPictureService);
     }
 
     [HttpPost]
@@ -124,6 +127,31 @@ public class ProductController : ControllerBase{
         try {
             ListProductDTO? productDTO = await getProductByIdUseCase.Execute(productId);
             return Ok(productDTO);
+        }catch(Exception ex) {
+            var error = ExceptionUtils.FormatExceptionResponse(ex);
+            return StatusCode(StatusCodes.Status500InternalServerError, error);
+        }
+    }
+
+    [HttpGet()]
+    public async Task<IActionResult> GetNearbyProducts(
+        [FromQuery] SearchNearbyQuery query,
+        [FromQuery] ProductFilterQuery? filterQuery,
+        [FromQuery] int? page
+        ) {
+        try {
+            var nearbyProducts = await getNearbyProductsUseCase.Execute(new Location() {
+                Latitude = (double)query.Latitude!,
+                Longitude = (double)query.Longitude!,
+                RadiusInKm = (int)query.RadiusInKm!
+
+            }, 
+            page ?? 0, 
+            10, 
+            filterQuery);
+
+            return Ok(nearbyProducts);
+
         }catch(Exception ex) {
             var error = ExceptionUtils.FormatExceptionResponse(ex);
             return StatusCode(StatusCodes.Status500InternalServerError, error);

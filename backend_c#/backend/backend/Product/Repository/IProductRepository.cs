@@ -1,4 +1,5 @@
 ﻿using backend.Picture.DTOs;
+using backend.Producer.Queries;
 using backend.Product.DTOs;
 using backend.Product.Models;
 using backend.Shared.Classes;
@@ -13,6 +14,7 @@ public interface IProductRepository{
     backend.Models.Product? FindById(Guid productId);
     Pagination<backend.Models.Product> GetProducerProducts(Guid producerId, int page, int pageResults, ProductFilterQuery? filterModel);
     Pagination<backend.Models.Product> FindByFilter(ProductFilterQuery filterModel, int page, int pageResults);
+    Pagination<backend.Models.Product> FindNearProducts(Location myLocation, int page, int pageResults, ProductFilterQuery? query);
     Task<List<backend.Models.Product>> SaveMany(List<backend.Models.Product> products);
     backend.Models.Product Update(backend.Models.Product product);
     Task<backend.Models.Product> Delete(backend.Models.Product product);

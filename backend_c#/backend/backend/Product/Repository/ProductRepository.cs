@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backend.Contexts;
+using backend.Models;
 using backend.Picture.DTOs;
 using backend.Product.DTOs;
 using backend.Product.Exceptions;
@@ -12,6 +13,7 @@ using backend.Utils;
 using EntityFramework.Exceptions.Common;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 
 namespace backend.Product.Repository;
 
@@ -45,7 +47,7 @@ public class ProductRepository : IProductRepository{
             var possibleProduct = _context.Products.
                 Where(p => p.Id == productId && p.DeletedAt == null)
                 .Include(p => p.Producer)
-                .Include(p => p.Pictures)
+                .Include(p => p.Pictures.OrderBy(pic => pic.Position))
                 .FirstOrDefault();
 
             return possibleProduct; 
@@ -193,10 +195,77 @@ public class ProductRepository : IProductRepository{
         }
     }
 
+    public Pagination<backend.Models.Product> FindNearProducts(Shared.Classes.Location myLocation, int page, int pageResults, ProductFilterQuery? query) {
+
+        var referenceCoord = new Point(new Coordinate(myLocation.Longitude, myLocation.Latitude));
+        List<backend.Models.Product> products = new List<backend.Models.Product>();
+
+        double radiusInMeters = myLocation.RadiusInKm * 1000;
+
+        /*
+         * Get nearby products ordered by:
+         * 1 - Distance
+         * 2 - Ratings average
+         * 3 - Ratings count
+         */
+
+        // Filtering by distance
+        var nearbyProducts = _context.Products
+            .Include(p => p.Producer)
+            .Where(p => p.Producer.Location.Distance(referenceCoord) <= radiusInMeters
+                && p.Producer.DeletedAt == null
+                && p.DeletedAt == null)
+            .Select(product => new backend.Models.Product {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                HarvestDate = product.HarvestDate,
+                Unit = product.Unit,
+                IsOrganic = product.IsOrganic,
+                AvailableQuantity = product.AvailableQuantity,
+                ProducerId = product.ProducerId,
+                Category = product.Category,
+                Price = product.Price,
+                CreatedAt = product.CreatedAt,
+                Pictures = product.Pictures.Where(picture => picture.Position == 0).ToList(),
+            });
+
+        // Applying filters
+        if (query != null) {
+            nearbyProducts = _ApplyFilters(nearbyProducts, query);
+            products = nearbyProducts.ToList();
+        } else {
+            //Default order: distance -> ratings count -> ratings avg
+            products = nearbyProducts
+            .OrderBy(product => product.Producer.Location.Distance(referenceCoord))
+            .ThenByDescending(product => product.RatingsCount)
+            .OrderByDescending(product => product.RatingsAvg)
+            .ToList();
+        }
+
+        var totalProductsCount = products.Count();
+        var pageCount = (int)Math.Ceiling((double)totalProductsCount / pageResults);
+        page = Math.Min(page, (int)pageCount - 1);
+
+        int offset = Math.Max(0, page) * pageResults;
+
+        var paginatedProducts = products
+            .Skip(offset)
+            .Take((int)pageResults)
+            .ToList();
+
+        return new Pagination<backend.Models.Product>() {
+            CurrentPage = page,
+            Data = paginatedProducts,
+            Pages = pageCount,
+            Offset = offset
+        };
+    }
+
     private IQueryable<backend.Models.Product> _ApplyFilters(IQueryable<backend.Models.Product> query, ProductFilterQuery filterModel) {
 
         //Find products that are existent. This is due to soft deletion.
-        query = query.Where(p => p.DeletedAt == null);
+        //query = query.Where(p => p.DeletedAt == null);
 
         if (!string.IsNullOrEmpty(filterModel.Name)) {
             string normalizedName = new StringUtils().NormalizeString(filterModel.Name);

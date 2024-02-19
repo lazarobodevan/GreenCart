@@ -5,6 +5,7 @@ C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.AssemblyInf
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.csproj.CoreCompileInputs.cache
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cs
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.MvcApplicationPartsAssemblyInfo.cache
+C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\EFCoreNpgsqlNetTopologySuite.cs
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.sourcelink.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\appsettings.Development.json
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\appsettings.json
@@ -20,6 +21,7 @@ C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\AWSSDK.Extensions.N
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\AWSSDK.S3.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\EntityFramework.Exceptions.Common.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\EntityFramework.Exceptions.PostgreSQL.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\GeoCoordinate.NetCore.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Humanizer.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
@@ -33,8 +35,12 @@ C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Microsoft.EntityFra
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\NetTopologySuite.IO.PostGis.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.NetTopologySuite.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -110,9 +116,3 @@ C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\refint\backend.dll
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.pdb
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\ref\backend.dll
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\NetTopologySuite.dll
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\GeoCoordinate.NetCore.dll
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\NetTopologySuite.IO.PostGis.dll
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
-C:\projs\AgroFam\backend_c#\backend\backend\bin\Debug\net8.0\Npgsql.NetTopologySuite.dll
-C:\projs\AgroFam\backend_c#\backend\backend\obj\Debug\net8.0\EFCoreNpgsqlNetTopologySuite.cs

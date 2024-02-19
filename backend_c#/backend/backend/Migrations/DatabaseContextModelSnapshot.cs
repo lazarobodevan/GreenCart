@@ -190,17 +190,9 @@ namespace backend.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("HasProfilePicture");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("double precision")
-                        .HasColumnName("Latitude");
-
                     b.Property<Point>("Location")
                         .IsRequired()
                         .HasColumnType("geography (point)");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("double precision")
-                        .HasColumnName("Longitude");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -296,6 +288,14 @@ namespace backend.Migrations
                     b.Property<Guid>("ProducerId")
                         .HasColumnType("uuid");
 
+                    b.Property<double>("RatingsAvg")
+                        .HasColumnType("double precision")
+                        .HasColumnName("RatingsAvg");
+
+                    b.Property<double>("RatingsCount")
+                        .HasColumnType("double precision")
+                        .HasColumnName("RatingsCount");
+
                     b.Property<int>("Unit")
                         .HasColumnType("integer")
                         .HasColumnName("Unit");
@@ -375,6 +375,8 @@ namespace backend.Migrations
 
                     b.HasIndex("ProducerId");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Rating");
                 });
 
@@ -453,6 +455,12 @@ namespace backend.Migrations
                         .HasForeignKey("ProducerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("backend.Models.Product", null)
+                        .WithMany("Ratings")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("backend.Models.Consumer", b =>
@@ -476,6 +484,8 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Product", b =>
                 {
                     b.Navigation("Pictures");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }

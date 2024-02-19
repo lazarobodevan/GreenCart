@@ -51,7 +51,17 @@ public class Product{
 
     [ForeignKey("Producer")] public Guid ProducerId{ get; set; }
 
+    [Column("RatingsAvg")]
+    [Required]
+    public double RatingsAvg { get; set; }
+
+    [Column("RatingsCount")]
+    [Required]
+    public double RatingsCount { get; set; }
+
     public Producer Producer{ get; set; }
+
+    public List<Rating>? Ratings { get; set; }
 
     [Column("CreatedAt")] public DateTime CreatedAt{ get; set; }
 

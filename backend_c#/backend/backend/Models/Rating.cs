@@ -15,12 +15,15 @@ namespace backend.Models {
         public int RatingNumber { get; set; }
 
         [Column(name:"ProductId")]
+        [ForeignKey("Product")]
         public Guid ProductId { get; set; }
 
         [Column(name: "ProducerId")]
+        [ForeignKey("Producer")]
         public Guid ProducerId { get; set; }
 
         [Column(name: "ConsumerId")]
+        [ForeignKey("Consumer")]
         public Guid ConsumerId { get; set; }
 
         [Column(name:"CreatedAt")]
