@@ -7,6 +7,7 @@ using backend.Producer.DTOs;
 using backend.Producer.Repository;
 using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
+using backend.Shared.Services.Location;
 using NetTopologySuite;
 
 namespace backend.Producer.UseCases;
@@ -14,10 +15,12 @@ namespace backend.Producer.UseCases;
 public class CreateProducerUseCase{
     private readonly IProducerRepository repository;
     private readonly IProducerPictureService producerPictureService;
+    private readonly ILocationService locationService;
 
-    public CreateProducerUseCase(IProducerRepository repository, IProducerPictureService producerPictureService){
+    public CreateProducerUseCase(IProducerRepository repository, IProducerPictureService producerPictureService, ILocationService locationService){
         this.repository = repository;
         this.producerPictureService = producerPictureService;
+        this.locationService = locationService;
     }
 
     public async Task<Models.Producer> Execute(CreateProducerDTO producerDTO){
@@ -34,12 +37,14 @@ public class CreateProducerUseCase{
 
         var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326); // SRID para WGS84
         var locationPoint = geometryFactory.CreatePoint(new NetTopologySuite.Geometries.Coordinate((double)producerDTO.Longitude!, (double)producerDTO.Latitude!));
+        var locationAdress = locationService.GetLocationByLatLon((double)producerDTO.Latitude!, (double)producerDTO.Longitude!);
 
         var producer = new Models.Producer {
             Name = producerDTO.Name,
             Email = producerDTO.Email,
             FavdByConsumers = new List<ConsumerFavProducer>(),
             WhereToFind = producerDTO.WhereToFind,
+            LocationAddress = locationAdress,
             HasProfilePicture = producerDTO.Picture != null,
             Password = producerDTO.Password,
             Telephone = producerDTO.Telephone,

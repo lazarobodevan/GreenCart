@@ -10,6 +10,7 @@ using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
 using backend.Shared.Classes;
 using backend.Shared.Queries;
+using backend.Shared.Services.Location;
 using backend.Utils;
 using backend.Utils.Errors;
 using Microsoft.AspNetCore.Http;
@@ -26,11 +27,13 @@ public class ProducerController : ControllerBase{
 
     private readonly IProducerRepository repository;
     private readonly IProducerPictureService producerPictureService;
+    private readonly ILocationService locationService;
 
-    public ProducerController(IProducerRepository repository, IProducerPictureService producerPictureService){
+    public ProducerController(IProducerRepository repository, IProducerPictureService producerPictureService, ILocationService locationService){
         this.repository = repository;
         this.producerPictureService = producerPictureService;
-        createProducerUseCase = new CreateProducerUseCase(this.repository, this.producerPictureService);
+        this.locationService = locationService;
+        createProducerUseCase = new CreateProducerUseCase(this.repository, this.producerPictureService, this.locationService);
         findNearProducersUseCase = new FindNearProducersUseCase(this.repository, this.producerPictureService);
         findProducerByIdUseCase = new FindProducerByIdUseCase(this.repository, producerPictureService);
     }
@@ -74,7 +77,7 @@ public class ProducerController : ControllerBase{
                 new Shared.Classes.Location() {
                     Latitude = (double)searchParameters.Latitude!,
                     Longitude = (double)searchParameters.Longitude!,
-                    RadiusInKm = (int)searchParameters.RadiusInKm!
+                    RadiusInKm = (int)searchParameters.RadiusInKm!,
                 },
                 page ?? 0,
                 resultsPerPage,

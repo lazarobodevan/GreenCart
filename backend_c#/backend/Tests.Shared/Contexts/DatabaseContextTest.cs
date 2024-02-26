@@ -26,5 +26,6 @@ namespace Tests.Shared.Contexts {
         public DbSet<Product> Products { get; set; }
 
         public DbSet<ProductPicture> Pictures { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }

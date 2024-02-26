@@ -103,6 +103,37 @@ namespace backend.Migrations
                     b.ToTable("ConsumerFavProducer");
                 });
 
+            modelBuilder.Entity("backend.Models.Location", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("Address");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("City");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("State");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("ZipCode");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Locations");
+                });
+
             modelBuilder.Entity("backend.Models.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -169,7 +200,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Producer", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("Id");
 
@@ -424,6 +454,17 @@ namespace backend.Migrations
                     b.Navigation("Producer");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("backend.Models.Producer", b =>
+                {
+                    b.HasOne("backend.Models.Location", "LocationAddress")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LocationAddress");
                 });
 
             modelBuilder.Entity("backend.Models.Product", b =>

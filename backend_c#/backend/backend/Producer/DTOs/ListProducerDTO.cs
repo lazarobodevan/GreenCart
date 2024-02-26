@@ -1,4 +1,5 @@
-﻿using backend.ProducerPicture.DTOs;
+﻿using backend.Migrations;
+using backend.ProducerPicture.DTOs;
 using NetTopologySuite.Geometries;
 using System;
 using System.Text.Json.Serialization;
@@ -15,8 +16,15 @@ public class ListProducerDTO{
             ProducerId = producer.Id,
             Url = pictureDTO.Url
         } : null;
-        Latitude = producer.Location.Y;
-        Longitude = producer.Location.X;
+        Location = new Shared.Classes.Location() {
+            Latitude = producer.Location.Y,
+            Longitude = producer.Location.X,
+            Address = producer.LocationAddress.Address,
+            City = producer.LocationAddress.City,
+            State = producer.LocationAddress.State,
+            ZipCode = producer.LocationAddress.ZipCode,
+            RadiusInKm = 0
+        };
         RatingsAvg = producer.RatingsAvg;
         RatingsCount = producer.RatingsCount;
         WhereToFind = producer.WhereToFind;
@@ -40,11 +48,7 @@ public class ListProducerDTO{
 
     [JsonPropertyName("whereToFind")] public string WhereToFind{ get; set; }
 
-    [JsonPropertyName("latitude")] public double Latitude { get; set; }
-
-    [JsonPropertyName("location")] public Point Location { get; set; }
-
-    [JsonPropertyName("longitude")] public double Longitude { get; set; }
+    [JsonPropertyName("location")] public Shared.Classes.Location Location { get; set; }
 
     [JsonPropertyName("ratingsAvg")] public double RatingsAvg { get; set; }
 

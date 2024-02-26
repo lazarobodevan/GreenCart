@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gY3PdMeSTXiOAjawPaDee972H8/2dzhwkdLHJ0Wqz+YypDvObwLUWnRbIqmKvBi9WfdMYCoufxJRlIsdPuPznQ==",
+  "dgSpecHash": "STJky3daudmuDqqhBfAwmEwPsyTUoleFW3SyrIm3Ijem10Hy/aHRLQTYItWrfXL1ET7U1ItYCjqUHu7+eE4B6w==",
   "success": true,
   "projectFilePath": "C:\\projs\\AgroFam\\backend_c#\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.common\\8.0.0\\entityframeworkcore.exceptions.common.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.postgresql\\8.0.0\\entityframeworkcore.exceptions.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\geocoordinate.netcore\\1.0.0.1\\geocoordinate.netcore.1.0.0.1.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\googlemaps.locationservices\\1.2.0.5\\googlemaps.locationservices.1.2.0.5.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",

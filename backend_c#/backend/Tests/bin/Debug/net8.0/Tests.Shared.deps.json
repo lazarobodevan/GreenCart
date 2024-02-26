@@ -83,6 +83,14 @@
           }
         }
       },
+      "GoogleMaps.LocationServices/1.2.0.5": {
+        "runtime": {
+          "lib/netstandard2.0/GoogleMaps.LocationServices.dll": {
+            "assemblyVersion": "1.2.0.5",
+            "fileVersion": "1.2.0.5"
+          }
+        }
+      },
       "Microsoft.CodeCoverage/17.8.0": {
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {
@@ -1288,6 +1296,7 @@
           "AWSSDK.S3": "3.7.305.2",
           "EntityFrameworkCore.Exceptions.PostgreSQL": "8.0.0",
           "GeoCoordinate.NetCore": "1.0.0.1",
+          "GoogleMaps.LocationServices": "1.2.0.5",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.19.5",
           "NetTopologySuite": "2.5.0",
@@ -1356,6 +1365,13 @@
       "sha512": "sha512-VrR5MLkh0u2qka79JcQ/GUrgHwGidayCA7nKy2430qYX/JHdrHLgwp1MuBTSsygWs0s2V6GQ0Hp8HUMatHiWFw==",
       "path": "geocoordinate.netcore/1.0.0.1",
       "hashPath": "geocoordinate.netcore.1.0.0.1.nupkg.sha512"
+    },
+    "GoogleMaps.LocationServices/1.2.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0j3RL5+acxYgQNz72JdXJ1nUKxMGaY+6UvrOIOxZfp0qpJOUmo/ivCAm53atbnuy0z3vrZK+j9mZifh35UBqag==",
+      "path": "googlemaps.locationservices/1.2.0.5",
+      "hashPath": "googlemaps.locationservices.1.2.0.5.nupkg.sha512"
     },
     "Microsoft.CodeCoverage/17.8.0": {
       "type": "package",

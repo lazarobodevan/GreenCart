@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XU+aEZuE0u5/y6SC/hEIknrYRi6a/gUC7YSEPs+TE3s84LoPovlYXR1zyW38B3vX+rYmrJAvVPhn1KIpflTlbQ==",
+  "dgSpecHash": "HlDO+B2RXahCIilL0bIRpe+WqW7Lc4mW/5a+2Up5a5nXLYIb+x5Rkwg5m6QZjtSbqYLiqjFkKSV7H4umeT8XTQ==",
   "success": true,
   "projectFilePath": "C:\\projs\\AgroFam\\backend_c#\\backend\\Tests\\UnitTests.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.common\\8.0.0\\entityframeworkcore.exceptions.common.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\entityframeworkcore.exceptions.postgresql\\8.0.0\\entityframeworkcore.exceptions.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\geocoordinate.netcore\\1.0.0.1\\geocoordinate.netcore.1.0.0.1.nupkg.sha512",
+    "C:\\Users\\Lázaro\\.nuget\\packages\\googlemaps.locationservices\\1.2.0.5\\googlemaps.locationservices.1.2.0.5.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
     "C:\\Users\\Lázaro\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0\\microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",

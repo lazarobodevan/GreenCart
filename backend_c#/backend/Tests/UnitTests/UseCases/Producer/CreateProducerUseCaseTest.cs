@@ -5,6 +5,7 @@ using backend.Producer.Repository;
 using backend.Producer.UseCases;
 using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
+using backend.Shared.Services.Location;
 using backend.Utils.Errors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -24,10 +25,12 @@ namespace Tests.UnitTests.UseCases.Producer
         private ProducerDTOFactory producerFactory = new ProducerDTOFactory();
         private Mock<IProducerRepository> producerRepository;
         private Mock<IProducerPictureService> producerPictureService;
+        private Mock<ILocationService> locationService;
 
         public CreateProducerUseCaseTest() {
             producerRepository = new Mock<IProducerRepository>();
             producerPictureService = new Mock<IProducerPictureService>();
+            locationService = new Mock<ILocationService>();
         }
 
 
@@ -39,8 +42,9 @@ namespace Tests.UnitTests.UseCases.Producer
             producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer());
             producerRepository.Setup(x => x.FindByEmail(It.IsAny<string>())).Returns(Task.FromResult<backend.Models.Producer?>(null));
             producerPictureService.Setup(x => x.UploadProfilePictureAsync(It.IsAny<backend.Models.Producer>(), It.IsAny<CreateProducerPictureDTO>())).ReturnsAsync(new Amazon.S3.Model.PutObjectResponse());
+            locationService.Setup(x => x.GetLocationByLatLon(It.IsAny<double>(), It.IsAny<double>())).Returns(new Location() { Address = "", City="", State="", UserId = Guid.NewGuid(), ZipCode = "" }) ;
 
-            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object, producerPictureService.Object);
+            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object, producerPictureService.Object, locationService.Object);
 
             var producer = producerFactory.Build();
 
@@ -58,8 +62,9 @@ namespace Tests.UnitTests.UseCases.Producer
             producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new backend.Models.Producer());
             producerRepository.Setup(x => x.FindByEmail(It.IsAny<string>())).ReturnsAsync(new backend.Models.Producer());
             producerPictureService.Setup(x => x.UploadProfilePictureAsync(It.IsAny<backend.Models.Producer>(), It.IsAny<CreateProducerPictureDTO>())).ReturnsAsync(new Amazon.S3.Model.PutObjectResponse());
+            locationService.Setup(x => x.GetLocationByLatLon(It.IsAny<double>(), It.IsAny<double>())).Returns(new Location() { Address = "", City = "", State = "", UserId = Guid.NewGuid(), ZipCode = "" });
 
-            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object, producerPictureService.Object);
+            CreateProducerUseCase usecase = new CreateProducerUseCase(producerRepository.Object, producerPictureService.Object, locationService.Object);
 
             var producer = producerFactory.Build();
 

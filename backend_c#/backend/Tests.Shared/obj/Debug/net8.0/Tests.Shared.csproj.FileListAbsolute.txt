@@ -127,3 +127,4 @@ C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\GeoCoordinate.
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\NetTopologySuite.IO.PostGis.dll
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
 C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\Npgsql.NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\Tests.Shared\bin\Debug\net8.0\GoogleMaps.LocationServices.dll

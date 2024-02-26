@@ -102,6 +102,15 @@
           }
         }
       },
+      "GoogleMaps.LocationServices/1.2.0.5": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/GoogleMaps.LocationServices.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/GoogleMaps.LocationServices.dll": {}
+        }
+      },
       "Microsoft.CodeCoverage/17.8.0": {
         "type": "package",
         "compile": {
@@ -2246,6 +2255,7 @@
           "AWSSDK.S3": "3.7.305.2",
           "EntityFrameworkCore.Exceptions.PostgreSQL": "8.0.0",
           "GeoCoordinate.NetCore": "1.0.0.1",
+          "GoogleMaps.LocationServices": "1.2.0.5",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.19.5",
           "NetTopologySuite": "2.5.0",
@@ -2446,6 +2456,18 @@
         "geocoordinate.netcore.nuspec",
         "lib/netstandard1.6/GeoCoordinate.NetCore.deps.json",
         "lib/netstandard1.6/GeoCoordinate.NetCore.dll"
+      ]
+    },
+    "GoogleMaps.LocationServices/1.2.0.5": {
+      "sha512": "0j3RL5+acxYgQNz72JdXJ1nUKxMGaY+6UvrOIOxZfp0qpJOUmo/ivCAm53atbnuy0z3vrZK+j9mZifh35UBqag==",
+      "type": "package",
+      "path": "googlemaps.locationservices/1.2.0.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "googlemaps.locationservices.1.2.0.5.nupkg.sha512",
+        "googlemaps.locationservices.nuspec",
+        "lib/netstandard2.0/GoogleMaps.LocationServices.dll"
       ]
     },
     "Microsoft.CodeCoverage/17.8.0": {

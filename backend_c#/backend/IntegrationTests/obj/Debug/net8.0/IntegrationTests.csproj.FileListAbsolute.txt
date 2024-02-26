@@ -136,3 +136,4 @@ C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\GeoCoordin
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\NetTopologySuite.IO.PostGis.dll
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
 C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\Npgsql.NetTopologySuite.dll
+C:\projs\AgroFam\backend_c#\backend\IntegrationTests\bin\Debug\net8.0\GoogleMaps.LocationServices.dll

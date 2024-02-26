@@ -140,7 +140,7 @@ public class ProductController : ControllerBase{
         [FromQuery] int? page
         ) {
         try {
-            var nearbyProducts = await getNearbyProductsUseCase.Execute(new Location() {
+            var nearbyProducts = await getNearbyProductsUseCase.Execute(new Shared.Classes.Location() {
                 Latitude = (double)query.Latitude!,
                 Longitude = (double)query.Longitude!,
                 RadiusInKm = (int)query.RadiusInKm!

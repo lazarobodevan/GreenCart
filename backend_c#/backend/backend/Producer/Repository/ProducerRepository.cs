@@ -52,13 +52,13 @@ public class ProducerRepository : IProducerRepository{
 
         // Filtering by distance
         var nearbyProducers = _context.Producers
-            .Where(producer => producer.Location.Distance(referenceCoord) <= radiusInMeters 
+            .Where(producer => producer.Location.Distance(referenceCoord) <= radiusInMeters
                 && producer.DeletedAt == null);
-        var teste = nearbyProducers.ToList();
+
         // Applying filters
         if (filterQuery != null) {
             nearbyProducers = _ApplyFilters(nearbyProducers.AsQueryable(), filterQuery, referenceCoord);
-            producers = nearbyProducers.ToList();
+            producers = nearbyProducers.Include(p => p.LocationAddress).ToList();
         } else {
             //Default order: distance -> ratings count -> ratings avg
             producers = nearbyProducers

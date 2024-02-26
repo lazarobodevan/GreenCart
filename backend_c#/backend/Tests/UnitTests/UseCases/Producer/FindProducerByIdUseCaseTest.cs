@@ -3,6 +3,7 @@ using backend.Models;
 using backend.Producer.Repository;
 using backend.Producer.UseCases;
 using backend.ProducerPicture.Services;
+using backend.Shared.Services.Location;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,13 @@ namespace Tests.UnitTests.UseCases.Producer
 
         private readonly Mock<IProducerRepository> _producerRepository;
         private readonly Mock<IProducerPictureService> _producerPictureServiceMock;
+        private readonly Mock<ILocationService> locationService;
         private ProducerDTOFactory producerFactory = new ProducerDTOFactory();
 
         public FindProducerByIdUseCaseTest() {
             _producerRepository = new Mock<IProducerRepository>();
             _producerPictureServiceMock = new Mock<IProducerPictureService>();
+            locationService = new Mock<ILocationService>();
         }
 
         [Fact]
@@ -32,8 +35,9 @@ namespace Tests.UnitTests.UseCases.Producer
             _producerRepository.Setup(x => x.Save(It.IsAny<backend.Models.Producer>())).ReturnsAsync(new ProducerFactory().WithId(producerId).Build());
             _producerRepository.Setup(x => x.FindById(It.IsAny<Guid>())).ReturnsAsync(new ProducerFactory().WithId(producerId).Build());
             _producerPictureServiceMock.Setup(x => x.GetProfilePictureAsync(It.IsAny<backend.Models.Producer>())).ReturnsAsync("link");
+            locationService.Setup(x => x.GetLocationByLatLon(It.IsAny<double>(), It.IsAny<double>())).Returns(new Location() { Address = "", City = "", State = "", UserId = Guid.NewGuid(), ZipCode = "" });
 
-            CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object, _producerPictureServiceMock.Object);
+            CreateProducerUseCase createProducerUseCase = new CreateProducerUseCase(_producerRepository.Object, _producerPictureServiceMock.Object, locationService.Object);
             FindProducerByIdUseCase findProducerByIdUseCase = new FindProducerByIdUseCase(_producerRepository.Object, _producerPictureServiceMock.Object);
 
             var producer = producerFactory.Build();

@@ -28,4 +28,5 @@ public class DatabaseContext : DbContext, IDatabaseContextOptions{
     public virtual DbSet<Models.Order> Orders{ get; set; }
     public virtual DbSet<Models.Product> Products{ get; set; }
     public virtual DbSet<Models.ProductPicture> Pictures { get; set; }
+    public virtual DbSet<Models.Location> Locations { get; set; }
 }

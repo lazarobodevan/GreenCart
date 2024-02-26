@@ -9,4 +9,5 @@ public interface IDatabaseContextOptions{
     DbSet<Models.Order> Orders{ get; set; }
     DbSet<Models.Product> Products{ get; set; }
     DbSet<Models.ProductPicture> Pictures { get; set; }
+    DbSet<Models.Location> Locations { get; set; }
 }

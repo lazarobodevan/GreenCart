@@ -11,7 +11,9 @@ using backend.Producer.Services;
 using backend.ProducerPicture.Services;
 using backend.Product.Enums;
 using backend.Product.Repository;
+using backend.Shared.Services.Location;
 using EntityFramework.Exceptions.PostgreSQL;
+using GoogleMaps.LocationServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -73,6 +75,14 @@ builder.Services.AddScoped<IAmazonS3>(provider => {
 
     return new AmazonS3Client(awsCredentials, awsRegion);
 });
+
+// Google maps geolocation service package
+builder.Services.AddScoped<GoogleLocationService>(provider => {
+    return new GoogleLocationService(builder.Configuration.GetValue<string>("MapsApiKey"));
+});
+
+//LocationService
+builder.Services.AddScoped<backend.Shared.Services.Location.ILocationService, backend.Shared.Services.Location.LocationService >();
 
 // Registra o PictureService
 builder.Services.AddScoped<IProductPictureService, ProductPictureService>(provider => {
