@@ -54,6 +54,17 @@ if (builder.Environment.IsDevelopment()){
         options.UseExceptionProcessor();
     });
 
+    builder.Services.AddScoped<IAmazonS3>(provider => {
+        var awsCredentials = new BasicAWSCredentials(
+            builder.Configuration.GetValue<string>("AmazonS3Dev:AccessKeyId"),
+            builder.Configuration.GetValue<string>("AmazonS3Dev:SecretKey")
+        );
+
+        var awsRegion = RegionEndpoint.SAEast1;
+
+        return new AmazonS3Client(awsCredentials, awsRegion);
+    });
+
 }
 
 if (builder.Environment.IsProduction()){
@@ -63,18 +74,20 @@ if (builder.Environment.IsProduction()){
         options.UseNpgsql(builder.Configuration.GetValue<String>("ConnectionStrings:Prd"));
         options.UseExceptionProcessor();
     });
+
+    builder.Services.AddScoped<IAmazonS3>(provider => {
+        var awsCredentials = new BasicAWSCredentials(
+            builder.Configuration.GetValue<string>("AmazonS3:AccessKeyId"),
+            builder.Configuration.GetValue<string>("AmazonS3:SecretKey")
+        );
+
+        var awsRegion = RegionEndpoint.SAEast1;
+
+        return new AmazonS3Client(awsCredentials, awsRegion);
+    });
 }
 
-builder.Services.AddScoped<IAmazonS3>(provider => {
-    var awsCredentials = new BasicAWSCredentials(
-        builder.Configuration.GetValue<string>("AmazonS3:AccessKeyId"),
-        builder.Configuration.GetValue<string>("AmazonS3:SecretKey")
-    );
 
-    var awsRegion = RegionEndpoint.SAEast1;
-
-    return new AmazonS3Client(awsCredentials, awsRegion);
-});
 
 // Google maps geolocation service package
 builder.Services.AddScoped<GoogleLocationService>(provider => {
@@ -88,18 +101,25 @@ builder.Services.AddScoped<backend.Shared.Services.Location.ILocationService, ba
 builder.Services.AddScoped<IProductPictureService, ProductPictureService>(provider => {
     var amazonS3 = provider.GetRequiredService<IAmazonS3>();
 
+    var bucketName = builder.Environment.IsDevelopment() ? 
+        builder.Configuration.GetValue<string>("AmazonS3Dev:BucketName") : 
+        builder.Configuration.GetValue<string>("AmazonS3:BucketName");
+
     return new ProductPictureService(
         amazonS3,
-        builder.Configuration.GetValue<string>("AmazonS3:BucketName")!
+        bucketName!
     );
 });
 
 builder.Services.AddScoped<IProducerPictureService, ProducerPictureService>(provider => {
     var amazonS3 = provider.GetRequiredService<IAmazonS3>();
+    var bucketName = builder.Environment.IsDevelopment() ?
+        builder.Configuration.GetValue<string>("AmazonS3Dev:BucketName") :
+        builder.Configuration.GetValue<string>("AmazonS3:BucketName");
 
     return new ProducerPictureService(
         amazonS3,
-        builder.Configuration.GetValue<string>("AmazonS3:BucketName")!
+        bucketName!
     );
 });
 
