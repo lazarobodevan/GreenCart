@@ -33,7 +33,9 @@ public class ProducerRepository : IProducerRepository{
     }
 
     public async Task<Models.Producer?> FindById(Guid id){
-        return await _context.Producers.FirstOrDefaultAsync(producer => producer.Id == id);
+        return await _context.Producers
+            .Include(p => p.LocationAddress)
+            .FirstOrDefaultAsync(producer => producer.Id == id);
     }
 
     public Pagination<backend.Models.Producer> FindNearProducers(Shared.Classes.Location myLocation, int page, int pageResults, ProducerFilterQuery? filterQuery) {

@@ -25,10 +25,7 @@ public class FindProducerByIdUseCase{
 
         if (possibleProducer.HasProfilePicture) {
             var pictureUrl = await _pictureService.GetProfilePictureAsync(possibleProducer);
-            producerDTO.Picture = new ListProducerPictureDTO() {
-                ProducerId = possibleProducer.Id,
-                Url = pictureUrl.ToString()
-            };
+            producerDTO.Picture = pictureUrl.ToString();
         }
         return producerDTO;
     }

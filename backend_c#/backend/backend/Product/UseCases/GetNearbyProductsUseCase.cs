@@ -7,6 +7,7 @@ using backend.Product.DTOs;
 using backend.Product.Models;
 using backend.Product.Repository;
 using backend.Shared.Classes;
+using backend.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace backend.Product.UseCases {
         }
 
         public async Task<Pagination<ListProductDTO>> Execute(Location myLocation, int page, int pageResults, ProductFilterQuery? filterQuery) {
+
+            filterQuery = ClassUtils.IsAllPropsNull(filterQuery) ? null : filterQuery;
 
             var foundProducts = _repository.FindNearProducts(myLocation, page, pageResults, filterQuery);
 

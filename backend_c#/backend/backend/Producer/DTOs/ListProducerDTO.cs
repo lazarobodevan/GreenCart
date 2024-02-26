@@ -12,10 +12,7 @@ public class ListProducerDTO{
         Name = producer.Name;
         Email = producer.Email;
         Telephone = producer.Telephone;
-        Picture = producer.HasProfilePicture && pictureDTO != null ? new ListProducerPictureDTO() {
-            ProducerId = producer.Id,
-            Url = pictureDTO.Url
-        } : null;
+        Picture = producer.HasProfilePicture && pictureDTO != null ? pictureDTO.Url: null;
         Location = new Shared.Classes.Location() {
             Latitude = producer.Location.Y,
             Longitude = producer.Location.X,
@@ -44,7 +41,7 @@ public class ListProducerDTO{
 
     [JsonPropertyName("telephone")] public string Telephone{ get; set; }
 
-    [JsonPropertyName("picture")] public ListProducerPictureDTO? Picture{ get; set; }
+    [JsonPropertyName("picture")] public string? Picture{ get; set; }
 
     [JsonPropertyName("whereToFind")] public string WhereToFind{ get; set; }
 

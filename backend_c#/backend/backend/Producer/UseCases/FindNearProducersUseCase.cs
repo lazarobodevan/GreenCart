@@ -7,6 +7,7 @@ using backend.Producer.Repository;
 using backend.ProducerPicture.DTOs;
 using backend.ProducerPicture.Services;
 using backend.Shared.Classes;
+using backend.Utils;
 
 namespace backend.Producer.UseCases;
 
@@ -20,6 +21,8 @@ public class FindNearProducersUseCase{
     }
 
     public async Task<Pagination<ListProducerDTO>> Execute(Location myLocation, int page, int pageResults, ProducerFilterQuery? filterQuery){
+
+        filterQuery = ClassUtils.IsAllPropsNull(filterQuery) ? null : filterQuery;
 
         var foundProducers = _repository.FindNearProducers(myLocation, page, pageResults, filterQuery);
 
@@ -35,10 +38,7 @@ public class FindNearProducersUseCase{
             listProducerDTOs.Add(new ListProducerDTO(currentProducer, new ListProducerPictureDTO()));
 
             if (currentProducer.HasProfilePicture) {
-                listProducerDTOs[i].Picture = new ListProducerPictureDTO() {
-                    ProducerId = currentProducer.Id,
-                    Url = profilePictures[i]!
-                };
+                listProducerDTOs[i].Picture = profilePictures[i]!;
 
             }
         }

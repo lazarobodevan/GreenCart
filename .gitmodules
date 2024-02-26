@@ -1,3 +1,7 @@
 [submodule "mobile"]
 	path = mobile
 	url = https://github.com/lazarobodevan/Fairy-mobile
+
+[submodule "green-cart-producer-mobile"]
+	path = green-cart-producer-mobile
+	url = https://github.com/lazarobodevan/green-cart-producer-mobile
