@@ -6,10 +6,11 @@ using backend.Producer.DTOs;
 using backend.Product.Enums;
 using backend.Models;
 using backend.ProducerPicture.DTOs;
+using backend.Shared.Classes;
 namespace backend.Product.DTOs;
 
 public class ListProductDTO{
-    public ListProductDTO(backend.Models.Product product, List<ListProductPictureDTO> productPicturesUrls){
+    public ListProductDTO(backend.Models.Product product, List<ListProductPictureDTO> productPicturesUrls, string? producerPicture){
         Id = product.Id;
         Name = product.Name;
         Description = product.Description;
@@ -25,6 +26,18 @@ public class ListProductDTO{
             Name = product.Producer.Name,
             Email = product.Producer.Email,
             WhereToFind = product.Producer.WhereToFind,
+            Picture = producerPicture,
+            Telephone = product.Producer.Telephone,
+            CreatedAt = product.Producer.CreatedAt,
+            DeletedAt = product.Producer.DeletedAt,
+            RatingsAvg = product.Producer.RatingsAvg,
+            RatingsCount = product.Producer.RatingsCount,
+            UpdatedAt = product.Producer.UpdatedAt,
+            Location = new Shared.Classes.Location(product.Producer.LocationAddress) {
+                Latitude = product.Producer.Location.Y,
+                Longitude = product.Producer.Location.X,
+            },
+            
         }: null;
         CreatedAt = product.CreatedAt;
         UpdatedAt = product.UpdatedAt;
@@ -47,6 +60,8 @@ public class ListProductDTO{
     [JsonPropertyName("price")] public double Price{ get; set; }
 
     [JsonPropertyName("unit")] public string Unit{ get; set; }
+
+    [JsonPropertyName("location")] public Shared.Classes.Location Location { get; set; }
 
     [JsonPropertyName("availableQuantity")]
     public int AvailableQuantity{ get; set; }

@@ -53,9 +53,9 @@ public class CreateProductUseCase{
         }
 
         try {
-
-            await pictureService.UploadImageAsync(picturesList, productEntity);
             var createdProduct = await repository.Save(productEntity, picturesList);
+            await pictureService.UploadImageAsync(picturesList, productEntity);
+            
             return createdProduct;
 
         }catch(AmazonS3Exception ex) {

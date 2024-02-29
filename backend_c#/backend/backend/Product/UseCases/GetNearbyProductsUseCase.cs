@@ -45,7 +45,7 @@ namespace backend.Product.UseCases {
                     Url = profilePictures[i][0]
                 });
 
-                listProductsDTOs.Add(new ListProductDTO(currentProduct, productPictures));
+                listProductsDTOs.Add(new ListProductDTO(currentProduct, productPictures, null));
 
             }
 

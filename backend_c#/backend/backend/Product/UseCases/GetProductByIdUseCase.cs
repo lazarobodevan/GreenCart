@@ -8,16 +8,19 @@ using backend.Picture.DTOs;
 using backend.Producer.Services;
 using System.Linq;
 using backend.Models;
+using backend.ProducerPicture.Services;
 
 namespace backend.Product.UseCases;
 
 public class GetProductByIdUseCase{
     private readonly IProductRepository repository;
     private readonly IProductPictureService pictureService;
+    private readonly IProducerPictureService producerPictureService;
 
-    public GetProductByIdUseCase(IProductRepository repository, IProductPictureService pictureService){
+    public GetProductByIdUseCase(IProductRepository repository, IProductPictureService pictureService, IProducerPictureService producerPictureService){
         this.repository = repository;
         this.pictureService = pictureService;
+        this.producerPictureService = producerPictureService;
     }
 
     public async Task<ListProductDTO?> Execute(Guid id){
@@ -36,7 +39,9 @@ public class GetProductByIdUseCase{
                 Url = s3Urls.ElementAt(i)
             });
         }
-        var listProduct = new ListProductDTO(productEntity, pictures);
+        string? producerPicture = await producerPictureService.GetProfilePictureAsync(productEntity.Producer);
+        
+        var listProduct = new ListProductDTO(productEntity, pictures, producerPicture);
 
         return listProduct;
     }

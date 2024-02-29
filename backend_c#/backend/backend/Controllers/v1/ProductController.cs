@@ -53,7 +53,7 @@ public class ProductController : ControllerBase{
         createProductUseCase = new CreateProductUseCase(this.repository, productPictureService);
         getProducerProductsUseCase = new GetProducerProductsUseCase(this.repository, productPictureService);
         getProducerByIdUseCase = new FindProducerByIdUseCase(this.producerRepository, producerPictureService);
-        getProductByIdUseCase = new GetProductByIdUseCase(this.repository, productPictureService);
+        getProductByIdUseCase = new GetProductByIdUseCase(this.repository, productPictureService, producerPictureService);
         getNearbyProductsUseCase = new GetNearbyProductsUseCase(this.repository, this.productPictureService);
     }
 
@@ -64,7 +64,7 @@ public class ProductController : ControllerBase{
 
             var createdProduct = await createProductUseCase.Execute(productDTO);
 
-            ListProductDTO listCreatedProducts = new ListProductDTO(createdProduct, new List<ListProductPictureDTO>());
+            ListProductDTO listCreatedProducts = new ListProductDTO(createdProduct, new List<ListProductPictureDTO>(), null);
 
             return StatusCode(StatusCodes.Status201Created, listCreatedProducts);
         }
@@ -103,9 +103,10 @@ public class ProductController : ControllerBase{
             return Ok(new ListProductsResponse() {
                 
                 Producer = producer,
-                Products = new Pagination<List<ListProductDTO>>() {
+                Products = new Pagination<ListProductDTO>() {
                     CurrentPage = page ?? 0,
                     Pages = products.Pages,
+                    Data = products.Data,
                     NextUrl = new PaginationUtils().GetNextUrl(page ?? 0, products.Pages, Request.PathBase),
                     PreviousUrl = new PaginationUtils().GetPreviousUrl(page ?? 0, Request.PathBase)
                 }

@@ -47,6 +47,7 @@ public class ProductRepository : IProductRepository{
             var possibleProduct = _context.Products.
                 Where(p => p.Id == productId && p.DeletedAt == null)
                 .Include(p => p.Producer)
+                .ThenInclude(p => p.LocationAddress)
                 .Include(p => p.Pictures.OrderBy(pic => pic.Position))
                 .FirstOrDefault();
 

@@ -40,7 +40,7 @@ public class GetProducerProductsUseCase{
                 Url = url.ElementAt(0) ?? "",
             });
 
-            listProductsDto.Add(new ListProductDTO(product, productPicturesUrls));
+            listProductsDto.Add(new ListProductDTO(product, productPicturesUrls, null));
         }
         return new Pagination<ListProductDTO>() {
             Data = listProductsDto,

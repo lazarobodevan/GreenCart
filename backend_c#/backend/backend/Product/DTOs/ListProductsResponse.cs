@@ -6,6 +6,6 @@ using backend.Shared.Classes;
 namespace backend.Product.DTOs {
     public class ListProductsResponse {
         public ListProducerDTO? Producer { get; set; }
-        public Pagination<List<ListProductDTO>> Products { get; set; } = new Pagination<List<ListProductDTO>>();
+        public Pagination<ListProductDTO> Products { get; set; } = new Pagination<ListProductDTO>();
     }
 }
