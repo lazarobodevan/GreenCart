@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 
@@ -12,6 +13,6 @@ namespace backend.Picture.DTOs
         public int? Position { get; set; }
 
         [Required]
-        public Stream? Stream { get; set; }
+        public IFormFile? Stream { get; set; }
     }
 }

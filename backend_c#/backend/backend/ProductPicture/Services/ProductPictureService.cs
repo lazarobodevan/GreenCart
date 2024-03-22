@@ -61,7 +61,7 @@ namespace backend.Producer.Services {
                     BucketName = _BucketName,
                     Key = $"{product.ProducerId}/products/{product.Id}/{picture.Key}",
                     ContentType = "image/png",
-                    InputStream = picture.Stream
+                    InputStream = picture.Stream!.OpenReadStream()
                 };
                 var response = await _amazonS3.PutObjectAsync(putObjectRequest);
                 picturesObjectResponse.Add(response);

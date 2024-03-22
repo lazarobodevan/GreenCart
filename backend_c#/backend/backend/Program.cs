@@ -6,6 +6,7 @@ using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Amazon.S3;
 using backend.Contexts;
+using backend.Picture.Repository;
 using backend.Producer.Repository;
 using backend.Producer.Services;
 using backend.ProducerPicture.Services;
@@ -125,6 +126,7 @@ builder.Services.AddScoped<IProducerPictureService, ProducerPictureService>(prov
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
+builder.Services.AddScoped<IPictureRepository, PictureRepository>();
 CultureInfo.CurrentCulture = new CultureInfo("en-US");
 
 var app = builder.Build();

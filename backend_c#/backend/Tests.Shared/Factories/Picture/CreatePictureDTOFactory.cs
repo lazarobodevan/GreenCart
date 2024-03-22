@@ -1,4 +1,5 @@
 ﻿using backend.Picture.DTOs;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Tests.Shared.Factories.Picture {
         private CreateProductPictureDTO _pictureDTO = new CreateProductPictureDTO() {
             Key = Guid.NewGuid(),
             Position = 0,
-            Stream = new MemoryStream()
+            Stream = new FormFile(Stream.Null,0,0,"","")
         };
 
         public CreateProductPictureDTO Build() {
@@ -28,7 +29,7 @@ namespace Tests.Shared.Factories.Picture {
             return this;
         }
 
-        public CreatePictureDTOFactory WithStream(MemoryStream stream) {
+        public CreatePictureDTOFactory WithStream(FormFile stream) {
             _pictureDTO.Stream = stream;
             return this;
         }

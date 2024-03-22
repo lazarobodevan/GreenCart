@@ -61,7 +61,7 @@ public class CreateManyProductsUseCase{
         foreach (var picture in pictures) {
             picturesEntity.Add(new CreateProductPictureDTO() {
                 Key = Guid.NewGuid(),
-                Stream = picture.OpenReadStream(),
+                Stream = (IFormFile)picture.OpenReadStream(),
                 Position = 1
             });
         }

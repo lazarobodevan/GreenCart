@@ -86,7 +86,7 @@ public class CreateProductUseCase{
             pictureList.Add(new CreateProductPictureDTO() {
                 Key = Guid.NewGuid(),
                 Position = (int)position,
-                Stream = picture.OpenReadStream(),
+                Stream = picture,
             });
         }
 

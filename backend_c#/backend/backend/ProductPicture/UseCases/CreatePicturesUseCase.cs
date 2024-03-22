@@ -4,6 +4,8 @@ using backend.Picture.DTOs;
 using backend.Picture.Exceptions;
 using backend.Picture.Repository;
 using backend.Producer.Services;
+using backend.Product.Exceptions;
+using backend.Product.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +15,21 @@ namespace backend.Picture.UseCases {
     public class CreatePicturesUseCase {
         private readonly IPictureRepository _pictureRepository;
         private readonly IProductPictureService _pictureService;
+        private readonly IProductRepository _productRepository;
         private const int MAX_NUMBER_OF_PICTURES_PER_PRODUCT = 5;
 
-        public CreatePicturesUseCase(IPictureRepository pictureRepository, IProductPictureService pictureService) {
+        public CreatePicturesUseCase(IPictureRepository pictureRepository, IProductPictureService pictureService, IProductRepository productRepository) {
             _pictureRepository = pictureRepository;
             _pictureService = pictureService;
+            _productRepository = productRepository;
         }
 
-        public async Task<List<Models.ProductPicture>> Execute(List<CreateProductPictureDTO> picturesDTO, Models.Product product) {
+        public async Task<List<Models.ProductPicture>> Execute(List<CreateProductPictureDTO> picturesDTO, Guid productId) {
+
+            var product = _productRepository.FindById(productId);
+
+            if(product == null) { throw new ProductDoesNotExistException(); }
+
             var storedPictures = _pictureRepository.FindPicturesFromProduct(product.Id);
 
             if(storedPictures.Count >= MAX_NUMBER_OF_PICTURES_PER_PRODUCT) {

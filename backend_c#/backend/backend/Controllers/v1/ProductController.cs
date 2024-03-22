@@ -22,6 +22,8 @@ using backend.Product.Enums;
 using backend.Shared.Classes;
 using backend.ProducerPicture.Services;
 using backend.Shared.Queries;
+using backend.ProductPicture.UseCases;
+using backend.Picture.Repository;
 
 namespace backend.Controllers.v1;
 
@@ -34,27 +36,33 @@ public class ProductController : ControllerBase{
     private readonly FindProducerByIdUseCase getProducerByIdUseCase;
     private readonly GetProductByIdUseCase getProductByIdUseCase;
     private readonly GetNearbyProductsUseCase getNearbyProductsUseCase;
+    private readonly UpdateProductPictureUseCase updateProductPictureUseCase;
 
     private readonly IProductPictureService productPictureService;
     private readonly IProducerPictureService producerPictureService;
     private readonly IProductRepository repository;
     private readonly IProducerRepository producerRepository;
+    private readonly IPictureRepository pictureRepository;
 
     public ProductController(
         IProductRepository repository, 
         IProductPictureService _pictureService, 
         IProducerRepository _producerRepository,
-        IProducerPictureService producerPictureService){
+        IProducerPictureService producerPictureService,
+        IPictureRepository pictureRepository){
 
         this.repository = repository;
         this.productPictureService = _pictureService;
         this.producerRepository = _producerRepository;
         this.producerPictureService = producerPictureService;
+        this.pictureRepository = pictureRepository;
+
         createProductUseCase = new CreateProductUseCase(this.repository, productPictureService);
         getProducerProductsUseCase = new GetProducerProductsUseCase(this.repository, productPictureService);
         getProducerByIdUseCase = new FindProducerByIdUseCase(this.producerRepository, producerPictureService);
         getProductByIdUseCase = new GetProductByIdUseCase(this.repository, productPictureService, producerPictureService);
         getNearbyProductsUseCase = new GetNearbyProductsUseCase(this.repository, this.productPictureService);
+        updateProductPictureUseCase = new UpdateProductPictureUseCase(this.productPictureService, this.pictureRepository, this.repository);
     }
 
     [HttpPost]
@@ -158,4 +166,14 @@ public class ProductController : ControllerBase{
             return StatusCode(StatusCodes.Status500InternalServerError, error);
         }
     }
+    /*
+    [HttpPut("/Pictures/productId={productId}")]
+    public async Task<IActionResult> UpdateProductPictures(Guid productId, [FromForm] CreateProductPictureDTO pictures) {
+        try {
+            await updateProductPictureUseCase.Execute();
+        } catch (e) {
+
+        }
+
+    }*/
 }

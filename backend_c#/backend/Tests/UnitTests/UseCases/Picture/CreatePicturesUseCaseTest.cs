@@ -12,22 +12,25 @@ using backend.Picture.DTOs;
 using Tests.Shared.Factories.Picture;
 using backend.Picture.Exceptions;
 using Amazon.S3;
+using backend.Product.Repository;
 
 namespace UnitTests.UnitTests.UseCases.Picture {
     public class CreatePicturesUseCaseTest {
         
         private Mock<IPictureRepository> _pictureRepositoryMock;
         private Mock<IProductPictureService> _pictureServiceMock;
+        private Mock<IProductRepository> _productRepositoryMock;
 
         public CreatePicturesUseCaseTest() {
             _pictureRepositoryMock = new Mock<IPictureRepository>();
             _pictureServiceMock = new Mock<IProductPictureService>();
+            _productRepositoryMock = new Mock<IProductRepository>();
         }
 
         [Fact]
         public async Task Create_GivenListOfCreatePictureDTO_ReturnsListOfPictureEntities() {
             //Arrange
-            CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object);
+            CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object, _productRepositoryMock.Object);
             var productId = Guid.NewGuid();
             var storedPictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
@@ -60,7 +63,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
             );
 
             //Act
-            var createdPictures = await createPicturesUseCase.Execute(new List<CreateProductPictureDTO>(), new backend.Models.Product());
+            var createdPictures = await createPicturesUseCase.Execute(new List<CreateProductPictureDTO>(), Guid.NewGuid());
 
             //Assert
             Assert.Single(createdPictures);
@@ -69,7 +72,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
         [Fact]
         public async Task Create_GivenListOfCreatePictureDTOWithConflictingPositions_ThrowsConflictingPositionsException() {
             //Arrange
-            CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object);
+            CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object, _productRepositoryMock.Object);
             var productId = Guid.NewGuid();
             var storedPictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
@@ -92,7 +95,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
 
             //Act
             async Task Act() {
-                var createdPictures = await createPicturesUseCase.Execute(newPictures, new backend.Models.Product());
+                var createdPictures = await createPicturesUseCase.Execute(newPictures, Guid.NewGuid());
             }
 
             //Assert
@@ -103,7 +106,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
         [Fact]
         public async Task Create_GivenListOfCreatePictureDTO_ThrowsAmazonS3Exception() {
             //Arrange
-            CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object);
+            CreatePicturesUseCase createPicturesUseCase = new CreatePicturesUseCase(_pictureRepositoryMock.Object, _pictureServiceMock.Object, _productRepositoryMock.Object);
             var productId = Guid.NewGuid();
             var storedPictures = new List<backend.Models.ProductPicture>() {
                 new PictureFactory()
@@ -134,7 +137,7 @@ namespace UnitTests.UnitTests.UseCases.Picture {
 
             //Act
             async Task Act() {
-                var createdPictures = await createPicturesUseCase.Execute(newPictures, new backend.Models.Product());
+                var createdPictures = await createPicturesUseCase.Execute(newPictures, Guid.NewGuid());
             }
 
             //Assert
