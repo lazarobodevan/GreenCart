@@ -37,6 +37,7 @@ public class ProductController : ControllerBase{
     private readonly GetProductByIdUseCase getProductByIdUseCase;
     private readonly GetNearbyProductsUseCase getNearbyProductsUseCase;
     private readonly UpdateProductPictureUseCase updateProductPictureUseCase;
+    private readonly UpdateProductUseCase updateProductUseCase;
 
     private readonly IProductPictureService productPictureService;
     private readonly IProducerPictureService producerPictureService;
@@ -63,6 +64,7 @@ public class ProductController : ControllerBase{
         getProductByIdUseCase = new GetProductByIdUseCase(this.repository, productPictureService, producerPictureService);
         getNearbyProductsUseCase = new GetNearbyProductsUseCase(this.repository, this.productPictureService);
         updateProductPictureUseCase = new UpdateProductPictureUseCase(this.productPictureService, this.pictureRepository, this.repository);
+        updateProductUseCase = new UpdateProductUseCase(this.repository);
     }
 
     [HttpPost]
@@ -166,14 +168,17 @@ public class ProductController : ControllerBase{
             return StatusCode(StatusCodes.Status500InternalServerError, error);
         }
     }
-    /*
-    [HttpPut("/Pictures/productId={productId}")]
-    public async Task<IActionResult> UpdateProductPictures(Guid productId, [FromForm] CreateProductPictureDTO pictures) {
+    
+    [HttpPut()]
+    public async Task<IActionResult> UpdateProductPictures(UpdateProductDTO newProduct) {
         try {
-            await updateProductPictureUseCase.Execute();
-        } catch (e) {
+            var updatedProduct = await updateProductUseCase.Execute(newProduct);
+            return Ok(updatedProduct);
 
+        } catch (Exception e) {
+            var error = ExceptionUtils.FormatExceptionResponse(e);
+            return StatusCode(StatusCodes.Status500InternalServerError, error);
         }
 
-    }*/
+    }
 }
