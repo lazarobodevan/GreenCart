@@ -143,10 +143,25 @@ public class ProductRepository : IProductRepository{
     public backend.Models.Product Update(backend.Models.Product product){
         try{
             product.UpdatedAt = DateTime.Now;
+            var possibleProduct = _context.Products.Where(x => x.Id == product.Id).FirstOrDefault();
 
-            var updatedProduct = _context.Products.Update(product);
+            if(possibleProduct == null) {
+                throw new ProductDoesNotExistException();
+            }
 
-            return updatedProduct.Entity;
+            possibleProduct.Name = product.Name;
+            possibleProduct.AvailableQuantity = product.AvailableQuantity;
+            possibleProduct.Category = product.Category;
+            possibleProduct.Description = product.Description;
+            possibleProduct.Price = product.Price;
+            possibleProduct.HarvestDate = product.HarvestDate;
+            possibleProduct.Unit = product.Unit;
+            possibleProduct.IsOrganic = product.IsOrganic;
+            possibleProduct.UpdatedAt = DateTime.Now;
+
+            _context.Update(possibleProduct);
+            _context.SaveChanges();
+            return product;
         }
         catch (Exception e){
             throw new Exception("Erro inesperado ao atualizar no banco de dados");

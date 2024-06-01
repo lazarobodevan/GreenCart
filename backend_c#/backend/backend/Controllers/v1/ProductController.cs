@@ -170,10 +170,20 @@ public class ProductController : ControllerBase{
     }
     
     [HttpPut()]
-    public async Task<IActionResult> UpdateProductPictures(UpdateProductDTO newProduct) {
+    public async Task<IActionResult> UpdateProduct(UpdateProductDTO newProduct) {
         try {
             var updatedProduct = await updateProductUseCase.Execute(newProduct);
-            return Ok(updatedProduct);
+            return Ok(new UpdateProductDTO() { 
+                Id = updatedProduct.Id,
+                Name = updatedProduct.Name,
+                AvailableQuantity = updatedProduct.AvailableQuantity,
+                Category = updatedProduct.Category,
+                Description = updatedProduct.Description,
+                HarvestDate = DateUtils.ConvertDateTimeToString(updatedProduct.HarvestDate),
+                IsOrganic = updatedProduct.IsOrganic,
+                Price = updatedProduct.Price,
+                Unit = updatedProduct.Unit
+            });
 
         } catch (Exception e) {
             var error = ExceptionUtils.FormatExceptionResponse(e);

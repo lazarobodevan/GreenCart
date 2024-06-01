@@ -9,4 +9,8 @@ public class DateUtils{
                 out DateTime parsedDate)) return DateTime.SpecifyKind(parsedDate.ToUniversalTime(), DateTimeKind.Utc);
         throw new Exception("Formato inválido de data");
     }
+
+    public static String ConvertDateTimeToString(DateTime dt) {
+        return dt.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+    }
 }
